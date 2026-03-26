@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MU Alumni | Global Impact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-dark: #050a18; 
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-red: #ff3e3e; 
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+        }
+
+        body {
+       
+            background: linear-gradient(to bottom, var(--bg-dark) 75%, #ffffff 75%);
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-white);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .alumni-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .highlight { color: var(--accent-red); }
+
+        .header-content p {
+            color: var(--text-gray);
+            margin-bottom: 80px; 
+            font-size: 1.1rem;
+        }
+
+        .alumni-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 60px 30px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 20px 30px 20px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-red);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-area {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-area img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-dark); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .social-badge {
+            position: absolute; bottom: 5px; right: 5px;
+            background: #0077b5; width: 26px; height: 26px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; border: 2px solid var(--bg-dark);
+        }
+
+        .card-info h3 { font-size: 1.3rem; margin: 20px 0 5px 0; font-weight: 600; }
+        .batch { color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px; display: block; }
+
+        .company-logo {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; color: #ddd; font-size: 0.9rem; padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+
+        .icon-img { width: 18px; height: 18px; object-fit: contain; }
+        .fa-microsoft { color: #00a4ef; }
+        .fa-google { color: #DB4437; }
+
+        .btn-container { margin-top: 60px; }
+
+        .view-all-link {
+            display: inline-block;
+            color: #050a18; 
+            text-decoration: none;
+            font-weight: 700;
+            padding: 14px 35px;
+            border: 2px solid #050a18;
+            border-radius: 50px;
+            transition: 0.3s;
+            background: transparent;
+        }
+
+        .view-all-link:hover {
+            background: var(--bg-dark);
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            body { background: linear-gradient(to bottom, var(--bg-dark) 90%, #ffffff 90%); }
+            .alumni-wrapper { grid-template-columns: 1fr; gap: 100px; }
+            .btn-container { margin-top: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="alumni-container">
+    <div class="header-content">
+        <h1>Our Graduates, <span class="highlight">Global Impact</span></h1>
+        <p>Building the future with Metropolitan University alumni.</p>
+    </div>
+
+    <div class="alumni-wrapper">
+        <div class="glass-card">
+            <div class="profile-area">
+                <img src="c:\Users\Maliha Reem\Downloads\WhatsApp Image 2026-03-26 at 8.12.47 PM.jpeg" alt="Alumni">
+                <a href="https://www.linkedin.com/in/nafiul-adnan/" target="_blank" class="social-badge">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <div class="card-info">
+                <h3>Nafiul Adnan Chowdhury</h3>
+                <span class="batch">CSE • Class of 2018</span>
+                <div class="company-logo">
+                    <i class="fab fa-microsoft"></i> <span>Security Software Engineer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="profile-area">
+                <img src="c:\Users\Maliha Reem\Downloads\WhatsApp Image 2026-03-26 at 8.12.44 PM.jpeg" alt="Alumni">
+                <div class="social-badge"><i class="fab fa-linkedin-in"></i></div>
+            </div>
+            <div class="card-info">
+                <h3>Majharul Islam Rafat</h3>
+                <span class="batch">BBA • Class of 2019</span>
+                <div class="company-logo">
+                    <img src="https://www.genesys.com/favicon.ico" class="icon-img"> <span>Senior Software Engineer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="profile-area">
+                <img src="c:\Users\Maliha Reem\Downloads\WhatsApp Image 2026-03-26 at 8.12.19 PM.jpeg" alt="Alumni">
+                <a href="https://www.linkedin.com/in/foysol-ahmed-shuvo/" target="_blank" class="social-badge">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <div class="card-info">
+                <h3>Foysol Ahmed Shuvo</h3>
+                <span class="batch">EEE • Class of 2017</span>
+                <div class="company-logo">
+                    <img src="https://www.agoda.com/favicon.ico" class="icon-img"> <span>Software Engineer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="profile-area">
+                <img src="c:\Users\Maliha Reem\Downloads\WhatsApp Image 2026-03-26 at 8.08.52 PM (2).jpeg" alt="Alumni">
+                <div class="social-badge"><i class="fab fa-linkedin-in"></i></div>
+            </div>
+            <div class="card-info">
+                <h3>Amanur Rahman</h3>
+                <span class="batch">English • Class of 2020</span>
+                <div class="company-logo">
+                    <i class="fab fa-google"></i> <span>Software Engineer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="all-alumni.html" target="_blank" class="view-all-link">
+            View All Alumni <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+</body>
+</html>
