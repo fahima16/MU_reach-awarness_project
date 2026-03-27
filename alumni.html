@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* --- NEW NAV CSS (ADDED) --- */
+        .main-nav {
+            position: fixed; /* Stays at top while you scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(5, 10, 24, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; margin: 0; padding: 0; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: white; 
+            font-weight: 500; 
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #ff3e3e; }
+        .nav-logo { font-weight: 700; color: white; font-size: 1.1rem; text-decoration: none; }
+
+        /* --- YOUR ORIGINAL CSS (NOT REMOVED) --- */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
         :root {
@@ -19,7 +47,6 @@
         }
 
         body {
-       
             background: linear-gradient(to bottom, var(--bg-dark) 75%, #ffffff 75%);
             background-attachment: fixed;
             font-family: 'Inter', sans-serif;
@@ -110,7 +137,6 @@
             border-top: 1px solid var(--glass-border);
         }
 
-
         .icon-img { width: 18px; height: 18px; object-fit: contain; }
         .fa-microsoft { color: #00a4ef; }
         .fa-google { color: #DB4437; }
@@ -140,10 +166,24 @@
             body { background: linear-gradient(to bottom, var(--bg-dark) 90%, #ffffff 90%); }
             .alumni-wrapper { grid-template-columns: 1fr; gap: 100px; }
             .btn-container { margin-top: 100px; }
+            .main-nav { padding: 10px 3%; }
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
+
+<nav class="main-nav">
+    <a href="index.html" class="nav-logo">MU PORTAL</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="visit.html">Visit Campus</a></li>
+        <li><a href="alumni.html">Alumni</a></li>
+        <li><a href="teachers.html">Teachers</a></li>
+        <li><a href="resources.html">Resources</a></li>
+    </ul>
+</nav>
 
 <section class="alumni-container">
     <div class="header-content">
@@ -156,7 +196,7 @@
             <div class="profile-area">
                 <img src="photo5.jpeg" alt="Alumni">
                 <a href="https://www.linkedin.com/in/nafiul-adnan/" target="_blank" class="social-badge">
-                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-linkedin-in" style="color:white;"></i>
                 </a>
             </div>
             <div class="card-info">
@@ -171,7 +211,7 @@
         <div class="glass-card">
             <div class="profile-area">
                 <img src="photo4.jpeg" alt="Alumni">
-                <div class="social-badge"><i class="fab fa-linkedin-in"></i></div>
+                <div class="social-badge"><i class="fab fa-linkedin-in" style="color:white;"></i></div>
             </div>
             <div class="card-info">
                 <h3>Majharul Islam Rafat</h3>
@@ -186,7 +226,7 @@
             <div class="profile-area">
                 <img src="photo3.jpeg" alt="Alumni">
                 <a href="https://www.linkedin.com/in/foysol-ahmed-shuvo/" target="_blank" class="social-badge">
-                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-linkedin-in" style="color:white;"></i>
                 </a>
             </div>
             <div class="card-info">
@@ -202,7 +242,7 @@
             <div class="profile-area">
                 <img src="photo2.jpeg" alt="Alumni">
                 <a href="https://www.linkedin.com/in/amanur-rahman/" target="_blank" class="social-badge">
-                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-linkedin-in" style="color:white;"></i>
                 </a>
             </div>
             <div class="card-info">
