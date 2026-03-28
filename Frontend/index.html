@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metropolitan University | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="nav-bar">
+      <a href="index.html" class="logo-area" style="text-decoration: none;">
+        <div class="logo-icon" style="color: #c8a951; font-size: 1.4rem;">🎓</div>
+        <div class="logo-text">
+          <span style="color: #c8a951; font-weight: 600; font-size: 1.1rem;">Metropolitan University</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" style="color: #c8a951;">HOME</a></li>
+        <li><a href="#">VISIT CAMPUS</a></li>
+        <li><a href="#">ALUMNI</a></li>
+        <li><a href="all-teachers.html">TEACHERS</a></li>
+        <li><a href="#">RESOURCES</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-share" onclick="copyUrl()">🔗 Share</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\Frontend\photo7.jpeg" alt="MU Campus" class="hero-image">
+      <div class="hero-caption">
+        <h2>Change Your Education</h2>
+        <p>Your journey at Metropolitan University starts here. Discover excellence in research and learning.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <section>
+        <h3 class="sec-title">Welcome to Metropolitan University</h3>
+        <div class="article-content">
+          <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\Frontend\photo8.jpeg" alt="Welcome to MU" class="wrapped-photo">
+          
+          <p><strong>A Legacy of Excellence in the Heart of Sylhet.</strong> Established in 2003 by the visionary educationist Dr. Toufique Rahman Chowdhury, Metropolitan University has evolved into a premier seat of higher learning in Bangladesh. Recently achieving the prestigious 'Permanent Charter' from the Government of Bangladesh, MU stands as the first private university in the Sylhet region.</p>
+          
+          <p>Guided by the motto 'Education, Not Just a Degree,' the university is committed to fostering a research-driven environment across its sprawling permanent campus in Bateshwar. With a community of over 6,000 students and a legacy of producing global leaders now working at tech giants like Google and Amazon, MU continues to bridge the gap between academic theory and industry innovation.As we look toward the future, the university remains dedicated to providing a transformative educational experience that prepares students for the challenges of the 4th Industrial Revolution. Our graduates are not just degree holders; they are innovators and problem-solvers ready to make a global impact.</p>
+          
+        </div>
+      </section>
+
+      <aside>
+        <h3 class="sec-title">Campus Spotlight 📰</h3>
+        <div class="article-content">
+          <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\Frontend\photo9.jpeg" alt="Campus Spotlight" class="wrapped-photo">
+          <p><strong>Innovation Beyond the Classroom.</strong> Metropolitan University continues to lead the region in technological and academic breakthroughs. Our students recently secured top honors at the NASA International Space Apps Challenge (Sylhet Division), demonstrating world-class problem-solving skills.</p>
+          
+          <p>In line with global industry shifts, MU has pioneered the first BSc (Hons) in Data Science program in the region, focusing on AI and Machine Learning. Beyond academics, the MU Rover Scout Group and our award-winning Debating Society consistently earn national recognition.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    function copyUrl() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Page link copied!');
+    }
+  </script>
+    <div class="navy-divider-container">
+    <hr class="navy-line">
+    
+</div>
+  <section class="milestones-section">
+    <h2 class="milestones-title">Our Pride & Milestones</h2>
+    <div class="milestones-grid">
+        <div class="milestone-card blue">
+            <span class="m-icon">🎓</span>
+            <h3>6,000+</h3>
+            <p>Current Students</p>
+        </div>
+        <div class="milestone-card green">
+            <span class="m-icon">🏢</span>
+            <h3>20+</h3>
+            <p>Years of Excellence</p>
+        </div>
+        <div class="milestone-card purple">
+            <span class="m-icon">📍</span>
+            <h3>Global</h3>
+            <p>Alumni Network</p>
+        </div>
+        <div class="milestone-card gold">
+            <span class="m-icon">🏅</span>
+            <h3>1st</h3>
+            <p>Permanent Charter in Sylhet</p>
+        </div>
+    </div>
+
+    <div class="highlights-row">
+        <div class="h-item">✅ UGC Approved</div>
+        <div class="h-item">✅ Ranked Top University in Sylhet</div>
+        <div class="h-item">✅ 10,000+ Alumni Globally</div>
+        <div class="h-item">✅ Modern Research Facilities</div>
+    </div>
+</section>
+
+</body>
+</html>
