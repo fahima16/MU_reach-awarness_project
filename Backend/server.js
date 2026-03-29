@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+const alumniRoutes = require('./routes/alumniRoutes');
+
 const app = express();
 
 // Middleware
@@ -19,7 +21,10 @@ app.get('/', (req, res) => {
     res.send("Metropolitan University Reach Backend is Running!");
 });
 
+app.use('/api/alumni', alumniRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server on: http://localhost:${PORT}`);
 });
+
