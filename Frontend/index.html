@@ -20,9 +20,10 @@
 
       <ul class="nav-links">
         <li><a href="index.html" style="color: #c8a951;">HOME</a></li>
+        <li><a href="#leaders-section">LEADERSHIP</a></li>
         <li><a href="#">VISIT CAMPUS</a></li>
         <li><a href="#">ALUMNI</a></li>
-        <li><a href="all-teachers.html">TEACHERS</a></li>
+
         <li><a href="#">RESOURCES</a></li>
       </ul>
 
@@ -74,7 +75,7 @@
   </script>
     <div class="navy-divider-container">
     <hr class="navy-line">
-    
+  
 </div>
   <section class="milestones-section">
     <h2 class="milestones-title">Our Pride & Milestones</h2>
@@ -109,5 +110,95 @@
     </div>
 </section>
 
+<section id="leaders-section">
+    <header class="teacher-hero">
+        <span class="gold-label">— FACULTY LEADERSHIP</span>
+        <h1>The Minds Shaping Tomorrow</h1>
+    </header>
+
+    <section class="leaders2-section">
+        <div class="leaders-grid">
+            <div class="leader-card">
+                <img src="https://i.pravatar.cc/150?u=11" alt="Faculty">
+                <p class="leader-dept">CSE Department</p>
+                <h3 class="leader-name">Prof. Dr. M. Choudhury</h3>
+                <div class="leader-info">
+                    <div>📍 Region: <strong>Sylhet</strong></div>
+                    <div>⏱️ Exp: <strong>15+ Years</strong></div>
+                    <div>🎓 Focus: <strong>AI & Robotics</strong></div>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="https://i.pravatar.cc/150?u=12" alt="Faculty">
+                <p class="leader-dept">BBA Department</p>
+                <h3 class="leader-name">Dr. Fahmida Liza</h3>
+                <div class="leader-info">
+                    <div>📍 Region: <strong>Dhaka</strong></div>
+                    <div>⏱️ Exp: <strong>10+ Years</strong></div>
+                    <div>🎓 Focus: <strong>Strategic Finance</strong></div>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="https://i.pravatar.cc/150?u=13" alt="Faculty">
+                <p class="leader-dept">EEE Department</p>
+                <h3 class="leader-name">Prof. Ahmed Rafat</h3>
+                <div class="leader-info">
+                    <div>📍 Region: <strong>Chittagong</strong></div>
+                    <div>⏱️ Exp: <strong>12+ Years</strong></div>
+                    <div>🎓 Focus: <strong>Renewable Energy</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="all-teachers.html" class="know-more-btn">
+                Know More — View All Faculty <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+            </a>
+        </div>
+    </section>
+    
+</section>
+<script>
+    /**
+     * 1. ORIGINAL SHARE FUNCTION
+     * Keeps the original functionality for your buttons.
+     */
+    function sharePage() {
+        if (navigator.share) {
+            navigator.share({ title: 'MU Teachers', url: window.location.href });
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied to clipboard!");
+        }
+    }
+
+    /**
+     * 2. SMART NAV HIGHLIGHTER
+     * Automatically turns the "LEADERSHIP" link gold when the section is on screen.
+     */
+    window.addEventListener('scroll', () => {
+        const section = document.querySelector('#leaders-section');
+        const navLink = document.querySelector('a[href="#leaders-section"]');
+        
+        if (section && navLink) {
+            const rect = section.getBoundingClientRect();
+            
+            /* Highlights when the section top is near the top of the screen (150px)
+               and remains highlighted until the section bottom leaves the view.
+            */
+            if (rect.top <= 150 && rect.bottom >= 150) {
+                navLink.style.color = "#c8a951"; 
+                navLink.style.borderBottom = "2px solid #c8a951";
+                navLink.style.transition = "color 0.3s ease, border-bottom 0.3s ease";
+            } else {
+                navLink.style.color = ""; 
+                navLink.style.borderBottom = "none";
+            }
+        }
+    });
+</script>
+ 
 </body>
 </html>

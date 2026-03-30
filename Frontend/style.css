@@ -4,11 +4,21 @@
   --cream: #fdfaf3;
   --white: #ffffff;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* RESET */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; }
-
+body {
+    margin: 0 !important;
+    padding: 0 !important; /* Force removes the white gap at the very top */
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
 /* HEADER */
 header { width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 .nav-bar { background: var(--ink); padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; }
@@ -18,19 +28,75 @@ header { width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px
 .btn-share { background: var(--gold); border: none; color: var(--ink); padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold; }
 
 /* HERO */
-.hero { position: relative; width: 100%; height: 450px; overflow: hidden; border-bottom: 6px solid var(--gold); }
-.hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-caption { position: absolute; bottom: 40px; right: 5%; background: var(--gold); color: var(--ink); padding: 25px; width: 340px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-.hero-caption h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 8px; }
+.hero { 
+    margin-top: 0;
+    /* CHANGE: Add padding here instead so the "Attend MU" text isn't hidden by the Nav */
+    padding-top: 70px; 
+    position: relative; 
+    width: 100%; 
+    height: 450px; 
+    overflow: hidden; 
+    border-bottom: 6px solid var(--gold);
+    box-sizing: border-box; /* Keeps the 450px height accurate */
+}
 
+.hero-image { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+    /* Ensures the image stays at the top background */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.hero-caption { 
+    position: absolute; 
+    bottom: 40px; 
+    right: 5%; 
+    background: var(--gold); 
+    color: var(--ink); 
+    padding: 25px; 
+    width: 340px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+}
+
+.hero-caption h2 { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2rem; 
+    margin-bottom: 8px; 
+}
 .nav-bar {
-  background: var(--ink);
+  background: var(--ink); /* Your dark Navy color */
   padding: 10px 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-height: 70px;
-  flex-wrap: wrap; /* Allows items to move to next line instead of breaking */
+  flex-wrap: wrap; 
+  
+  /* --- FIXES THE OVERLAP & DISAPPEARING --- */
+  position: fixed;   /* This STICKS the Nav to the top of the screen */
+  top: 0;            /* Locked to top */
+  left: 0;           /* Locked to left side */
+  right: 0;          /* Locked to right side */
+  width: 100%;       
+  z-index: 10000;    /* Higher than the Teacher cards and Hero box */
+  box-sizing: border-box; 
+}
+
+/* IMPORTANT: Add this so the Navigation doesn't hide the 
+   very first section of your Home page */
+body {
+  padding-top: 70px; 
+}
+
+/* Add this to your .hero (or the section right after the Nav) 
+   to prevent the Nav from covering the top of your page */
+.hero {
+  margin-top: 70px; 
 }
 
 /* This keeps the Resources and Share button from jumping weirdly */
@@ -106,7 +172,7 @@ header { width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px
 }
 
 .milestones-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: italic 'Cormorant Garamond', serif;
     font-size: 2.5rem;
     margin-bottom: 40px;
     color: var(--ink);
@@ -180,6 +246,192 @@ header { width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px
     color: var(--gold); /* Adds a touch of gold in the center */
     font-size: 1.2rem;
 }
+
+/*leadership section */
+:root {
+            --primary-dark: #0c1520;
+            --accent-gold: #c8a951;
+            --cream-white: #faf7f2;
+            --pure-white: #ffffff;
+            --steel-gray: #8096b0;
+        }
+        #leaders-section {
+        
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--cream-white);
+            color: var(--primary-dark);
+        
+      }
+      #leaders-section { 
+    padding: 0; /* This ensures your title isn't hidden by the menu */
+    margin: 0;
+    border: none;
+    text-align: center;
+    }
+
+        /* --- NAVBAR --- */
+        .main-nav {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: var(--primary-dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; z-index: 1000;
+            border-bottom: 1px solid rgba(200, 169, 81, 0.2);
+            box-sizing: border-box;
+        }
+        .nav-logo { color: var(--accent-gold); font-weight: bold; text-decoration: none; font-size: 1.1rem; letter-spacing: 1px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; margin: 0; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        
+        .share-btn {
+            background: var(--accent-gold); color: var(--primary-dark);
+            border: none; padding: 8px 18px; border-radius: 4px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+        }
+
+        /* --- HERO SECTION --- */
+    .teacher-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 10% 30px 10%;
+    text-align: center;
+    background: var(--primary-dark);
+    color: white;
+    
+    /* --- FIXES THE OVERLAP --- */
+    position: relative; /* Tells the browser this is a normal section */
+    z-index: 1;         /* Keeps it below the Nav bar (which is 10000) */
+     /* Prevents any internal content from leaking out */
+}
+
+.gold-label { 
+    color: var(--accent-gold); 
+    font-size: 0.8rem; 
+    letter-spacing: 3px; 
+    font-weight: 600; 
+    display: block; 
+    margin-bottom: 0 0 5px 0; 
+}
+
+.teacher-hero h1 { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 3.5rem; 
+    margin:0; 
+    font-style: italic; 
+    line-height: 1.1;
+}
+
+        /* --- LEADERS GRID (3 CARDS) --- */
+        /* Added the '#' so the ID works correctly and adjusted padding */
+#leaders-section { 
+    padding: 0;
+    margin: 0; 
+    margin-bottom: 0;
+    padding-bottom: 40px; /* Adds space below the last card */
+    text-align: center; 
+    background: var(--pure-white); /* Ensures a clean background */
+}
+
+.leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px; /* Removed the negative margin so it doesn't cover your Nav/Logo */
+}
+
+.leader-card {
+    background: var(--pure-white);
+    padding: 40px 30px;
+    border-radius: 4px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    position: relative;
+    transition: 0.4s ease;
+    text-align: left;
+    border-top: 3px solid transparent;
+}
+
+.leader-card:hover { 
+    transform: translateY(-10px); 
+    border-top-color: var(--accent-gold); 
+}
+
+.leader-card img { 
+    width: 90px; 
+    height: 90px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 20px; 
+    border: 2px solid var(--accent-gold); 
+}
+
+.leader-name { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.6rem; 
+    margin: 0; 
+    font-weight: 700; 
+}
+
+.leader-dept { 
+    color: var(--accent-gold); 
+    font-weight: 600; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+.leader-info { 
+    border-top: 1px solid #eee; 
+    margin-top: 20px; 
+    padding-top: 20px; 
+    font-size: 0.9rem; 
+    color: var(--steel-gray); 
+}
+
+.leader-info div { 
+    margin-bottom: 8px; 
+}
+
+.leader-info strong { 
+    color: var(--primary-dark); 
+}
+
+        /* --- KNOW MORE BUTTON --- */
+        /* Keeps your original margin and adds centering */
+.btn-container { 
+    margin-top: 60px; 
+    text-align: center; /* This pulls the button from the left to the center */
+    width: 100%;        /* Ensures the container spans the whole page */
+}
+
+/* Your original button design - nothing removed */
+.know-more-btn {
+    display: inline-block;
+    background: var(--primary-dark);
+    color: white;
+    padding: 16px 40px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    border: 1px solid var(--primary-dark);
+}
+
+/* Your original hover effect - nothing removed */
+.know-more-btn:hover { 
+    background: transparent; 
+    color: var(--primary-dark); 
+}
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .teacher-hero h1 { font-size: 2.5rem; }
+            .leaders-grid { margin-top: 40px; }
+            .nav-links { display: none; } /* Simplified for demo */
+        }
+
 /* ============================================================
    TOTAL MOBILE RESPONSIVE FIX (ALL-IN-ONE)
    ============================================================ */
