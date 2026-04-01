@@ -424,117 +424,294 @@ body {
     background: transparent; 
     color: var(--primary-dark); 
 }
+.map-guide-box {
+    background: #001f3f; /* Your Navy color */
+    color: white;
+    padding: 50px 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 40px;
+}
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            .teacher-hero h1 { font-size: 2.5rem; }
-            .leaders-grid { margin-top: 40px; }
-            .nav-links { display: none; } /* Simplified for demo */
-        }
+.city-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.city-btn {
+    background: transparent;
+    color: #c8a951; /* Your Gold color */
+    border: 2px solid #c8a951;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.city-btn:hover {
+    background: #c8a951;
+    color: #001f3f;
+}
+
+.journey-card {
+    background: white;
+    color: #001f3f;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.map-guide-box {
+    background: #001f3f; /* Navy */
+    color: white;
+    padding: 50px 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.city-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.city-btn {
+    background: transparent;
+    color: #c8a951; /* Gold */
+    border: 2px solid #c8a951;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 5px;
+    min-width: 120px;
+}
+
+.city-btn:hover {
+    background: #c8a951;
+    color: #001f3f;
+}
+
+.journey-card {
+    background: white;
+    color: #001f3f;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 30px auto 0;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: left;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item strong { display: block; color: #666; font-size: 0.8rem; text-transform: uppercase; }
+.info-item p { font-size: 1.1rem; font-weight: bold; margin: 5px 0 0; }
+
+.housing-note {
+    background: #f9f9f9;
+    padding: 15px;
+    border-left: 4px solid #c8a951;
+    font-size: 0.9rem;
+}
+
+/* MOBILE FIX FOR VISIT CAMPUS */
+@media (max-width: 768px) {
+    .city-btn { width: 45% !important; padding: 10px 5px !important; }
+    .info-row { flex-direction: column; gap: 15px; }
+}
+@media (max-width: 768px) {
+    .teacher-hero h1 { font-size: 2.5rem; }
+    .leaders-grid { margin-top: 40px; }
+    /* REMOVED display:none to fix the nav breaking */
+}
 
 /* ============================================================
-   TOTAL MOBILE RESPONSIVE FIX (ALL-IN-ONE)
+   FIXED MOBILE RESPONSIVE BLOCK
    ============================================================ */
 @media (max-width: 900px) {
   
-  /* 1. HEADER: Stacks everything so nothing is cut off */
+  /* 1. HEADER: Fixed to keep Share button on the same line */
   .nav-bar {
-    flex-direction: column !important;
+    display: flex !important;
+    flex-direction: row !important; /* Stays horizontal like laptop */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 3% !important;
     height: auto !important;
-    padding: 20px 10px !important;
-    gap: 15px;
-    text-align: center;
   }
 
   .nav-links {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center;
-    gap: 12px;
-    margin: 10px 0;
-    width: 100%;
+    display: flex !important;
+    gap: 8px !important;
+    margin: 0 !important;
   }
 
   .nav-links a {
-    font-size: 0.8rem;
-    white-space: nowrap; /* Keeps words like 'RESOURCES' whole */
+    font-size: 0.65rem !important; /* Smaller text so it fits horizontally */
+    white-space: nowrap !important;
   }
 
   .nav-actions {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    display: flex !important;
   }
 
-  /* 2. HERO: Moves the gold box UNDER the picture */
-  .hero { 
-    height: auto !important; 
-    min-height: 400px; 
-    display: flex;
-    flex-direction: column;
+  .btn-share {
+    padding: 5px 10px !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* 2. HERO: Fixed height and top-alignment so photo isn't cut */
+  /* 2. HERO: Fixed to show the FULL picture without cutting anything */
+.hero { 
+    height: 350px !important; /* Forces the box to be visible */
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
   }
 
   .hero-image {
-    height: 250px !important; 
-    width: 100%;
-    object-fit: cover;
-    position: relative;
+    width: 100% !important;
+    height: 100% !important; /* Fills the 350px box */
+    display: block !important;
+    object-fit: cover !important; 
+    object-position: top center !important; /* This ensures the logo isn't cut off */
   }
 
   .hero-caption { 
-    position: relative !important; 
-    width: 100% !important; 
-    right: 0 !important; 
-    bottom: 0 !important; 
-    padding: 25px !important; 
-    box-shadow: none !important;
-    transform: translateY(-20px); /* Slight modern overlap */
+    position: absolute !important; 
+    width: 260px !important; 
+    right: 10px !important; 
+    bottom: 10px !important; 
+    padding: 15px !important; 
+    transform: none !important;
   }
+.hero-caption h2 { 
+    font-size: 1rem !important; 
+    margin-bottom: 5px !important;
+}
 
-  /* 3. ARTICLES: Stacks the photo and text */
+.hero-caption p { 
+    font-size: 0.7rem !important; 
+}
+
+  /* 3. ARTICLES & MILESTONES: Stays exactly as you want them */
   .container { 
     grid-template-columns: 1fr !important; 
     padding: 0 20px;
-    margin: 30px auto;
   }
 
   .wrapped-photo { 
     float: none !important; 
     width: 100% !important; 
     height: auto !important; 
-    margin-right: 0 !important; 
     margin-bottom: 20px !important; 
   }
 
-  /* 4. NAVY LINE DIVIDER */
-  .navy-divider-container {
-    margin: 40px auto !important;
-    width: 90%;
-  }
-
-  /* 5. MILESTONES: Sets them to 2-per-row so they don't squish */
   .milestones-grid { 
     grid-template-columns: 1fr 1fr !important; 
-    gap: 15px !important;
-    padding: 0 10px;
-  }
-
-  .milestone-card {
-    padding: 20px 10px !important;
-  }
-
-  .milestone-card h3 {
-    font-size: 1.5rem !important;
   }
 }
 
-/* 6. TINY PHONES FIX (Under 480px) */
+/* 4. TINY PHONES FIX (Under 480px) */
 @media (max-width: 480px) {
   .milestones-grid { 
-    grid-template-columns: 1fr !important; /* One box at a time */
+    grid-template-columns: 1fr !important; 
   }
-  
-  .nav-links {
-    gap: 8px;
-  }
+  .nav-links { gap: 5px !important; }
+  .nav-links a { font-size: 0.55rem !important; }
 }
+.map-guide-box {
+    background: #001f3f; /* Your Navy color */
+    color: white;
+    padding: 50px 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.city-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.city-btn {
+    background: transparent;
+    color: #c8a951; /* Your Gold color */
+    border: 2px solid #c8a951;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.city-btn:hover {
+    background: #c8a951;
+    color: #001f3f;
+}
+
+.journey-card {
+    background: white;
+    color: #001f3f;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+/* --- Global Map Responsive --- */
+  .city-btn {
+    width: 45% !important; /* Two buttons per row on mobile */
+    font-size: 0.8rem !important;
+    padding: 8px !important;
+  }
+
+  .journey-card {
+    width: 95% !important;
+    padding: 20px !important;
+  }
+
+  .info-row {
+    flex-direction: column !important; /* Stacks distance/cost for small screens */
+    gap: 10px;
+  }
+
+
