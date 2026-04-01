@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const alumniRoutes = require('./routes/alumniRoutes');
+const teacherRoutes = require('./routes/all-teachersROutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/alumni', alumniRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
