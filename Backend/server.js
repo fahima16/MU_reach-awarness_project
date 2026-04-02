@@ -11,6 +11,9 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next)=>{console.log(`${new Data().toISOString()}-${req.method} request to ${req.url}`);
+    next();
+});
 
 // MongoDB Connection (Atlas link .env file-e thakbe)
 mongoose.connect(process.env.MONGODB_URI)
