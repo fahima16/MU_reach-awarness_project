@@ -199,10 +199,16 @@
         }
     });
 </script>
- <section id="visit-campus" class="visit-campus-section">
-    <div class="container">
-        <div class="map-guide-box">
-            <h2 class="section-title">Visit Campus</h2>
+<section id="visit-campus" class="visit-campus-section" style="padding: 0; margin: 0;">
+    <hr class="section-divider">
+
+    <div class="map-top-image">
+        <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\photo11.bmp" alt="Campus View">
+    </div>
+
+    <div class="map-guide-box">
+        <div class="container">
+            <h2 class="section-title" style="color: #c8a951;">Visit Campus</h2>
             <p class="section-subtitle">Plan your journey to Metropolitan University. One click to see travel costs and distance.</p>
             
             <div class="city-grid">
@@ -211,10 +217,12 @@
                 <button class="city-btn" onclick="showJourney('Rajshahi', 450, 1200, 'Desh Travels')">Rajshahi</button>
                 <button class="city-btn" onclick="showJourney('Khulna', 500, 1500, 'Hanif Enterprise')">Khulna</button>
                 <button class="city-btn" onclick="showJourney('Barisal', 480, 1400, 'Sakura')">Barisal</button>
+                <button class="city-btn" onclick="showJourney('Mymensingh', 210, 550, 'Ena / Soukhin')">Mymensingh</button>
+                <button class="city-btn" onclick="showJourney('Rangpur', 430, 1100, 'Hanif / SR Travels')">Rangpur</button>
             </div>
 
             <div id="journey-result" class="journey-card" style="display:none;">
-                <h3 id="res-city">Journey Details</h3>
+                <h3 id="res-city" style="color: #001f3f; border-bottom: 2px solid #c8a951; padding-bottom: 10px; margin-bottom: 20px;">Journey Details</h3>
                 <div class="info-row">
                     <div class="info-item">
                         <strong>Distance</strong>
@@ -230,25 +238,21 @@
                     </div>
                 </div>
                 <div class="housing-note">
-                    <p>🏠 <strong>Accommodation:</strong> University Hostels and private mess options are available near the Bateshwar campus for students traveling from this city.</p>
+                    <p style="color: #444;">🏠 <strong>Accommodation:</strong> University Hostels and private mess options are available near the Bateshwar campus.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <script>
-function showJourney(name, dist, cost, bus) {
+ function showJourney(name, dist, cost, bus) {
     const resultBox = document.getElementById("journey-result");
-    
     if (resultBox) {
         resultBox.style.display = "block";
-        
         document.getElementById("res-city").innerText = "Plan for " + name;
         document.getElementById("res-dist").innerText = dist;
         document.getElementById("res-cost").innerText = cost;
         document.getElementById("res-bus").innerText = bus;
-        
-        // Smoothly scroll to the results
         resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }

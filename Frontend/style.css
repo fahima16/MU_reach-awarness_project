@@ -424,32 +424,92 @@ body {
     background: transparent; 
     color: var(--primary-dark); 
 }
-.map-guide-box {
-    background: #001f3f; /* Your Navy color */
-    color: white;
-    padding: 50px 30px;
-    border-radius: 15px;
-    text-align: center;
-    margin-top: 40px;
+/* --- IMAGE AREA (No Gaps) --- */
+/* --- FORCING FULL WIDTH (No Gaps) --- */
+.visit-campus-section {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
+/* 2. Reset the container so it doesn't force a side-by-side layout */
+.visit-campus-section .container {
+    display: block !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+
+
+.map-top-image {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0; /* Removes gap under image */
+}
+
+.map-top-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0 !important; /* Forces edges to hit the screen */
+}
+
+.map-guide-box {
+    background: #001f3f !important;
+    color: white !important;
+    padding: 60px 20px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important; /* Forces title/subtitle to stack vertically */
+    text-align: center !important; 
+    border-radius: 0 !important;
+}
+
+
+section-title {
+    color: #c8a951 !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.section-subtitle {
+    display: block !important;
+    margin: 0 auto 40px auto !important;
+    max-width: 600px; /* Keeps the text from spreading too wide */
+}
+/* --- KEEPING CONTENT CENTERED --- */
+.map-guide-box .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- BUTTONS & GRID --- */
+
 .city-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin: 30px 0;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important; /* Centers the whole group of buttons */
+    gap: 15px !important;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
 }
 
 .city-btn {
+    width: 100%;
     background: transparent;
-    color: #c8a951; /* Your Gold color */
+    color: #c8a951;
     border: 2px solid #c8a951;
-    padding: 10px 25px;
+    padding: 12px;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.3s;
     border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .city-btn:hover {
@@ -457,59 +517,7 @@ body {
     color: #001f3f;
 }
 
-.journey-card {
-    background: white;
-    color: #001f3f;
-    padding: 30px;
-    border-radius: 10px;
-    margin-top: 30px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-}
-.map-guide-box {
-    background: #001f3f; /* Navy */
-    color: white;
-    padding: 50px 30px;
-    border-radius: 15px;
-    text-align: center;
-    margin-top: 40px;
-}
-
-.city-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin: 30px 0;
-}
-
-.city-btn {
-    background: transparent;
-    color: #c8a951; /* Gold */
-    border: 2px solid #c8a951;
-    padding: 10px 25px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-    border-radius: 5px;
-    min-width: 120px;
-}
-
-.city-btn:hover {
-    background: #c8a951;
-    color: #001f3f;
-}
-
+/* --- RESULT CARD --- */
 .journey-card {
     background: white;
     color: #001f3f;
@@ -539,10 +547,10 @@ body {
     font-size: 0.9rem;
 }
 
-/* MOBILE FIX FOR VISIT CAMPUS */
+/* --- MOBILE FIX --- */
 @media (max-width: 768px) {
     .city-btn { width: 45% !important; padding: 10px 5px !important; }
-    .info-row { flex-direction: column; gap: 15px; }
+    .info-row { flex-direction: column; gap: 15px; text-align: center; }
 }
 @media (max-width: 768px) {
     .teacher-hero h1 { font-size: 2.5rem; }
