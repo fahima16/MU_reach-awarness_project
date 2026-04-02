@@ -426,6 +426,8 @@ body {
 }
 /* --- IMAGE AREA (No Gaps) --- */
 /* --- FORCING FULL WIDTH (No Gaps) --- */
+/* This is what keeps the 'Leadership' style highlight and underline */
+
 .visit-campus-section {
     display: block !important;
     width: 100% !important;
@@ -456,7 +458,20 @@ body {
     display: block;
     border-radius: 0 !important; /* Forces edges to hit the screen */
 }
+/* This keeps the nav item gold and underlined when you are on that section */
+.nav-links li a.active {
+    color: #c8a951 !important;
+    border-bottom: 3px solid #c8a951 !important; /* The underline */
+    padding-bottom: 5px;
+    font-weight: bold !important;
+}
 
+/* Base style to make the transition smooth */
+.nav-links li a {
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-block;
+}
 .map-guide-box {
     background: #001f3f !important;
     color: white !important;

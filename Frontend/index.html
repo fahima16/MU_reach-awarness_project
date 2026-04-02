@@ -21,9 +21,8 @@
       <ul class="nav-links">
         <li><a href="index.html" style="color: #c8a951;">HOME</a></li>
         <li><a href="#leaders-section">LEADERSHIP</a></li>
-        <li><a href="#">VISIT CAMPUS</a></li>
+        <li><a href="#visit-campus">VISIT CAMPUS</a></li>
         <li><a href="#">ALUMNI</a></li>
-
         <li><a href="#">RESOURCES</a></li>
       </ul>
 
@@ -257,6 +256,32 @@
     }
 }
 </script>
+<script>
+window.addEventListener('scroll', () => {
+    let current = "";
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links li a");
 
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        // This detects when you are inside the section
+        if (pageYOffset >= (sectionTop - 200)) {
+            current = section.getAttribute("id");
+        }
+    });
+
+    navLinks.forEach((link) => {
+        link.classList.remove("active");
+        const href = link.getAttribute("href");
+        
+        // This connects the ID of the section to the link in your nav
+        if (href === `#${current}`) {
+            link.classList.add("active");
+        }
+    });
+});
+</script>
 </body>
 </html>
