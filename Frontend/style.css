@@ -459,18 +459,31 @@ body {
     border-radius: 0 !important; /* Forces edges to hit the screen */
 }
 /* This keeps the nav item gold and underlined when you are on that section */
-.nav-links li a.active {
-    color: #c8a951 !important;
-    border-bottom: 3px solid #c8a951 !important; /* The underline */
-    padding-bottom: 5px;
-    font-weight: bold !important;
+.nav-links li {
+    position: relative;
 }
 
-/* Base style to make the transition smooth */
 .nav-links li a {
     text-decoration: none;
-    transition: 0.3s ease;
-    display: inline-block;
+    color: #fff; /* or your nav color */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+/* The Gold Underline for the Active Link */
+.nav-links li a.active {
+    color: #c8a951 !important; /* Gold text */
+}
+
+.nav-links li a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    background-color: #c8a951; /* Gold underline */
+    border-radius: 2px;
 }
 .map-guide-box {
     background: #001f3f !important;
@@ -652,6 +665,120 @@ section-title {
     cursor: pointer;
 }
 
+.life-video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.mu-video-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 280px;
+    cursor: pointer;
+}
+
+.mu-video-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.mu-video-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0; top: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+}
+
+.mu-video-overlay h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.mu-video-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Modal / Pop-up Styles */
+.mu-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+}
+
+.mu-modal-content {
+    position: relative;
+    top: 50%; transform: translateY(-50%);
+    width: 80%; max-width: 800px;
+    margin: auto;
+}
+
+.mu-close {
+    position: absolute;
+    top: 30px; right: 40px;
+    color: white; font-size: 50px; cursor: pointer;
+}
+/* --- FULL MOBILE RESPONSIVE FIX --- */
+
+@media (max-width: 768px) {
+    /* 1. FIX FOR DIVISION SELECTOR (MU Reach) */
+    .reach-flex-layout {
+        flex-direction: column; /* Stack selector on top of the console */
+        gap: 20px;
+    }
+
+    .division-selector {
+        width: 100%;
+        max-height: 300px; /* Limits height so it doesn't take the whole screen */
+        overflow-y: auto; /* Adds a scrollbar just for the list */
+        display: block; /* Ensures it is visible */
+        padding-right: 5px;
+    }
+
+    .div-card {
+        padding: 12px 15px; /* Slightly smaller for mobile fingers */
+        margin-bottom: 8px;
+    }
+
+    .live-console {
+        width: 100%;
+        padding: 15px; /* Reduce padding to save space */
+    }
+
+    /* 2. FIX FOR CHART BOXES (Stacked Vertically) */
+    .live-console .chart-box {
+        width: 100% !important; /* Force charts to be full width on mobile */
+        margin: 10px 0 !important;
+        height: 200px !important; /* Give them enough height to be readable */
+    }
+
+    /* 3. FIX FOR LIFE AT MU (Video Grid) */
+    .life-video-grid {
+        grid-template-columns: 1fr; /* 1 column instead of 2 */
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .mu-video-card {
+        height: 200px; /* Shorter cards for mobile */
+    }
+
+    /* 4. TEXT ADJUSTMENTS */
+    .reach-title, .life-mu-container h2 {
+        font-size: 1.6rem !important;
+        padding: 0 10px;
+    }
+}
 /* --- MOBILE FIX --- */
 @media (max-width: 768px) {
     .city-btn { width: 45% !important; padding: 10px 5px !important; }

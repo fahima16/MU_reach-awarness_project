@@ -308,11 +308,88 @@
         </div>
         </div>
 
+        <div class="life-mu-container" style="margin-top: 80px; padding-top: 40px; border-top: 1px solid #eee;">
+        <h2 style="text-align: center; color: #001f3f; font-size: 2.5rem; margin-bottom: 5px;">Life at MU</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 40px;">Experience the vibrant campus community</p>
+
+        <div class="life-video-grid">
+            <div class="mu-video-card" onclick="openMUVideo('VIDEO_URL_1')">
+                <img src="modern-campus.jpg" alt="Modern Campus">
+                <div class="mu-video-overlay">
+                    <h3>Modern Campus</h3>
+                </div>
+            </div>
+
+            <div class="mu-video-card" onclick="openMUVideo('VIDEO_URL_2')">
+                <img src="student-life.jpg" alt="Student Life">
+                <div class="mu-video-overlay">
+                    <h3>Student Life</h3>
+                </div>
+            </div>
+
+            <div class="mu-video-card" onclick="openMUVideo('VIDEO_URL_3')">
+                <img src="evening-views.jpg" alt="Evening Views">
+                <div class="mu-video-overlay">
+                    <h3>Evening Views</h3>
+                </div>
+            </div>
+
+            <div class="mu-video-card" onclick="openMUVideo('VIDEO_URL_4')">
+                <img src="academic-buildings.jpg" alt="Academic Buildings">
+                <div class="mu-video-overlay">
+                    <h3>Academic Buildings</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="muVideoModal" class="mu-modal" onclick="closeMUVideo()">
+        <span class="mu-close">&times;</span>
+        <div class="mu-modal-content">
+            <iframe id="muVideoPlayer" width="100%" height="450" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
     </div>
     
 </section>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    window.addEventListener('scroll', () => {
+    let current = "";
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links li a");
+
+    // 1. Detect which section is currently on screen
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        // We subtract 250px so the highlight changes a bit before you reach the next section
+        if (pageYOffset >= (sectionTop - 250)) {
+            current = section.getAttribute("id");
+        }
+    });
+
+    // 2. Remove 'active' from all and add to the current one
+    navLinks.forEach((link) => {
+        link.classList.remove("active");
+        const href = link.getAttribute("href");
+        
+        // This matches the ID of the section to the Nav Link
+        if (href === `#${current}`) {
+            link.classList.add("active");
+        }
+    });
+});
+
+// 3. Keep highlight when clicking (Instant response)
+document.querySelectorAll('.nav-links li a').forEach(link => {
+    link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-links li a').forEach(nav => nav.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
 let myLineChart, myBarChart;
 
 window.onload = function() {
@@ -383,6 +460,20 @@ function updateLiveMap(el, title, sub, stat) {
         myLineChart.data.datasets[0].data = Array.from({length: 5}, () => Math.floor(Math.random() * 80));
         myLineChart.update();
     }
+
+    function openMUVideo(url) {
+    const modal = document.getElementById("muVideoModal");
+    const player = document.getElementById("muVideoPlayer");
+    player.src = url; 
+    modal.style.display = "block";
+}
+
+function closeMUVideo() {
+    const modal = document.getElementById("muVideoModal");
+    const player = document.getElementById("muVideoPlayer");
+    modal.style.display = "none";
+    player.src = ""; 
+}
 }
 </script>
 </body>
