@@ -242,46 +242,146 @@
             </div>
         </div>
     </div>
+
+    <div class="reach-awareness-container">
+    <h2 class="reach-title">MU Across Bangladesh & Beyond</h2>
+    <div class="reach-underline"></div>
+
+    <div class="reach-flex-layout">
+        <div class="division-selector">
+            <div class="div-card active" onclick="updateLiveMap(this, 'Dhaka', 'The Educational Heart', '720+ Active Students')">
+                <h3>Dhaka</h3>
+                <p>Capital Connectivity</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Sylhet', 'Campus Home Division', 'Local Awareness Leader')">
+                <h3>Sylhet</h3>
+                <p>Home of MU</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Chittagong', 'Coastal Reach', 'Port City Hub')">
+                <h3>Chittagong</h3>
+                <p>Southern Gateway</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Rajshahi', 'Silk City Education', 'Northern Hub')">
+                <h3>Rajshahi</h3>
+                <p>Knowledge Center</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Khulna', 'Industrial Reach', 'Delta Connectivity')">
+                <h3>Khulna</h3>
+                <p>Southern Link</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Barisal', 'Riverine Outreach', 'Waterfront Hub')">
+                <h3>Barisal</h3>
+                <p>Venice of Bengal</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Rangpur', 'Northern Gateway', 'Frontier Reach')">
+                <h3>Rangpur</h3>
+                <p>North-End Link</p>
+            </div>
+            <div class="div-card" onclick="updateLiveMap(this, 'Mymensingh', 'Cultural Connectivity', 'Heritage Reach')">
+                <h3>Mymensingh</h3>
+                <p>Old Brahmaputra Hub</p>
+            </div>
+        </div>
+
+        <div class="live-console">
+            <div class="console-top">
+                <span class="status-dot">●</span> <span class="live-label">LIVE SYSTEM STATUS</span>
+                <h4 id="map-title">Dhaka Division</h4>
+                <p id="map-subtitle">The Educational Heart</p>
+            </div>
+
+            <div class="chart-box" style="display: inline-block; width: 48%; height: 160px; vertical-align: top; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
+                <p class="chart-label" style="font-size: 10px; color: #c8a951; margin-bottom: 5px;">Growth Trend</p>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+            <div class="chart-box" style="display: inline-block; width: 48%; height: 160px; vertical-align: top; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
+                <p class="chart-label" style="font-size: 10px; color: #c8a951; margin-bottom: 5px;">Reach Percentage</p>
+                <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="console-bottom">
+                <p>Network: <strong style="color: #c8a951;">MU Reach v3.0</strong></p>
+                <button class="live-btn">Update Live</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
 </section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
- function showJourney(name, dist, cost, bus) {
-    const resultBox = document.getElementById("journey-result");
-    if (resultBox) {
-        resultBox.style.display = "block";
-        document.getElementById("res-city").innerText = "Plan for " + name;
-        document.getElementById("res-dist").innerText = dist;
-        document.getElementById("res-cost").innerText = cost;
-        document.getElementById("res-bus").innerText = bus;
-        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+let myLineChart, myBarChart;
+
+window.onload = function() {
+    // 1. LINE CHART (Growth)
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    myLineChart = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                data: [20, 40, 35, 55, 45],
+                borderColor: '#c8a951',
+                borderWidth: 3,
+                tension: 0.4,
+                pointRadius: 0,
+                fill: false
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { ticks: { color: '#aaa', font: { size: 10 } } } } }
+    });
+
+    // 2. BAR CHART (8 Divisions - The Pillars)
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    myBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Dhaka', 'Sylhet', 'Chatto', 'Raj', 'Khulna', 'Baris', 'Rang', 'Mymen'],
+            datasets: [{
+                label: 'Reach %',
+                data: [70, 85, 60, 50, 45, 40, 35, 30], // Initial data
+                backgroundColor: [
+                    '#5dade2', '#f4d03f', '#58d68d', '#eb984e', 
+                    '#af7ac5', '#ec7063', '#48c9b0', '#a569bd'
+                ],
+                borderRadius: 5,
+                borderWidth: 1
+            }]
+        },
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            plugins: { legend: { display: false } },
+            scales: { 
+                y: { beginAtZero: true, max: 100, ticks: { color: '#aaa', font: { size: 9 } } },
+                x: { ticks: { color: '#fff', font: { size: 9 } } }
+            }
+        }
+    });
+};
+
+// Update function when you click a division card
+function updateLiveMap(el, title, sub, stat) {
+    document.querySelectorAll('.div-card').forEach(card => card.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('map-title').innerText = title + " Division";
+    document.getElementById('map-subtitle').innerText = sub;
+
+    // FIND WHICH INDEX TO UPDATE (0-7)
+    const labels = ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
+    const index = labels.indexOf(title);
+
+    if (index !== -1) {
+        // Boost the selected division's bar and randomize others slightly
+        myBarChart.data.datasets[0].data[index] = Math.floor(Math.random() * (98 - 80) + 80);
+        myBarChart.update();
+
+        // Update growth trend with random movement
+        myLineChart.data.datasets[0].data = Array.from({length: 5}, () => Math.floor(Math.random() * 80));
+        myLineChart.update();
     }
 }
-</script>
-<script>
-window.addEventListener('scroll', () => {
-    let current = "";
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-links li a");
-
-    sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        // This detects when you are inside the section
-        if (pageYOffset >= (sectionTop - 200)) {
-            current = section.getAttribute("id");
-        }
-    });
-
-    navLinks.forEach((link) => {
-        link.classList.remove("active");
-        const href = link.getAttribute("href");
-        
-        // This connects the ID of the section to the link in your nav
-        if (href === `#${current}`) {
-            link.classList.add("active");
-        }
-    });
-});
 </script>
 </body>
 </html>
