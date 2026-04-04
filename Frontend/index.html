@@ -202,7 +202,7 @@
     <hr class="section-divider">
 
     <div class="map-top-image">
-        <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\photo11.bmp" alt="Campus View">
+        <img src="c:\Users\Maliha Reem\OneDrive\Desktop\MU_reach-awarness_project\photo11.jpeg" alt="Campus View">
     </div>
 
     <div class="map-guide-box">
@@ -290,22 +290,24 @@
                 <p id="map-subtitle">The Educational Heart</p>
             </div>
 
-            <div class="chart-box" style="display: inline-block; width: 48%; height: 160px; vertical-align: top; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
-                <p class="chart-label" style="font-size: 10px; color: #c8a951; margin-bottom: 5px;">Growth Trend</p>
-                <canvas id="lineChart"></canvas>
+           <div class="chart-box" style="width: 100%; height: 180px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+        <p class="chart-label" style="font-size: 11px; color: #c8a951; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">Growth Trend</p>
+        <canvas id="lineChart"></canvas>
             </div>
 
-            <div class="chart-box" style="display: inline-block; width: 48%; height: 160px; vertical-align: top; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
-                <p class="chart-label" style="font-size: 10px; color: #c8a951; margin-bottom: 5px;">Reach Percentage</p>
+
+           <div class="chart-box" style="width: 100%; height: 250px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                <p class="chart-label" style="font-size: 11px; color: #c8a951; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">Reach Percentage by Division</p>
                 <canvas id="barChart"></canvas>
             </div>
 
-            <div class="console-bottom">
-                <p>Network: <strong style="color: #c8a951;">MU Reach v3.0</strong></p>
-                <button class="live-btn">Update Live</button>
-            </div>
+              <div class="console-bottom" style="margin-top: 20px;">
+             <p>Network: <strong style="color: #c8a951;">MU Reach v3.0   (2026)</strong></p>
+             <button class="live-btn">Update Live</button>
+                </div>
         </div>
         </div>
+
     </div>
     
 </section>
@@ -319,7 +321,7 @@ window.onload = function() {
     myLineChart = new Chart(ctxLine, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 data: [20, 40, 35, 55, 45],
                 borderColor: '#c8a951',
@@ -337,7 +339,7 @@ window.onload = function() {
     myBarChart = new Chart(ctxBar, {
         type: 'bar',
         data: {
-            labels: ['Dhaka', 'Sylhet', 'Chatto', 'Raj', 'Khulna', 'Baris', 'Rang', 'Mymen'],
+            labels: ['Dhaka', 'Sylhet', 'Chattogram', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'],
             datasets: [{
                 label: 'Reach %',
                 data: [70, 85, 60, 50, 45, 40, 35, 30], // Initial data

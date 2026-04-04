@@ -589,7 +589,7 @@ section-title {
 /* Scrollable Division List */
 .division-selector {
     flex: 1;
-    max-height: 500px;
+    max-height: 7g00px;
     overflow-y: auto;
     padding-right: 10px;
 }
