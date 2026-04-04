@@ -1,26 +1,747 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;600&display=swap');
 
+/* আপনার style.css এর বাকি সব কোড নিচে পেস্ট করুন */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0c1520;
+  --gold: #c8a951;
+  --cream: #fdfaf3;
+  --white: #ffffff;
+}
+html {
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    margin: 0 !important;
+    padding: 0 !important; /* Force removes the white gap at the very top */
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+/* HEADER */
+header { width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.nav-bar { background: var(--ink); padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+.nav-links { list-style: none; display: flex; gap: 25px; }
+.nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+.nav-links a:hover { color: var(--gold); }
+.btn-share { background: var(--gold); border: none; color: var(--ink); padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+
+/* HERO */
+.hero { 
+    margin-top: 0;
+    /* CHANGE: Add padding here instead so the "Attend MU" text isn't hidden by the Nav */
+    padding-top: 70px; 
+    position: relative; 
+    width: 100%; 
+    height: 450px; 
+    overflow: hidden; 
+    border-bottom: 6px solid var(--gold);
+    box-sizing: border-box; /* Keeps the 450px height accurate */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.hero-image { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+    /* Ensures the image stays at the top background */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.hero-caption { 
+    position: absolute; 
+    bottom: 40px; 
+    right: 5%; 
+    background: var(--gold); 
+    color: var(--ink); 
+    padding: 25px; 
+    width: 340px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+}
+
+.hero-caption h2 { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2rem; 
+    margin-bottom: 8px; 
+}
+.nav-bar {
+  background: var(--ink); /* Your dark Navy color */
+  padding: 10px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  flex-wrap: wrap; 
+  
+  /* --- FIXES THE OVERLAP & DISAPPEARING --- */
+  position: fixed;   /* This STICKS the Nav to the top of the screen */
+  top: 0;            /* Locked to top */
+  left: 0;           /* Locked to left side */
+  right: 0;          /* Locked to right side */
+  width: 100%;       
+  z-index: 10000;    /* Higher than the Teacher cards and Hero box */
+  box-sizing: border-box; 
+}
+
+/* IMPORTANT: Add this so the Navigation doesn't hide the 
+   very first section of your Home page */
+body {
+  padding-top: 70px; 
+}
+
+/* Add this to your .hero (or the section right after the Nav) 
+   to prevent the Nav from covering the top of your page */
+.hero {
+  margin-top: 70px; 
+}
+
+/* This keeps the Resources and Share button from jumping weirdly */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+/* LAYOUT GRID */
+.container { 
+  max-width: 1200px; 
+  margin: 50px auto; 
+  padding: 0 20px; 
+  display: grid; 
+  grid-template-columns: 1.7fr 1fr; /* Side-by-side columns */
+  gap: 40px; 
+}
+
+/* TITLES */
+.sec-title { 
+  font-family: 'Cormorant Garamond', serif; 
+  font-size: 1.7rem; 
+  margin-bottom: 25px; 
+  border-left: 5px solid var(--gold); 
+  padding-left: 15px; 
+  color: var(--ink); 
+}
+
+/* THE NEWS WRAP FIX */
+.article-content { 
+  display: block; /* Important for wrapping */
+  width: 100%;
+}
+
+/* THIS LOCKS THE IMAGE SIZE */
+.wrapped-photo { 
+  float: left; 
+  width: 280px; /* Small and professional */
+  height: 190px; 
+  object-fit: cover; 
+  margin-right: 20px; 
+  margin-bottom: 10px; 
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.article-content p { 
+  font-size: 0.95rem; 
+  color: #444; 
+  margin-bottom: 15px; 
+  text-align: justify; /* Newspaper style edges */
+}
+
+/* NAVY READ MORE LINK */
+.read-more-navy { 
+  display: inline-block; 
+  color: var(--ink); 
+  font-weight: 700; 
+  text-decoration: none; 
+  text-transform: uppercase; 
+  font-size: 0.75rem; 
+  border-bottom: 2px solid var(--gold); 
+  padding-bottom: 2px;
+  margin-top: 5px;
+}
+
+
+.milestones-section {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 5%;
+    text-align: center;
+}
+
+.milestones-title {
+    font-family: italic 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--ink);
+}
+
+.milestones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.milestone-card {
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.milestone-card:hover { transform: translateY(-10px); }
+
+/* Card Colors */
+.blue { background: #eef6ff; }
+.green { background: #f0fff4; }
+.purple { background: #f5f3ff; }
+.gold { background: #fffaf0; }
+
+.m-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+.milestone-card h3 { font-size: 2rem; color: var(--ink); margin-bottom: 5px; }
+.milestone-card p { font-size: 0.9rem; color: #666; font-weight: 600; }
+
+/* Bottom Row Highlights */
+.highlights-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.h-item {
+    background: #fdfaf3;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border-left: 4px solid var(--gold);
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--ink);
+}
+.navy-divider-container {
+    max-width: 1200px;
+    margin: 60px auto; /* Adds space above and below the line */
+    padding: 0 5%;
+    position: relative;
+    text-align: center;
+}
+
+.navy-line {
+    border: none;
+    height: 1px;
+    background-color: var(--ink); /* Your Navy Color */
+    opacity: 0.2; /* Makes it subtle and high-end */
+}
+
+.divider-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    padding: 0 15px;
+    color: var(--gold); /* Adds a touch of gold in the center */
+    font-size: 1.2rem;
+}
+
+/*leadership section */
+:root {
+            --primary-dark: #0c1520;
+            --accent-gold: #c8a951;
+            --cream-white: #faf7f2;
+            --pure-white: #ffffff;
+            --steel-gray: #8096b0;
+        }
+        #leaders-section {
+        
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--cream-white);
+            color: var(--primary-dark);
+        
+      }
+      #leaders-section { 
+    padding: 0; /* This ensures your title isn't hidden by the menu */
+    margin: 0;
+    border: none;
+    text-align: center;
+    }
+
+        /* --- NAVBAR --- */
+        .main-nav {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: var(--primary-dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; z-index: 1000;
+            border-bottom: 1px solid rgba(200, 169, 81, 0.2);
+            box-sizing: border-box;
+        }
+        .nav-logo { color: var(--accent-gold); font-weight: bold; text-decoration: none; font-size: 1.1rem; letter-spacing: 1px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; margin: 0; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent-gold); }
+        
+        .share-btn {
+            background: var(--accent-gold); color: var(--primary-dark);
+            border: none; padding: 8px 18px; border-radius: 4px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+        }
+
+        /* --- HERO SECTION --- */
+    .teacher-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 10% 30px 10%;
+    text-align: center;
+    background: var(--primary-dark);
+    color: white;
+    
+    /* --- FIXES THE OVERLAP --- */
+    position: relative; /* Tells the browser this is a normal section */
+    z-index: 1;         /* Keeps it below the Nav bar (which is 10000) */
+     /* Prevents any internal content from leaking out */
+}
+
+.gold-label { 
+    color: var(--accent-gold); 
+    font-size: 0.8rem; 
+    letter-spacing: 3px; 
+    font-weight: 600; 
+    display: block; 
+    margin-bottom: 0 0 5px 0; 
+}
+
+.teacher-hero h1 { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 3.5rem; 
+    margin:0; 
+    font-style: italic; 
+    line-height: 1.1;
+}
+
+        /* --- LEADERS GRID (3 CARDS) --- */
+        /* Added the '#' so the ID works correctly and adjusted padding */
+#leaders-section { 
+    padding: 0;
+    margin: 0; 
+    margin-bottom: 0;
+    padding-bottom: 40px; /* Adds space below the last card */
+    text-align: center; 
+    background: var(--pure-white); /* Ensures a clean background */
+}
+
+.leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px; /* Removed the negative margin so it doesn't cover your Nav/Logo */
+}
+
+.leader-card {
+    background: var(--pure-white);
+    padding: 40px 30px;
+    border-radius: 4px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    position: relative;
+    transition: 0.4s ease;
+    text-align: left;
+    border-top: 3px solid transparent;
+}
+
+.leader-card:hover { 
+    transform: translateY(-10px); 
+    border-top-color: var(--accent-gold); 
+}
+
+.leader-card img { 
+    width: 90px; 
+    height: 90px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 20px; 
+    border: 2px solid var(--accent-gold); 
+}
+
+.leader-name { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.6rem; 
+    margin: 0; 
+    font-weight: 700; 
+}
+
+.leader-dept { 
+    color: var(--accent-gold); 
+    font-weight: 600; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+.leader-info { 
+    border-top: 1px solid #eee; 
+    margin-top: 20px; 
+    padding-top: 20px; 
+    font-size: 0.9rem; 
+    color: var(--steel-gray); 
+}
+
+.leader-info div { 
+    margin-bottom: 8px; 
+}
+
+.leader-info strong { 
+    color: var(--primary-dark); 
+}
+
+        /* --- KNOW MORE BUTTON --- */
+        /* Keeps your original margin and adds centering */
+.btn-container { 
+    margin-top: 60px; 
+    text-align: center; /* This pulls the button from the left to the center */
+    width: 100%;        /* Ensures the container spans the whole page */
+}
+
+/* Your original button design - nothing removed */
+.know-more-btn {
+    display: inline-block;
+    background: var(--primary-dark);
+    color: white;
+    padding: 16px 40px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    border: 1px solid var(--primary-dark);
+}
+
+/* Your original hover effect - nothing removed */
+.know-more-btn:hover { 
+    background: transparent; 
+    color: var(--primary-dark); 
+}
+/* --- IMAGE AREA (No Gaps) --- */
+/* --- FORCING FULL WIDTH (No Gaps) --- */
+/* This is what keeps the 'Leadership' style highlight and underline */
+
+.visit-campus-section {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 2. Reset the container so it doesn't force a side-by-side layout */
+.visit-campus-section .container {
+    display: block !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+
+
+.map-top-image {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0; /* Removes gap under image */
+}
+
+.map-top-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0 !important; /* Forces edges to hit the screen */
+}
+/* This keeps the nav item gold and underlined when you are on that section */
+.nav-links li a.active {
+    color: #c8a951 !important;
+    border-bottom: 3px solid #c8a951 !important; /* The underline */
+    padding-bottom: 5px;
+    font-weight: bold !important;
+}
+
+/* Base style to make the transition smooth */
+.nav-links li a {
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-block;
+}
+.map-guide-box {
+    background: #001f3f !important;
+    color: white !important;
+    padding: 60px 20px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important; /* Forces title/subtitle to stack vertically */
+    text-align: center !important; 
+    border-radius: 0 !important;
+}
+
+
+section-title {
+    color: #c8a951 !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.section-subtitle {
+    display: block !important;
+    margin: 0 auto 40px auto !important;
+    max-width: 600px; /* Keeps the text from spreading too wide */
+}
+/* --- KEEPING CONTENT CENTERED --- */
+.map-guide-box .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- BUTTONS & GRID --- */
+
+.city-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important; /* Centers the whole group of buttons */
+    gap: 15px !important;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.city-btn {
+    width: 100%;
+    background: transparent;
+    color: #c8a951;
+    border: 2px solid #c8a951;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.city-btn:hover {
+    background: #c8a951;
+    color: #001f3f;
+}
+
+/* --- RESULT CARD --- */
+.journey-card {
+    background: white;
+    color: #001f3f;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 30px auto 0;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: left;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item strong { display: block; color: #666; font-size: 0.8rem; text-transform: uppercase; }
+.info-item p { font-size: 1.1rem; font-weight: bold; margin: 5px 0 0; }
+
+.housing-note {
+    background: #f9f9f9;
+    padding: 15px;
+    border-left: 4px solid #c8a951;
+    font-size: 0.9rem;
+}
+
+/* --- MOBILE FIX --- */
+@media (max-width: 768px) {
+    .city-btn { width: 45% !important; padding: 10px 5px !important; }
+    .info-row { flex-direction: column; gap: 15px; text-align: center; }
+}
+@media (max-width: 768px) {
+    .teacher-hero h1 { font-size: 2.5rem; }
+    .leaders-grid { margin-top: 40px; }
+    /* REMOVED display:none to fix the nav breaking */
+}
+
+/* ============================================================
+   FIXED MOBILE RESPONSIVE BLOCK
+   ============================================================ */
+@media (max-width: 900px) {
+  
+  /* 1. HEADER: Fixed to keep Share button on the same line */
+  .nav-bar {
+    display: flex !important;
+    flex-direction: row !important; /* Stays horizontal like laptop */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 3% !important;
+    height: auto !important;
+  }
+
+  .nav-links {
+    display: flex !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem !important; /* Smaller text so it fits horizontally */
+    white-space: nowrap !important;
+  }
+
+  .nav-actions {
+    display: flex !important;
+  }
+
+  .btn-share {
+    padding: 5px 10px !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* 2. HERO: Fixed height and top-alignment so photo isn't cut */
+  /* 2. HERO: Fixed to show the FULL picture without cutting anything */
+.hero { 
+    height: 350px !important; /* Forces the box to be visible */
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .hero-image {
+    width: 100% !important;
+    height: 100% !important; /* Fills the 350px box */
+    display: block !important;
+    object-fit: cover !important; 
+    object-position: top center !important; /* This ensures the logo isn't cut off */
+  }
+
+  .hero-caption { 
+    position: absolute !important; 
+    width: 260px !important; 
+    right: 10px !important; 
+    bottom: 10px !important; 
+    padding: 15px !important; 
+    transform: none !important;
+  }
+.hero-caption h2 { 
+    font-size: 1rem !important; 
+    margin-bottom: 5px !important;
+}
+
+.hero-caption p { 
+    font-size: 0.7rem !important; 
+}
+
+  /* 3. ARTICLES & MILESTONES: Stays exactly as you want them */
+  .container { 
+    grid-template-columns: 1fr !important; 
+    padding: 0 20px;
+  }
+
+  .wrapped-photo { 
+    float: none !important; 
+    width: 100% !important; 
+    height: auto !important; 
+    margin-bottom: 20px !important; 
+  }
+
+  .milestones-grid { 
+    grid-template-columns: 1fr 1fr !important; 
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 4. TINY PHONES FIX (Under 480px) */
+@media (max-width: 480px) {
+  .milestones-grid { 
+    grid-template-columns: 1fr !important; 
+  }
+  .nav-links { gap: 5px !important; }
+  .nav-links a { font-size: 0.55rem !important; }
+}
+.map-guide-box {
+    background: #001f3f; /* Your Navy color */
+    color: white;
+    padding: 50px 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.city-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.city-btn {
+    background: transparent;
+    color: #c8a951; /* Your Gold color */
+    border: 2px solid #c8a951;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.city-btn:hover {
+    background: #c8a951;
+    color: #001f3f;
+}
+
+.journey-card {
+    background: white;
+    color: #001f3f;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+/* --- Global Map Responsive --- */
+  .city-btn {
+    width: 45% !important; /* Two buttons per row on mobile */
+    font-size: 0.8rem !important;
+    padding: 8px !important;
+  }
+
+  .journey-card {
+    width: 95% !important;
+    padding: 20px !important;
+  }
+
+  .info-row {
+    flex-direction: column !important; /* Stacks distance/cost for small screens */
+    gap: 10px;
+  }
+
+
+.active {
+  color: #c8a951 !important;
+  border-bottom: 2px solid #c8a951;
 }
