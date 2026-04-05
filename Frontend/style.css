@@ -424,7 +424,188 @@ body {
     background: transparent; 
     color: var(--primary-dark); 
 }
-/* --- IMAGE AREA (No Gaps) --- */
+/* --- ALUMNI SECTION FINAL REFINEMENT --- */
+
+.alumni-main-section {
+    padding: 100px 0 0 0; /* Removed side padding to fix the cream section gap */
+    background-color: #050a18; /* Navy Top */
+    text-align: center;
+    color: white;
+    overflow: hidden; /* Prevents horizontal scroll/gaps */
+}
+
+.alumni-main-section .header-content h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.alumni-main-section .highlight {
+    color: #ff3e3e; /* Your accent red */
+}
+
+/* Horizontal Wrapper */
+.alumni-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 80px 30px; 
+    margin: 80px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+
+/* Updated Navy Box */
+.alumni-main-section .glass-card {
+    background: rgba(5, 10, 24, 0.6); /* Navy tint */
+    overflow: visible; /* Important for the social badge to show */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 45px 20px 30px 20px;
+    width: 260px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+/* LOGO SIZE FIX - Prevents the oversized icon issue */
+.alumni-main-section .icon-img {
+    width: 22px !important;
+    height: 22px !important;
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.alumni-main-section .profile-area {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    z-index: 5;
+}
+
+.alumni-main-section .profile-area img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #050a18;
+}
+
+/* LinkedIn Badge Fixed Position */
+.alumni-main-section .social-badge {
+    position: absolute; 
+    bottom: 2px; 
+    right: 2px;
+    background: #0077b5;
+    width: 28px; 
+    height: 28px;
+    border-radius: 50%; 
+    display: flex !important;
+    align-items: center; 
+    justify-content: center;
+    border: 2px solid #050a18;
+    z-index: 10;
+    text-decoration: none;
+}
+
+.alumni-main-section .social-badge i {
+    color: white;
+    font-size: 14px;
+}
+
+/* FIXED CREAM FOOTER - Full width, no left shift */
+
+.alumni-main-section .btn-container {
+    background-color: #fdf5e6 !important; /* Force Cream */
+    padding: 80px 0 !important;
+    width: 100% !important;
+    margin-top: 80px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    z-index: 999 !important;
+    clear: both !important;
+    border: none !important;
+}
+
+
+.alumni-main-section.view-all-link-final {
+    display: inline-block !important;
+    position: relative !important;
+    z-index: 10000 !important; /* Higher than the container */
+    color: #050a18 !important; /* Navy text */
+    border: 2px solid #050a18 !important;
+    padding: 16px 45px !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    background-color: transparent !important;
+    cursor: pointer !important; /* This makes the 'hand' icon appear */
+    transition: all 0.3s ease-in-out !important;
+    pointer-events: auto !important; /* Forces the browser to allow the click */
+}
+.alumni-main-section .view-all-link:hover {
+    background: white;
+    color: #fdf5e6 !important;
+    transform: translateY(-3px);
+}
+/* FIXED CREAM FOOTER - Full width and centered */
+
+.alumni-main-section .btn-container {
+    margin-top: 50px;
+    padding: 60px 0;
+    background-color: #050a18 !important; /* Cream Color */
+    width: 100%;
+    position: relative; /* Essential for z-index */
+    z-index: 999;       /* Higher than the cards */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clear: both;        /* Prevents floating issues */
+}
+/* THE BUTTON - Visible & Clickable */
+
+/* --- THE BUTTON FIX --- */
+.alumni-main-section .view-all-link {
+    position: relative;
+    z-index: 1000;      /* Top layer */
+    display: inline-block !important;
+    padding: 15px 45px !important;
+    border: 2px solid white !important;
+    border-radius: 50px;
+    color: white !important;
+    font-weight: 700;
+    text-decoration: none !important;
+    background-color: transparent !important;
+    cursor: pointer !important; /* Shows the "hand" icon */
+    transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+
+.alumni-main-section .view-all-link:hover {
+    background-color: #050a18 !important;
+    color: #fdf5e6 !important;
+    transform: translateY(-3px);
+}
+/* Mobile Responsive Fix */
+@media (max-width: 768px) {
+    .alumni-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 100px; /* More space for the profile photos on mobile */
+    }
+    
+    .alumni-main-section .header-content h1 {
+        font-size: 2rem;
+    }
+}
 /* --- FORCING FULL WIDTH (No Gaps) --- */
 /* This is what keeps the 'Leadership' style highlight and underline */
 
@@ -663,6 +844,14 @@ section-title {
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.middle-line {
+    width: 100%;          /* How wide the line is */
+    height: 2px;         /* How thick the line is */
+    background-color: #f7e9c1; /* Your gold color */
+    margin: 40px auto;   /* "auto" centers it horizontally */
+    border-radius: 2px;  /* Makes the edges smooth */
 }
 
 .life-video-grid {
