@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;600&display=swap');
 
 /* আপনার style.css এর বাকি সব কোড নিচে পেস্ট করুন */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --ink: #0c1520;
   --gold: #c8a951;
@@ -564,6 +567,96 @@ section-title {
     border-left: 4px solid #c8a951;
     font-size: 0.9rem;
 }
+.reach-awareness-container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+.reach-title {
+    color: #001f3f;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.reach-underline {
+    width: 60px;
+    height: 4px;
+    background: #c8a951;
+    margin: 0 auto 40px;
+}
+
+.reach-flex-layout {
+    display: flex;
+    gap: 30px;
+}
+
+/* Scrollable Division List */
+.division-selector {
+    flex: 1;
+    max-height: 7g00px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.div-card {
+    background: #f8f9fa;
+    border-left: 4px solid transparent;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.div-card h3 { margin: 0; font-size: 1.1rem; color: #001f3f; }
+.div-card p { margin: 5px 0 0; font-size: 0.85rem; color: #666; }
+
+.div-card.active {
+    background: #001f3f;
+    border-left-color: #c8a951;
+}
+
+.div-card.active h3 { color: #c8a951; }
+.div-card.active p { color: white; }
+
+/* Live Console */
+.live-console {
+    flex: 1.5;
+    background: #001f3f;
+    border-radius: 15px;
+    padding: 30px;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.status-dot { color: #c8a951; animation: blink 1.5s infinite; }
+@keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+.live-label { font-size: 0.7rem; letter-spacing: 1px; color: #aaa; }
+
+.map-view-box {
+    background: #002d5a;
+    height: 250px;
+    margin: 20px 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(200, 169, 81, 0.2);
+}
+
+.map-graphic { text-align: center; }
+
+.live-btn {
+    background: #c8a951;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 /* --- MOBILE FIX --- */
 @media (max-width: 768px) {
@@ -741,7 +834,8 @@ section-title {
   }
 
 
-.active {
-  color: #c8a951 !important;
-  border-bottom: 2px solid #c8a951;
-}
+
+
+
+
+
