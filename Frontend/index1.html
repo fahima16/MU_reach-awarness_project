@@ -22,7 +22,7 @@
       <ul class="nav-links">
         <li><a href="index.html" style="color: #c8a951;">HOME</a></li>
         <li><a href="#leaders-section">LEADERSHIP</a></li>
-        <li><a href="#alumni-section">ALUMNI</a></li>
+        <li><a href="#alumni">ALUMNI</a></li>
         <li><a href="#visit-campus">VISIT CAMPUS</a></li>
 
 
@@ -55,7 +55,7 @@
           <p>Guided by the motto 'Education, Not Just a Degree,' the university is committed to fostering a research-driven environment across its sprawling permanent campus in Bateshwar. With a community of over 6,000 students and a legacy of producing global leaders now working at tech giants like Google and Amazon, MU continues to bridge the gap between academic theory and industry innovation.As we look toward the future, the university remains dedicated to providing a transformative educational experience that prepares students for the challenges of the 4th Industrial Revolution. Our graduates are not just degree holders; they are innovators and problem-solvers ready to make a global impact.</p>
           
         </div>
-      </section>
+       </section>
 
       <aside>
         <h3 class="sec-title">Campus Spotlight 📰</h3>
@@ -78,7 +78,7 @@
     <div class="navy-divider-container">
     <hr class="navy-line">
   
-</div>
+        </div>
   <section class="milestones-section">
     <h2 class="milestones-title">Our Pride & Milestones</h2>
     <div class="milestones-grid">
@@ -477,6 +477,34 @@ document.querySelectorAll('.nav-links li a').forEach(link => {
         this.classList.add('active');
     });
 });
+
+
+function showJourney(name, dist, cost, bus) {
+    const resultBox = document.getElementById("journey-result");
+    if (resultBox) {
+        resultBox.style.display = "block";
+        document.getElementById("res-city").innerText = "Plan for " + name;
+        document.getElementById("res-dist").innerText = dist;
+        document.getElementById("res-cost").innerText = cost;
+        document.getElementById("res-bus").innerText = bus;
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// 3. MU REACH AWARENESS (Map Console Text Update)
+function updateLiveMap(el, title, sub, stat) {
+    document.querySelectorAll('.div-card').forEach(card => card.classList.remove('active'));
+    el.classList.add('active');
+
+    document.getElementById('map-title').innerText = title + " Division";
+    document.getElementById('map-subtitle').innerText = sub;
+    document.getElementById('map-stat').innerText = stat;
+    
+    const viewBox = document.querySelector('.map-view-box');
+    viewBox.style.opacity = '0.4';
+    setTimeout(() => { viewBox.style.opacity = '1'; }, 200);
+}
+
 let myLineChart, myBarChart;
 
 window.onload = function() {
@@ -497,7 +525,7 @@ window.onload = function() {
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { ticks: { color: '#aaa', font: { size: 10 } } } } }
     });
-
+    
     // 2. BAR CHART (8 Divisions - The Pillars)
     const ctxBar = document.getElementById('barChart').getContext('2d');
     myBarChart = new Chart(ctxBar, {

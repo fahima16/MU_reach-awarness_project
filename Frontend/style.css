@@ -427,7 +427,7 @@ body {
 /* --- ALUMNI SECTION FINAL REFINEMENT --- */
 
 .alumni-main-section {
-    padding: 100px 0 0 0; /* Removed side padding to fix the cream section gap */
+    padding: 40px ; /* Removed side padding to fix the cream section gap */
     background-color: #050a18; /* Navy Top */
     text-align: center;
     color: white;
@@ -440,35 +440,39 @@ body {
     margin: 0;
 }
 
+
 .alumni-main-section .highlight {
     color: #ff3e3e; /* Your accent red */
 }
 
 /* Horizontal Wrapper */
+
 .alumni-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 80px 30px; 
-    margin: 80px auto;
+    /* Increased first number to 100px to give photos more room on top */
+    gap: 100px 30px; 
+    margin: 80px auto 40px auto; 
     max-width: 1200px;
     padding: 0 20px;
-}
-
+} 
 
 /* Updated Navy Box */
+
 .alumni-main-section .glass-card {
-    background: rgba(5, 10, 24, 0.6); /* Navy tint */
-    overflow: visible; /* Important for the social badge to show */
+    background: rgba(5, 10, 24, 0.6);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    padding: 45px 20px 30px 20px;
+    /* 60px on top creates the gap between photo and name */
+    padding: 90px 20px 30px 20px; 
     width: 260px;
+    min-height: 250px; /* Ensures the card doesn't shrink */
     position: relative;
     transition: all 0.4s ease;
+    text-align: center;
 }
-
 /* LOGO SIZE FIX - Prevents the oversized icon issue */
 .alumni-main-section .icon-img {
     width: 22px !important;
@@ -478,24 +482,25 @@ body {
     vertical-align: middle;
 }
 
+
 .alumni-main-section .profile-area {
     position: absolute;
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
+    width: 100px !important; 
+    height: 100px !important;
     z-index: 5;
 }
 
+
 .alumni-main-section .profile-area img {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #050a18;
 }
-
 /* LinkedIn Badge Fixed Position */
 .alumni-main-section .social-badge {
     position: absolute; 
@@ -517,14 +522,28 @@ body {
     color: white;
     font-size: 14px;
 }
+.alumni-main-section .header-content {
+    text-align: center;
+    margin-bottom: 130px; /* Space between title and cards */
+    
+    /* THE FIX: Reduce top margin or use a small negative margin to pull it up */
+    margin-top: 50px !important; 
+}
+
+/* 3. Make sure the H1 itself doesn't have a huge top margin */
+.alumni-main-section .header-content h1 {
+    margin-top: 20px !important;
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
 
 /* FIXED CREAM FOOTER - Full width, no left shift */
 
 .alumni-main-section .btn-container {
     background-color: #fdf5e6 !important; /* Force Cream */
-    padding: 80px 0 !important;
+    padding: 50px 0 !important;
     width: 100% !important;
-    margin-top: 80px !important;
+    margin-top: 50px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -635,7 +654,7 @@ body {
 
 .map-top-image img {
     width: 100%;
-    height: auto;
+    height: 600px;
     display: block;
     border-radius: 0 !important; /* Forces edges to hit the screen */
 }
@@ -665,6 +684,11 @@ body {
     height: 3px;
     background-color: #c8a951; /* Gold underline */
     border-radius: 2px;
+}
+
+ .nav-links li a.active::before {
+    display: none !important;
+    content: none !important;
 }
 .map-guide-box {
     background: #001f3f !important;
