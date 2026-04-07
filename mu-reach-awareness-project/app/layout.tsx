@@ -18,3 +18,9 @@ export default function RootLayout({
     </html>
   )
 }
+<head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Outfit&display=swap"
+    rel="stylesheet"
+  />
+</head>

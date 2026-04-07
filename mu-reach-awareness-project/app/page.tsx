@@ -1,11 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
 export default function HomePage() {
   // ১. স্টেট ম্যানেজমেন্ট (Journey Calculator এর জন্য)
   const [journey, setJourney] = useState({ name: '', dist: 0, cost: 0, bus: '', visible: false });
-  const [activeSection, setActiveSection] = useState('');
+
+  const [mapTitle, setMapTitle] = useState('Dhaka Division');
+  const [mapSubtitle, setMapSubtitle] = useState('The Educational Heart');
+
+  const lineChartRef = useRef<any>(null);
+  const barChartRef = useRef<any>(null);
+
+  const [activeSection, setActiveSection]=useState('');
+
+  let myLineChart: any, myBarChart: any;
 
   // ২. শেয়ার ফাংশন
   const sharePage = () => {
@@ -20,6 +30,44 @@ export default function HomePage() {
   // ৩. জার্নি ক্যালকুলেটর ফাংশন
   const showJourney = (name: string, dist: number, cost: number, bus: string) => {
     setJourney({ name, dist, cost, bus, visible: true });
+  };
+
+  useEffect(() => {
+    const ctxLine = lineChartRef.current.getContext('2d');
+    const ctxBar = barChartRef.current.getContext('2d');
+
+    myLineChart = new Chart(ctxLine, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+          data: [20, 40, 35, 55, 45],
+          borderColor: '#c8a951',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 0,
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    myBarChart = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'],
+        datasets: [{
+          data: [70, 85, 60, 50, 45, 40, 35, 30],
+          backgroundColor: ['#5dade2','#f4d03f','#58d68d','#eb984e','#af7ac5','#ec7063','#48c9b0','#a569bd'],
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+  }, []);
+
+  const updateLiveMap = (title: string, sub: string) => {
+    setMapTitle(title + " Division");
+    setMapSubtitle(sub);
   };
 
   // ৪. স্ক্রল হাইলাইটার (Navigation Active Class)
@@ -52,8 +100,8 @@ export default function HomePage() {
 
           <ul className="nav-links">
             <li><a href="/" style={{ color: '#c8a951' }}>HOME</a></li>
-            <li><a href="#leaders-section" className={activeSection === 'leaders-section' ? 'active' : ''}>LEADERSHIP</a></li>
-            <li><a href="#visit-campus" className={activeSection === 'visit-campus' ? 'active' : ''}>VISIT CAMPUS</a></li>
+            <li><a href="#leaders-section" className={activeSection === 'leaders-section' ? 'active' : ''}onClick={(e)=>setActiveSection('leaders-section')}>LEADERSHIP</a></li>
+            <li><a href="#visit-campus" className={activeSection === 'visit-campus' ? 'active' : ''}onClick={()=>{setActiveSection('visit-campus');}}>VISIT CAMPUS</a></li>
             <li><a href="#">ALUMNI</a></li>
             <li><a href="#">RESOURCES</a></li>
           </ul>
@@ -187,7 +235,7 @@ export default function HomePage() {
             alt="Faculty Group" 
             style={{ 
               width: '100%', 
-              maxWidth: '1200px', // আপনি চাইলে ছোট-বড় করতে পারেন
+              maxWidth: '800px', // আপনি চাইলে ছোট-বড় করতে পারেন
               borderRadius: '12px', 
               boxShadow: '0 4px 15px rgba(0,0,0,0.1)' 
            }} 
@@ -245,6 +293,89 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <section className="reach-awareness-container">
+
+          <h2 className="reach-title">MU Across Bangladesh & Beyond</h2>
+          <div className="reach-underline"></div>
+
+          <div className="reach-flex-layout">
+
+            <div className="division-selector">
+
+              <div className="div-card active" onClick={() => updateLiveMap('Dhaka','The Educational Heart')}>
+                <h3>Dhaka</h3>
+                <p>Capital Connectivity</p>
+              </div>
+
+              <div className="div-card" onClick={() => updateLiveMap('Sylhet','Campus Home Division')}>
+                <h3>Sylhet</h3>
+                <p>Home of MU</p>
+              </div>
+
+              <div className="div-card" onClick={() => updateLiveMap('Chittagong','Coastal Reach')}>
+                <h3>Chittagong</h3>
+                <p>Southern Gateway</p>
+              </div>
+
+              <div className="div-card" onClick={() => updateLiveMap('Rajshahi','Silk City')}>
+                <h3>Rajshahi</h3>
+                <p>Knowledge Center</p>
+              </div>
+              <div className="div-card" onClick={()=>updateLiveMap('Khulna', 'Industrial Reach')}>
+                <h3>Khulna</h3>
+                <p>Southern Link</p>
+            </div>
+            <div className="div-card" onClick={()=>updateLiveMap('Barisal', 'Riverine Outreach')}>
+                <h3>Barisal</h3>
+                <p>Venice of Bengal</p>
+            </div>
+            <div className="div-card" onClick={()=>updateLiveMap('Rangpur', 'Northern Gateway')}>
+                <h3>Rangpur</h3>
+                <p>North-End Link</p>
+            </div>
+            <div className="div-card" onClick={()=>updateLiveMap('Mymensingh', 'Cultural Connectivity')}>
+                <h3>Mymensingh</h3>
+                <p>Old Brahmaputra Hub</p>
+            </div>
+
+            </div>
+
+            <div className="live-console">
+              
+
+              <div className="live-console">
+
+  <div className="console-top">
+    <span className="status-dot">●</span> 
+    <span className="live-label">LIVE SYSTEM STATUS</span>
+
+    <h4>{mapTitle}</h4>
+    <p>{mapSubtitle}</p>
+  </div>
+
+  <div className="chart-box" style={{ height: '180px' }}>
+    <p className="chart-label">Growth Trend</p>
+    <canvas ref={lineChartRef}></canvas>
+  </div>
+
+  <div className="chart-box" style={{ height: '250px' }}>
+    <p className="chart-label">Reach Percentage by Division</p>
+    <canvas ref={barChartRef}></canvas>
+  </div>
+
+  <div className="console-bottom">
+    <p>Network: <strong>MU Reach v3.0 (2026)</strong></p>
+    <button className="live-btn">Update Live</button>
+  </div>
+
+</div>
+
+            </div>
+
+          </div>
+
+        </section>
     </>
   );
 }
