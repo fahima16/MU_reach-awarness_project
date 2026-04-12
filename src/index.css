@@ -71,6 +71,15 @@ body {
   color: #c8a951 !important; /* Gold color */
   border-bottom: 3px solid #c8a951 !important; /* Underline */
 }
+/* Eita add korle default-e modal hidden thakbe */
+.mu-modal {
+    display: none !important;
+}
+
+/* Shudhu jokhon amra button click korbo, tokhon eita show korbe */
+.mu-modal.active {
+    display: flex !important;
+}
 /* HERO */
 
 .hero {
@@ -720,6 +729,7 @@ body {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    
 }
 
 .visit-campus-section .container {
@@ -799,7 +809,7 @@ body {
     color: #c8a951 !important;
     margin-bottom: 10px !important;
     display: block !important;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Arial Narrow Bold', sans-serif ;
     font-size: 2rem;
 }
 
@@ -807,6 +817,7 @@ body {
     display: block !important;
     margin: 0 auto 40px auto !important;
     max-width: 600px;
+    font-family: 'Times New Roman', serif ;
     color: rgba(255,255,255,0.7);
 }
 
@@ -817,43 +828,70 @@ body {
 }
 
 /* CITY GRID */
+/* CITY GRID - 100% Column layout as per your image_2.png */
+/* CITY GRID - 1 column layout exactly as your picture */
+/* MAP GUIDE BOX - Exactly as your image */
+
 .city-grid {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* Pashapashi 2 column */
     gap: 15px !important;
     max-width: 1100px !important;
-    margin: 0 auto !important;
-    padding: 0 20px !important;
+    margin: 30px auto !important;
 }
+
+.map-guide-box h2 {
+    font-family: 'Bodoni Moda', serif !important;
+    color: #c8a951 !important;
+    font-size: 2.8rem !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 10px !important;
+    text-transform: uppercase !important;
+}
+
 
 .city-btn {
-    background: transparent;
-    color: #c8a951;
-    border: 2px solid #c8a951;
-    padding: 12px 25px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: 0.3s;
+    background: transparent !important;
+    color: #c8a951 !important;
+    border: 2px solid #c8a951 !important; /* Ekdom chikun/sharp border */
+    padding: 7px 0 !important;           /* Box-er height */
+    cursor: pointer !important;
+    font-weight: 400 !important;
+    border-radius: 0 !important;          /* NO rounded corners, strictly sharp */
+    font-size: 1rem !important;
+    width: 100% !important;  
+    border-radius: 20px !important ;             /* Cell-er pura length nibe */
+    transition: all 0.3s ease !important;
+}
+.city-btn:hover, .city-btn:active {
+    background: #c8a951 !important; /* Pura box yellow/golden hobe */
+    color: #001f3f !important;      /* Text navy blue jate clear dekha jay */
+    box-shadow: 0 4px 15px rgba(200, 169, 81, 0.4) !important;
 }
 
-.city-btn:hover {
-    background: #c8a951;
-    color: #001f3f;
+/* Rangpur button niche center korar jonno */
+.rangpur-wrapper {
+    grid-column: span 2 !important;
+    display: flex !important;
+    justify-content: center !important;
 }
 
-/* JOURNEY CARD */
+.rangpur-wrapper .city-btn {
+    width: 50% !important; /* Baki gular moto width balance thakbe */
+}
+
+/* JOURNEY RESULT - White Card as per your image */
 .journey-card {
-    background: white;
-    color: #001f3f;
-    padding: 30px;
-    border-radius: 10px;
-    margin: 30px auto 0;
-    max-width: 600px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    text-align: left;
+    background: #fdfcf6 !important; /* Shada/Off-white card */
+    color: #001f3f !important;
+    padding: 30px !important;
+    border-radius: 8px !important;
+    margin: 40px auto !important;
+    max-width: 550px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    text-align: left !important;
 }
+
 
 .info-row {
     display: flex;
@@ -1190,4 +1228,45 @@ body {
   .club-showcase-grid {
     flex-direction: column;
   }
+}
+
+
+/* --- Mobile Responsiveness for Visit Campus --- */
+/* --- Mobile Fix: Strictly 1 Column --- */
+/* Mobile Responsive: Exactly like your picture */
+@media screen and (max-width: 768px) {
+    .city-grid {
+        display: grid !important;
+        /* Mobile-e o pashapashi 2 column thakbe */
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 10px !important;
+        padding: 0 15px !important;
+        width: 100% !important;
+    }
+
+    /* Rangpur button niche ekai pura row jure thakbe */
+    .rangpur-wrapper {
+        grid-column: span 2 !important; 
+        display: flex !important;
+        width: 100% !important;
+    }
+
+    .city-btn {
+        width: 100% !important;
+        padding: 7px 4px !important; /* Height thik rakhar jonno */
+        font-size: 0.9rem !important; /* Text jeno box-er bhetore thake */
+         border-radius: 25px !important; /* Mobile-e o round thakbe */
+        padding: 10px 0 !important;
+        text-align: center !important;
+    }
+
+    /* Shada card-ta center-e thakbe */
+    .journey-card {
+        width: 95% !important;
+        margin: 20px auto !important;
+        padding: 20px !important;
+    }
+     
+
+   
 }

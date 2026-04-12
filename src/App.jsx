@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import React from 'react';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -10,15 +9,89 @@ function App() {
     navigator.clipboard.writeText(window.location.href);
     alert('Page link copied!');
   };
+   
+  const [journey, setJourney] = useState({ visible: false, name: '', dist: 0, cost: 0, bus: '' });
+  const [videoUrl, setVideoUrl] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  
+  const lineChartRef = useRef(null);
+  const barChartRef = useRef(null);
+  
+  // --- ADDED: Auto-scroll Target Reference ---
+  const resultRef = useRef(null);
 
-  // 2. Scroll Highlight Logic
+  const handleShowJourney = (name, dist, cost, bus) => {
+    setJourney({ visible: true, name, dist, cost, bus });
 
+    // --- AUTO SCROLL LOGIC ---
+    // Click korle 100ms por automatic smooth scroll hoye costing panel-e niye jabe
+    setTimeout(() => {
+      if (resultRef.current) {
+        resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  };
 
- useEffect(() => {
+  const openMUVideo = (url) => { setVideoUrl(url); setShowModal(true); };
+  const closeMUVideo = () => { setVideoUrl(""); setShowModal(false); };
+
+  const updateLiveMap = (e, title, sub) => {
+    document.querySelectorAll('.div-card').forEach(card => card.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+
+    document.getElementById('map-title').innerText = title + " Division";
+    document.getElementById('map-subtitle').innerText = sub;
+
+    if (barChartRef.current && lineChartRef.current) {
+        const labels = ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
+        const index = labels.indexOf(title);
+        if (index !== -1) {
+            barChartRef.current.data.datasets[0].data[index] = Math.floor(Math.random() * (98 - 80) + 80);
+            barChartRef.current.update();
+            lineChartRef.current.data.datasets[0].data = Array.from({length: 12}, () => Math.floor(Math.random() * 80));
+            lineChartRef.current.update();
+        }
+    }
+  };
+
+  useEffect(() => {
+    const ctxLine = document.getElementById('lineChart')?.getContext('2d');
+    const ctxBar = document.getElementById('barChart')?.getContext('2d');
+
+    if (ctxLine && ctxBar && window.Chart) {
+      lineChartRef.current = new window.Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{ data: [20, 40, 35, 55, 45, 60, 50, 70, 65, 80, 75, 90], borderColor: '#c8a951', borderWidth: 3, tension: 0.4, pointRadius: 0, fill: false }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { ticks: { color: '#aaa', font: { size: 10 } } } } }
+      });
+
+      barChartRef.current = new window.Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'],
+          datasets: [{ 
+              data: [70, 85, 60, 50, 45, 40, 35, 30], 
+              backgroundColor: ['#5dade2', '#f4d03f', '#58d68d', '#eb984e', '#af7ac5', '#ec7063', '#48c9b0', '#a569bd'],
+              borderRadius: 5
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { color: '#aaa', font: { size: 9 } } }, x: { ticks: { color: '#fff', font: { size: 9 } } } } }
+      });
+    }
+    return () => {
+        if (lineChartRef.current) lineChartRef.current.destroy();
+        if (barChartRef.current) barChartRef.current.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
-      // Amra shob ID wala section track korchi
+
       const sections = ['home-section', 'leaders-section', 'alumni']; 
-      const scrollPos = window.scrollY + 250; // Offset ektu baralam jate agey dhorbe
+      const scrollPos = window.scrollY + 250;
 
       sections.forEach(id => {
         const section = document.getElementById(id);
@@ -38,9 +111,9 @@ function App() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Ekbar call kora jate load hobar sathe sathe kaj kore
+
     handleScroll(); 
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -130,6 +203,33 @@ function App() {
           </p>
         </div>
       </aside>
+
+      <section>
+        <h3 className="sec-title">Welcome to Metropolitan University</h3>
+        <div className="article-content">
+          <img src="photo8.jpeg" alt="Welcome to MU" className="wrapped-photo" />
+          <p>
+            <strong>A Legacy of Excellence in the Heart of Sylhet.</strong> Established in 2003 by the visionary educationist Dr. Toufique Rahman Chowdhury, Metropolitan University has evolved into a premier seat of higher learning in Bangladesh. Recently achieving the prestigious 'Permanent Charter' from the Government of Bangladesh, MU stands as the first private university in the Sylhet region.
+          </p>
+          <p>
+            Guided by the motto 'Education, Not Just a Degree,' the university is committed to fostering a research-driven environment across its sprawling permanent campus in Bateshwar. With a community of over 6,000 students and a legacy of producing global leaders now working at tech giants like Google and Amazon, MU continues to bridge the gap between academic theory and industry innovation. As we look toward the future, the university remains dedicated to providing a transformative educational experience that prepares students for the challenges of the 4th Industrial Revolution. Our graduates are not just degree holders; they are innovators and problem-solvers ready to make a global impact.
+          </p>
+        </div>
+      </section>
+
+       <aside>
+        <h3 className="sec-title">Campus Spotlight 📰</h3>
+        <div className="article-content">
+          <img src="photo9.jpeg" alt="Campus Spotlight" className="wrapped-photo" />
+          <p>
+            <strong>Innovation Beyond the Classroom.</strong> Metropolitan University continues to lead the region in technological and academic breakthroughs. Our students recently secured top honors at the NASA International Space Apps Challenge (Sylhet Division), demonstrating world-class problem-solving skills.
+          </p>
+          <p>
+            In line with global industry shifts, MU has pioneered the first BSc (Hons) in Data Science program in the region, focusing on AI and Machine Learning. Beyond academics, the MU Rover Scout Group and our award-winning Debating Society consistently earn national recognition.
+          </p>
+        </div>
+      </aside>
+
     </div>
   </section> {/* --- End of home-section --- */}
 </main>
@@ -180,11 +280,37 @@ function App() {
         </div>
 
         <div className="milestones-grid">
-          <div className="milestone-card blue"><h3>6,000+</h3><p>Current Students</p></div>
-          <div className="milestone-card green"><h3>20+</h3><p>Years of Excellence</p></div>
-          <div className="milestone-card purple"><h3>Global</h3><p>Alumni Network</p></div>
-          <div className="milestone-card gold"><h3>1st</h3><p>Permanent Charter</p></div>
+        <div className="milestone-card blue">
+            <span className="m-icon">🎓</span>
+            <h3>6,000+</h3>
+            <p>Current Students</p>
         </div>
+        
+        <div className="milestone-card green">
+            <span className="m-icon">🏢</span>
+            <h3>20+</h3>
+            <p>Years of Excellence</p>
+        </div>
+        
+        <div className="milestone-card purple">
+            <span className="m-icon">📍</span>
+            <h3>Global</h3>
+            <p>Alumni Network</p>
+        </div>
+        
+        <div className="milestone-card gold">
+            <span className="m-icon">🏅</span>
+            <h3>1st</h3>
+            <p>Permanent Charter in Sylhet</p>
+        </div>
+    </div>
+
+    <div className="highlights-row">
+        <div className="h-item">✅ UGC Approved</div>
+        <div className="h-item">✅ Ranked Top University in Sylhet</div>
+        <div className="h-item">✅ 10,000+ Alumni Globally</div>
+        <div className="h-item">✅ Modern Research Facilities</div>
+    </div>
       </section>
 
       {/* --- LEADERS SECTION --- */}
@@ -321,7 +447,163 @@ function App() {
     </div>
 </section>
 {/* --- ALUMNI SECTION END --- */}
+<section id="visit-campus" className="visit-campus-section" style={{ padding: 0, margin: 0 }}>
+    <hr className="section-divider" />
 
+    <div className="map-top-image">
+        <img src="/photo11.jpeg" alt="Campus View" />
+    </div>
+    <div className="map-guide-box">
+    <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+        <h2 className="section-title" style={{ color: '#e6b634', textAlign: 'center', marginBottom: '10px' }}>Visit Campus</h2>
+        <p className="section-subtitle" style={{ textAlign: 'center', color: '#ffffff', marginBottom: '30px' }}>Plan your journey to Metropolitan University. One click to see travel costs and distance.</p>
+        
+        {/* City Grid - Forced to be Column/Grid layout */}
+      <div className="city-grid">
+    <button className="city-btn" onClick={() => handleShowJourney('Dhaka', 240, 600, 'Green Line / Train')}>Dhaka</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Chittagong', 310, 800, 'S. Alam / Hanif')}>Chittagong</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Rajshahi', 450, 1200, 'Desh Travels')}>Rajshahi</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Khulna', 500, 1500, 'Hanif Enterprise')}>Khulna</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Barisal', 480, 1400, 'Sakura')}>Barisal</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Mymensingh', 210, 550, 'Ena / Soukhin')}>Mymensingh</button>
+    
+    <div className="rangpur-wrapper">
+        <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 430, 1100, 'Hanif / SR Travels')}>Rangpur</button>
+    </div>
+</div>
+
+{/* Modal Fix: Eita ensure korbe jeno kalo aboron na ashe */}
+{showModal && (
+    <div className="mu-modal" style={{ display: 'flex', position: 'fixed', zIndex: 9999, top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.9)', alignItems: 'center', justifyContent: 'center' }} onClick={closeMUVideo}>
+        <span className="mu-close" style={{ position: 'absolute', top: '20px', right: '35px', color: '#fff', fontSize: '40px', cursor: 'pointer' }} onClick={closeMUVideo}>&times;</span>
+        <div className="mu-modal-content" style={{ width: '80%', maxWidth: '800px' }} onClick={e => e.stopPropagation()}>
+            <iframe width="100%" height="450" src={videoUrl} frameBorder="0" allowFullScreen></iframe>
+        </div>
+    </div>
+)}
+
+        {/* Costing Result Box - Exactly as your HTML design */}
+
+        <div ref={resultRef}></div>
+        {journey.visible && (
+            
+            <div id="journey-result" className="journey-card" style={{ 
+                display: 'block', 
+                background: '#fff', 
+                padding: '25px', 
+                borderRadius: '12px', 
+                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                marginTop: '20px'
+            }}>
+                <h3 style={{ color: '#001f3f', borderBottom: '2px solid #c8a951', paddingBottom: '10px', marginBottom: '20px' }}>Journey Details: {journey.name}</h3>
+                <div className="info-row" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+                    <div className="info-item">
+                        <strong style={{ display: 'block', color: '#666', fontSize: '14px' }}>Distance</strong>
+                        <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#001f3f' }}><span>{journey.dist}</span> km</p>
+                    </div>
+                    <div className="info-item">
+                        <strong style={{ display: 'block', color: '#666', fontSize: '14px' }}>Est. Cost</strong>
+                        <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#001f3f' }}>৳<span>{journey.cost}</span></p>
+                    </div>
+                    <div className="info-item">
+                        <strong style={{ display: 'block', color: '#666', fontSize: '14px' }}>Transport</strong>
+                        <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#001f3f' }}>{journey.bus}</p>
+                    </div>
+                </div>
+                <div className="housing-note" style={{ marginTop: '20px', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
+                    <p style={{ color: '#444', margin: 0 }}>🏠 <strong>Accommodation:</strong> University Hostels and private mess options are available near the Bateshwar campus.</p>
+                </div>
+            </div>
+        )}
+    </div>
+</div>
+
+    <div className="reach-awareness-container">
+        <h2 className="reach-title">MU Across Bangladesh & Beyond</h2>
+        <div className="reach-underline"></div>
+
+        <div className="reach-flex-layout">
+            <div className="division-selector">
+                <div className="div-card active" onClick={(e) => updateLiveMap(e, 'Dhaka', 'The Educational Heart')}>
+                    <h3>Dhaka</h3>
+                    <p>Capital Connectivity</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Sylhet', 'Campus Home Division')}>
+                    <h3>Sylhet</h3>
+                    <p>Home of MU</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Chittagong', 'Coastal Reach')}>
+                    <h3>Chittagong</h3>
+                    <p>Southern Gateway</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Rajshahi', 'Silk City Education')}>
+                    <h3>Rajshahi</h3>
+                    <p>Knowledge Center</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Khulna', 'Industrial Reach')}>
+                    <h3>Khulna</h3>
+                    <p>Southern Link</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Barisal', 'Riverine Outreach')}>
+                    <h3>Barisal</h3>
+                    <p>Venice of Bengal</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Rangpur', 'Northern Gateway')}>
+                    <h3>Rangpur</h3>
+                    <p>North-End Link</p>
+                </div>
+                <div className="div-card" onClick={(e) => updateLiveMap(e, 'Mymensingh', 'Cultural Connectivity')}>
+                    <h3>Mymensingh</h3>
+                    <p>Old Brahmaputra Hub</p>
+                </div>
+            </div>
+
+            <div className="live-console">
+                <div className="console-top">
+                    <span className="status-dot">●</span> <span className="live-label">LIVE SYSTEM STATUS</span>
+                    <h4 id="map-title">Dhaka Division</h4>
+                    <p id="map-subtitle">The Educational Heart</p>
+                </div>
+                <div className="chart-box" style={{ width: '100%', height: '180px', background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '10px', marginBottom: '20px' }}>
+                    <p className="chart-label" style={{ fontSize: '11px', color: '#c8a951', fontWeight: 'bold' }}>Growth Trend</p>
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div className="chart-box" style={{ width: '100%', height: '250px', background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '10px' }}>
+                    <p className="chart-label" style={{ fontSize: '11px', color: '#c8a951', fontWeight: 'bold' }}>Reach Percentage</p>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
+            <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
+            <div className="life-video-grid">
+                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_1')}>
+                    <img src="/modern-campus.jpg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
+                </div>
+                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_2')}>
+                    <img src="/student-life.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
+                </div>
+                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_3')}>
+                    <img src="/evening-views.jpg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
+                </div>
+                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_4')}>
+                    <img src="/academic-buildings.jpg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {/* Modal Fix: ONLY shows when showModal is true */}
+    {showModal && (
+        <div className="mu-modal" style={{ display: 'flex', position: 'fixed', zIndex: 9999, top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.9)', alignItems: 'center', justifyContent: 'center' }} onClick={closeMUVideo}>
+            <span className="mu-close" style={{ position: 'absolute', top: '20px', right: '35px', color: '#fff', fontSize: '40px', cursor: 'pointer' }} onClick={closeMUVideo}>&times;</span>
+            <div className="mu-modal-content" style={{ width: '80%', maxWidth: '800px' }} onClick={e => e.stopPropagation()}>
+                <iframe width="100%" height="450" src={videoUrl} frameBorder="0" allowFullScreen title="MU Video"></iframe>
+            </div>
+        </div>
+    )}
+</section>
 
 
     </div>
