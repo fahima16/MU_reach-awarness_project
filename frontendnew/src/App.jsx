@@ -721,7 +721,7 @@ useEffect(() => {
    
     <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
       
-     <img src="c:\Users\Maliha Reem\Downloads\Avatar Foto de Perfil Hombre Gafas Dibujo Ilustrado Moderno Verde.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+     <img src="cartoon.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
        </div>
 
        <div className="banner-right" style={{ flex: '1', minWidth: '300px' }}>
@@ -737,7 +737,7 @@ useEffect(() => {
                     <img src="/modern-campus.jpg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
                 </div>
                 <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/student-life.mp4')}>
-                    <img src="/student-life.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
+                    <img src="/student life photo.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
                 </div>
                 <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/evening-views.mp4')}>
                     <img src="/evening-views.jpg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
