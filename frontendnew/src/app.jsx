@@ -4,8 +4,120 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 
+const RecommendationPoll = () => {
+  const [voted, setVoted] = useState(false);
+  const [choice, setChoice] = useState(null);
+  const [stats, setStats] = useState({ yes: 81, no: 19 });
+
+  const handleVote = (type) => {
+    if (!voted) {
+      setStats({ ...stats, [type]: stats[type] + 1 });
+      setChoice(type);
+      setVoted(true);
+    }
+  };
+
+  const total = stats.yes + stats.no;
+  const yesPer = Math.round((stats.yes / total) * 100);
+  const noPer = 100 - yesPer;
+
+  return (
+    <div className="poll-card-premium" style={{ 
+      backgroundColor: '#ffffff', 
+      padding: '40px', 
+      borderRadius: '15px',
+      color: '#001f3f',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+    }}>
+      
+      {/* --- ADDED TITLE SECTION --- */}
+      <div style={{ marginBottom: '30px' }}>
+        <h2 style={{ 
+          fontSize: '2.2rem', 
+          fontWeight: '900', 
+          textTransform: 'uppercase', 
+          letterSpacing: '1px',
+          margin: '0',
+          color: '#001f3f'
+        }}>
+          The Voice of Our Students
+        </h2>
+        {/* Signature Gold Line */}
+        <div style={{ width: '70px', height: '5px', background: '#e6b634', marginTop: '12px' }}></div>
+        
+        <p style={{ marginTop: '20px', fontSize: '1.1rem', color: '#444', lineHeight: '1.5' }}>
+          Share your recommendation and help us inspire the next generation of scholars.
+        </p>
+      </div>
+
+      {/* Result Bars - Always Visible */}
+      <div style={{ marginBottom: '30px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
+            <span>Yes, I Recommend</span>
+            <span style={{ color: '#e6b634' }}>{yesPer}%</span>
+          </div>
+          <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
+            <div style={{ width: `${yesPer}%`, background: '#e6b634', height: '100%', transition: 'width 1s ease' }}></div>
+          </div>
+        </div>
+
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
+            <span>No</span>
+            <span>{noPer}%</span>
+          </div>
+          <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
+            <div style={{ width: `${noPer}%`, background: '#001f3f', height: '100%', transition: 'width 1s ease' }}></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Buttons Container */}
+      {!voted ? (
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <button 
+            onClick={() => handleVote('yes')} 
+            style={{ flex: 1, padding: '14px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
+          >
+            Vote Yes
+          </button>
+          <button 
+            onClick={() => handleVote('no')} 
+            style={{ flex: 1, padding: '14px', background: 'transparent', color: '#001f3f', border: '2px solid #001f3f', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
+          >
+            Vote No
+          </button>
+        </div>
+      ) : (
+        <div style={{ textAlign: 'center', fontWeight: 'bold', color: '#001f3f', padding: '15px', border: '1px dashed #e6b634', borderRadius: '8px' }}>
+          Feedback Received. Thank you!
+        </div>
+      )}
+
+      {/* Enhanced Feedback Box */}
+      {choice === 'no' && (
+        <div className="animate-fade" style={{ marginTop: '30px', padding: '25px', background: '#001f3f', borderRadius: '12px', color: '#fff', borderLeft: '6px solid #e6b634' }}>
+          <p style={{ color: '#e6b634', marginBottom: '15px', fontSize: '1rem', fontWeight: '700', textTransform: 'uppercase' }}>How can we improve?</p>
+          <textarea 
+            placeholder="Your suggestions are private and help us grow..." 
+            rows="3"
+            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: 'none', marginBottom: '15px', outline: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff' }}
+          />
+          <button style={{ width: '100%', padding: '12px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}>
+            Submit Suggestions
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 function AppContents() {
   const [count, setCount] = useState(0);
+   // --- MOVE THIS TO THE TOP (OUTSIDE AppContents) ---
+
+
+  
   
   // 1. URL Copy Function
   const copyUrl = () => {
@@ -93,35 +205,34 @@ function AppContents() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  
+useEffect(() => {
+  const handleScroll = () => {
+    // Array-te 'resources' add koro
+    const sections = ['home-section', 'leaders-section', 'alumni', 'visit-campus', 'resources']; 
+    const scrollPos = window.scrollY + 300; 
 
-      const sections = ['home-section', 'leaders-section', 'alumni']; 
-      const scrollPos = window.scrollY + 250;
+    sections.forEach(id => {
+      const section = document.getElementById(id);
+      const navLink = document.querySelector(`.nav-links li a[href="#${id}"]`);
 
-      sections.forEach(id => {
-        const section = document.getElementById(id);
-        const navLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+      if (section && navLink) {
+        const offsetTop = section.offsetTop;
+        const height = section.offsetHeight;
 
-        if (section && navLink) {
-          const offsetTop = section.offsetTop;
-          const height = section.offsetHeight;
-
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
-            navLink.classList.add('active-link');
-          } else {
-            navLink.classList.remove('active-link');
-          }
+        if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
+          navLink.classList.add('active-link');
+        } else {
+          navLink.classList.remove('active-link');
         }
-      });
-    };
+      }
+    });
+  };
 
-    window.addEventListener('scroll', handleScroll);
-
-    handleScroll(); 
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); 
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 
   return (
     /*<Router>*/
@@ -258,7 +369,7 @@ function AppContents() {
 
         <div className="mu-main-container">
           <div className="navy-header-box">
-            <h3>Recent Club Achievements</h3>
+            <h3>Club Achievements</h3>
             <p>Our student clubs continue to shine on national and international stages</p>
           </div>
 
@@ -268,29 +379,29 @@ function AppContents() {
                 <img src="football.jpg" alt="Football" />
                 <span className="badge-champions">CHAMPIONS</span>
               </div>
-              <h4>MU Football Club</h4>
-              <span>Champions League Winners 2025</span>
+              <h4>MU Sports Club</h4>
+     
             </div>
             <div className="showcase-card">
               <div className="image-container">
                 <img src="rugby.jpg" alt="Rugby" />
                 <span className="badge-rising">RISING STARS</span>
               </div>
-              <h4>MU Rugby Club</h4>
-              <span>Regional Tournament Semi-Finalists</span>
+              <h4>MU Islamic Society</h4>
+           
             </div>
             <div className="showcase-card">
               <div className="image-container">
                 <img src="athletics.jpg" alt="Athletics" />
                 <span className="badge-record">RECORD BREAKERS</span>
               </div>
-              <h4>MU Athletics Club</h4>
-              <span>National Pride & Excellence</span>
+              <h4>MU BNCC Platoon</h4>
+         
             </div>
           </div>
           
           <div className="footer-detail-text">
-            <p>The MU Football Club recently clinched the Inter-University Champions League title in a stunning display of athletic prowess and strategic excellence. The final match, held at the National Stadium, saw our team triumph...</p>
+            <p>Metropolitan University fosters a vibrant and inclusive campus environment through a diverse range of student-led clubs and organizations. These platforms empower students to excel beyond academics by engaging in technical innovation through the MU Robotics Club and SWE Innovators Forum, or by honing leadership and diplomatic skills in the MU Model United Nations (MUN) and Debating Club. The university also emphasizes discipline and national service through the BNCC Platoon, alongside social responsibility and community welfare through the MU Social Services Club and Rover Scouts. For those interested in spiritual growth, the arts, and physical fitness, organizations such as the Islamic Society, MU Photographic Society, Cultural Club, Sports Club, and Cycling Association provide creative outlets and promote a healthy, balanced lifestyle. Together, these organizations form a dynamic ecosystem that builds leadership, teamwork, and professional expertise among the student body.</p>
           </div>
         </div>
 
@@ -467,7 +578,12 @@ function AppContents() {
     </div>
 </section>
 {/* --- ALUMNI SECTION END --- */}
-<section id="visit-campus" className="visit-campus-section" style={{ padding: 0, margin: 0 }}>
+<section id="visit-campus" className="visit-campus-section" style={{  minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: '#f4f4f4', // or your preferred background
+    padding: '80px 20px'  }}>
     <hr className="section-divider" />
 
     <div className="map-top-image">
@@ -595,25 +711,72 @@ function AppContents() {
             </div>
         </div>
 
+         <div className="recommendation-banner" style={{ 
+     display: 'flex', 
+    flexWrap: 'wrap', 
+    backgroundColor: '#ffffff', // Background white kora hoyeche
+    marginTop: '50px',
+    border: '1px solid #eee'
+}}>
+   
+    <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
+      
+     <img src="c:\Users\Maliha Reem\Downloads\Avatar Foto de Perfil Hombre Gafas Dibujo Ilustrado Moderno Verde.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+       </div>
+
+       <div className="banner-right" style={{ flex: '1', minWidth: '300px' }}>
+        {/* Component call korle baki shob auto chole ashbe */}
+        <RecommendationPoll />
+       </div>
+    </div>
+        
         <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
             <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
             <div className="life-video-grid">
-                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_1')}>
+                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic building.mp4')}>
                     <img src="/modern-campus.jpg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_2')}>
+                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/student-life.mp4')}>
                     <img src="/student-life.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_3')}>
+                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/evening-views.mp4')}>
                     <img src="/evening-views.jpg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('VIDEO_URL_4')}>
+                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic-buildings.mp4')}>
                     <img src="/academic-buildings.jpg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
                 </div>
             </div>
         </div>
+        
+
+      
     </div>
     </section>
+ <section id="resources" className="footer-premium">
+  <div className="footer-container">
+    
+    {/* --- THE END TITLE (Now Perfectly Centered) --- */}
+    <div className="the-end-title-wrapper">
+      <h1>THE END</h1>
+      <div className="title-divider"></div>
+      <p>Thank you for exploring our campus journey.</p>
+    </div>
+
+    {/* --- 8 WHITE BOXES GRID --- */}
+    <div className="horizontal-box-grid">
+      <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
+      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>
+      <div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>
+      <div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>
+      <div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5><p>Global Impact</p></div>
+      <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>
+      <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>
+      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>
+    </div>
+
+  </div>
+</section>
+
     </>
           } />
           
