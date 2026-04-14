@@ -376,7 +376,7 @@ useEffect(() => {
           <div className="club-showcase-grid">
             <div className="showcase-card">
               <div className="image-container">
-                <img src="football.jpg" alt="Football" />
+                <img src="/sports.jpeg" alt="Football" />
                 <span className="badge-champions">CHAMPIONS</span>
               </div>
               <h4>MU Sports Club</h4>
@@ -384,7 +384,7 @@ useEffect(() => {
             </div>
             <div className="showcase-card">
               <div className="image-container">
-                <img src="rugby.jpg" alt="Rugby" />
+                <img src="/islamic.jpeg" alt="Rugby" />
                 <span className="badge-rising">RISING STARS</span>
               </div>
               <h4>MU Islamic Society</h4>
@@ -392,7 +392,7 @@ useEffect(() => {
             </div>
             <div className="showcase-card">
               <div className="image-container">
-                <img src="athletics.jpg" alt="Athletics" />
+                <img src="/bncc.jpeg" alt="Athletics" />
                 <span className="badge-record">RECORD BREAKERS</span>
               </div>
               <h4>MU BNCC Platoon</h4>
@@ -587,7 +587,7 @@ useEffect(() => {
     <hr className="section-divider" />
 
     <div className="map-top-image">
-        <img src="/photo11.jpeg" alt="Campus View" />
+        <img src="/newphoto.jpg" alt="Campus View" />
     </div>
     <div className="map-guide-box">
     <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
@@ -733,17 +733,17 @@ useEffect(() => {
         <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
             <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
             <div className="life-video-grid">
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic building.mp4')}>
-                    <img src="/modern-campus.jpg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
+                    <img src="/modern campus.jpeg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/student-life.mp4')}>
-                    <img src="/student life photo.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
+                    <img src="/student life photo.jpeg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/evening-views.mp4')}>
-                    <img src="/evening-views.jpg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
+                    <img src="/evening photo.jpeg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic-buildings.mp4')}>
-                    <img src="/academic-buildings.jpg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
+                    <img src="/academing photo.jpeg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
                 </div>
             </div>
         </div>
