@@ -486,7 +486,7 @@ useEffect(() => {
           </div>*/}
           <div className="btn-container">
             <Link to="/all-teachers" className="know-more-btn">
-                Know More — View All Faculty <i className="fas fa-arrow-right" style={{ marginLeft: '10px' }}></i>
+                Know More — View All Faculty <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
         </section>
