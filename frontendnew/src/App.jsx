@@ -572,9 +572,12 @@ useEffect(() => {
     </div>
 
     <div className="btn-container">
-        <a href="/all-alumni" className="view-all-link">
+        {/*<a href="/all-alumni" className="view-all-link">
             View All Alumni <i className="fas fa-arrow-right"></i>
-        </a>
+        </a>*/}
+        <Link to="/all-alumni" className="view-all-link">
+                View All Alumni <i className="fas fa-arrow-right"></i>
+            </Link>
     </div>
 </section>
 {/* --- ALUMNI SECTION END --- */}
