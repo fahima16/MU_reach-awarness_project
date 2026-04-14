@@ -83,7 +83,7 @@ body {
 /* HERO */
 
 .hero {
-    margin-top: 70px;
+    margin-top: -60px;
     padding-top: 70px;
     position: relative;
     width: 100%;
@@ -748,6 +748,7 @@ body {
 
 .map-top-image {
     width: 100% !important;
+    height: 600px !important;
     margin: 0 !important;
     padding: 0 !important;
     line-height: 0;
@@ -755,10 +756,10 @@ body {
 
 .map-top-image img {
     width: 100%;
-    height: 600px;
+    height: 100%;
     display: block;
     border-radius: 0 !important;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 /* NAV ACTIVE STATE */
@@ -1269,4 +1270,37 @@ body {
      
 
    
+}
+/* ============================================================
+   FIX FOR TEACHERS PAGE GRID
+   ============================================================ */
+
+/* টিচার্স পেজের কন্টেইনারকে ফুল উইথ করা */
+.teachers-page-wrapper .container {
+    display: block !important; /* গ্রিড কলাম লেআউট বাতিল করা */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* গ্রিডকে ২ কলামে ফিক্স করা */
+.teachers-page-wrapper .teachers-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 30px !important;
+    width: 100% !important;
+    margin-top: 40px;
+}
+
+/* মোবাইল রেসপন্সিভ - মোবাইলে কার্ডগুলো একটার নিচে একটা আসবে */
+@media (max-width: 768px) {
+    .teachers-page-wrapper .teachers-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* কার্ডের ভেতরে ইমেজ বা টেক্সট যেন বাইরে না যায় */
+.teachers-page-wrapper .t-card {
+    width: 100%;
+    box-sizing: border-box;
 }
