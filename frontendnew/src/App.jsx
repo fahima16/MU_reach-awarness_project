@@ -449,7 +449,7 @@ useEffect(() => {
         <section className="leaders2-section">
           <div className="leaders-grid">
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=11" alt="Faculty" />
+              <img src="/photo15.jpeg" alt="Faculty" />
               <p className="leader-dept">CSE Department</p>
               <h3 className="leader-name">Prof. Dr. M. Choudhury</h3>
               <div className="leader-info">
@@ -459,7 +459,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=12" alt="Faculty" />
+              <img src="/photo16.jpeg" alt="Faculty" />
               <p className="leader-dept">BBA Department</p>
               <h3 className="leader-name">Dr. Fahmida Liza</h3>
               <div className="leader-info">
@@ -469,7 +469,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=13" alt="Faculty" />
+              <img src="/photo17.jpeg" alt="Faculty" />
               <p className="leader-dept">EEE Department</p>
               <h3 className="leader-name">Prof. Ahmed Rafat</h3>
               <div className="leader-info">
