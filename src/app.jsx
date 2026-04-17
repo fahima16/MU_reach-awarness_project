@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 
-
 const RecommendationPoll = () => {
   const [voted, setVoted] = useState(false);
   const [choice, setChoice] = useState(null);
