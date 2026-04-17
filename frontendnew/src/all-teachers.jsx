@@ -1,37 +1,118 @@
 import React, { useEffect, useState } from 'react';
 import './all-teachers.css';
+import axios from 'axios';
+
+
 
 const AllTeachers = () => {
+  const [districtStats, setDistrictStats] = useState([]);
+  const defaultDistricts = [
+  { _id: 'Sylhet', totalTeachers: 0 },
+  { _id: 'Dhaka', totalTeachers: 0 },
+  { _id: 'Chittagong', totalTeachers: 0 },
+  { _id: 'Rajshahi', totalTeachers: 0 },
+  { _id: 'Khulna', totalTeachers: 0 }
+];
+
+  useEffect(() => {
+    const fetchDistrictStats = async () => {
+      try {
+      const response = await axios.get('http://localhost:5000/api/teachers/stats-by-district');
+      
+      // ডাটাবেজ থেকে আসা ডেটাকে ডিফল্ট ডিস্ট্রিক্টগুলোর সাথে মিশিয়ে ফেলা (Merge)
+      const mergedData = defaultDistricts.map(defDist => {
+        const found = response.data.find(d => d._id === defDist._id);
+        return found ? found : defDist;
+      });
+
+      // এরপর ডাটাবেজের অন্য কোনো নতুন জেলা থাকলে সেগুলোকেও যোগ করা (যদি সেরা ৫-এ থাকে)
+      const dbOnlyDistricts = response.data.filter(
+        d => !defaultDistricts.find(def => def._id === d._id)
+      );
+
+      const finalDisplay = [...mergedData, ...dbOnlyDistricts]
+        .sort((a, b) => b.totalTeachers - a.totalTeachers) // সংখ্যা অনুযায়ী সাজানো
+        .slice(0, 5); // সব সময় সেরা ৫টি দেখানো
+
+      setDistrictStats(finalDisplay);
+    } catch (err) {
+      console.error("Error:", err);
+      setDistrictStats(defaultDistricts); // এরর হলে অন্তত ডিফল্টগুলো দেখাবে
+    }
+  };
+    fetchDistrictStats();
+  }, []);
+  const [stats, setStats] = useState({
+    yesPercentage: 0,
+    noPercentage: 0,
+    totalTeachers: 0
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/teachers/feedback-stats');
+        if (response.data && !response.data.message) {
+          setStats({
+            yesPercentage: response.data.yesPercentage,
+            noPercentage: response.data.noPercentage,
+            totalTeachers: response.data.totalTeachers
+          });
+        }
+      } catch (err) {
+        console.error("Poll fetch error:", err);
+      }
+    };
+    fetchStats();
+  }, []);
   // রেজিস্ট্রেশন ফর্মের জন্য স্টেট
   const [teachers, setTeachers]=useState([]);
   const [regData, setRegData] = useState({
-    fullName: '', department: '', district: '', experience: '', employeeId: '', bio: '', recommended: true,
-    whyNoMessage: '', satisfactionLevel: 'Very High',
+    fullName: '', department: '', district: '', experience: '', employeeId: '', bio: '', recommended: '',
+    whyNoMessage: '', satisfactionLevel: '',
   // ratings fields
-  academicEngagement: 5,
-  classroomBehavior: 5,
-  resourceUtilization: 5,
-  punctuality: 5,
-  studentParticipation: 5
+  academicEngagement: 0,
+  classroomBehavior: 0,
+  resourceUtilization: 0,
+  punctuality: 0,
+  studentParticipation: 0
   });
+  
   // ফটো আপলোডের জন্য আলাদা স্টেট
   const [photo, setPhoto] = useState(null);
 
   useEffect(()=> {fetchTeachers();}, []);
 
   const fetchTeachers = async () => {
+
     try {
-      // তোমার ব্যাকএন্ড রাউট অনুযায়ী URL (ধরি localhost:5000)
-      const response = await fetch('http://localhost:5000/api/teachers'); 
-      const data = await response.json();
-      setTeachers(data); // ডাটাবেজের সব টিচার এখন 'teachers' ভেরিয়েবলে
-    } catch (err) {
-      console.error("Fetch error:", err);
-    }
-  };
+
+      const response = await axios.get('http://localhost:5000/api/teachers');
+
+// কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
+
+        console.log("Backend response:", response.data);
+
+
+
+// যদি সরাসরি অ্যারে আসে তবে এটা কাজ করবে
+
+        setTeachers(response.data);
+
+      } catch (err) {
+
+      console.error("Data load error:", err);
+
+  }
+
+}
   // ইনপুট হ্যান্ডলার ফাংশন
   const handleInputChange = (e) => {
-    setRegData({ ...regData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setRegData({
+      ...regData,
+      [name]: type === 'checkbox' ? checked : value
+    });
   };
 
 
@@ -41,43 +122,41 @@ const AllTeachers = () => {
 
   // ১. সাধারণ টেক্সট ফিল্ডগুলো (Image 9 এর স্কিমা অনুযায়ী)
   formData.append('fullName', regData.fullName);
-  formData.append('department', regData.department);
-  formData.append('district', regData.district);
-  formData.append('experience', Number(regData.experience)); // Number হতে হবে
-  formData.append('employeeId', regData.employeeId);
-  formData.append('bio', regData.bio);
-  formData.append('recommended', regData.recommended);
-  formData.append('satisfactionLevel', regData.satisfactionLevel);
+    formData.append('department', regData.department);
+    formData.append('district', regData.district);
+    formData.append('your_experience', Number(regData.your_experience));
+    formData.append('experience', regData.experience);
+    formData.append('employeeId', regData.employeeId); // This is the KEY
+    formData.append('bio', regData.bio);
+    formData.append('recommended', regData.recommended);
+    formData.append('satisfactionLevel', regData.satisfactionLevel);
+    formData.append('whyNoMessage', regData.whyNoMessage);
 
-  // ২. রেটিং অবজেক্টের ডাটা (Image 9 এর ratings সেকশন)
-  // ব্যাকএন্ডে যেহেতু ratings একটি অবজেক্ট, তাই এভাবে পাঠাতে হবে
-  formData.append('ratings[academicEngagement]', regData.academicEngagement);
-  formData.append('ratings[classroomBehavior]', regData.classroomBehavior);
-  formData.append('ratings[resourceUtilization]', regData.resourceUtilization);
-  formData.append('ratings[punctuality]', regData.punctuality);
-  formData.append('ratings[studentParticipation]', regData.studentParticipation);
+    // রেটিং অবজেক্ট (ব্যাকএন্ডের রিকোয়ারমেন্ট অনুযায়ী)
+    formData.append('academicEngagement', Number(regData.academicEngagement));
+    formData.append('classroomBehavior', Number(regData.classroomBehavior));
+    formData.append('resourceUtilization', Number(regData.resourceUtilization));
+    formData.append('punctuality', Number(regData.punctuality));
+    formData.append('studentParticipation', Number(regData.studentParticipation));
 
   // ৩. ফটো (Image 9 এ photoUrl নামে আছে)
   if(photo) formData.append('photo', photo); 
 
   try {
-    const response = await fetch('http://localhost:5000/api/teachers/register', {
-      method: 'POST',
-      body: formData 
-    });
+      const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
 
-    const result = await response.json();
-    if (response.ok) {
-      alert("টিচার সফলভাবে রেজিস্টার হয়েছে!");
-      fetchTeachers(); // নতুন লিস্ট দেখানোর জন্য
-    } else {
-      console.log("Backend Error:", result.error);
+      if (response.data.success) {
+        alert("Data successfully synced with Database!");
+        setRegData({ ...regData, fullName: '', bio: '' }); // Form clear
+        setPhoto(null);
+        fetchTeachers(); // সাথে সাথে ড্যাশবোর্ড আপডেট হবে
+      }
+    } catch (err) {
+      alert("Error: " + (err.response?.data?.error || "Server error"));
     }
-  } catch (err) {
-    alert("সার্ভারের সাথে কানেক্ট করা যাচ্ছে না!");
-  }
-};
-  
+  };
   useEffect(() => {
     // ── SCROLL REVEAL ──
     const revealObs = new IntersectionObserver(entries => {
@@ -225,6 +304,73 @@ const AllTeachers = () => {
           </div>
 
           <div className="teachers-grid">
+
+            {teachers && teachers.length > 0 ? (
+  // filter দিয়ে নিশ্চিত করছি যেন শুধু নাম আছে এমন টিচারদের দেখায়
+  teachers.filter(t => t.fullName).map((teacher, index) => (
+    <div className="t-card reveal visible" key={teacher._id || index}>
+      <div className="t-card-accent"></div>
+      <div className="t-card-body">
+        
+        {/* কার্ড নম্বর ঠিক করা হয়েছে: এখানে ব্যাকটিক্স (`) হবে */}
+        <div className="t-card-num">
+          {index + 1 < 10 ? `0${index + 1}` : index + 1}
+        </div>
+        
+        <div className="t-card-top">
+          <div className="t-avatar-wrap">
+            {teacher.photoUrl ? (
+              <img 
+                /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
+                src={`http://localhost:5000/${teacher.photoUrl.replace(/\\/g, '/')}`} 
+                alt={teacher.fullName} 
+                className="t-avatar" 
+                style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+              />
+            ) : (
+              <div className="t-avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gold)', color: 'white', fontSize: '1.2rem' }}>
+                {teacher.fullName?.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <div className="t-avatar-ring"></div>
+          </div>
+          
+          <div className="t-card-info">
+            <div className="t-name">{teacher.fullName}</div>
+            <div className="t-dept-badge">💻 {teacher.department} Department</div>
+          </div>
+        </div>
+
+        <div className="t-meta">
+          <div className="t-meta-item">
+            <span className="t-meta-icon">📍</span> {teacher.district} District
+          </div>
+          <div className="t-meta-item">
+            <span className="t-meta-icon">⏱️</span> {teacher.experience} Years Exp.
+          </div>
+          <div className="t-meta-item">
+            <span className="t-meta-icon">😊</span> {teacher.satisfactionLevel || 'Satisfied'}
+          </div>
+        </div>
+
+        <div className="t-quote">
+          "{teacher.bio || "No bio provided."}"
+        </div>
+      </div>
+
+      <div className="t-card-footer">
+        <div className="t-joined">
+          Joined MU · {teacher.createdAt ? new Date(teacher.createdAt).getFullYear() : '2026'}
+        </div>
+        <div className="t-arrow">↗</div>
+      </div>
+    </div>
+  ))
+) : (
+  <div className="no-data-msg" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: 'var(--steel)' }}>
+     No faculty profiles found. Please register to see your card here!
+  </div>
+)}
             {/* Teacher Card 01 */}
             {/*<div className="t-card reveal delay-1">
               <div className="t-card-accent"></div>
@@ -359,51 +505,7 @@ const AllTeachers = () => {
         </div>
       </div>*/}
 
-          {teachers.length > 0 ? (
-    teachers.map((t, index) => (
-      <div className="t-card reveal visible" key={t._id || index}>
-        <div className="t-card-accent"></div>
-        <div className="t-card-body">
-          {/* ইনডেক্স থেকে সিরিয়াল নাম্বার তৈরি (০১, ০২...) */}
-          <div className="t-card-num">
-            {index + 1 < 10 ? `0${index + 1}` : index + 1}
-          </div>
           
-          <div className="t-card-top">
-            <div className="t-avatar-wrap">
-              {/* ডাটাবেজ থেকে আসা ইমেজ */}
-              {t.photoUrl ? (
-                <img src={`http://localhost:5000/${t.photoUrl}`} alt={t.fullName} className="t-avatar" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
-              ) : (
-                <div className="t-avatar">{t.fullName?.charAt(0)}</div>
-              )}
-              <div className="t-avatar-ring"></div>
-            </div>
-            
-            <div className="t-card-info">
-              <div className="t-name">{t.fullName}</div>
-              <div className="t-dept-badge">💻 {t.department} Department</div>
-            </div>
-          </div>
-
-          <div className="t-meta">
-            <div className="t-meta-item"><span className="t-meta-icon">📍</span> {t.district}</div>
-            <div className="t-meta-item"><span className="t-meta-icon">⏱️</span> {t.experience} Years Exp.</div>
-            <div className="t-meta-item"><span className="t-meta-icon">😊</span> {t.satisfactionLevel}</div>
-          </div>
-
-          <div className="t-quote">"{t.bio}"</div>
-        </div>
-
-        <div className="t-card-footer">
-          <div className="t-joined">Joined MU · {new Date(t.createdAt).getFullYear()}</div>
-          <div className="t-arrow">↗</div>
-        </div>
-      </div>
-    ))
-  ) : (
-    <div className="no-data">কোনো টিচার ডাটা পাওয়া যায়নি।</div>
-  )}
 
           
           </div>
@@ -493,7 +595,7 @@ const AllTeachers = () => {
             <div className="district-stats">
               <div className="district-title">Top Districts by Faculty Count</div>
               <div className="district-list">
-                {[
+                {/*{[
                   { rank: '#1', name: 'Sylhet', count: '48 teachers', width: '100%' },
                   { rank: '#2', name: 'Dhaka', count: '41 teachers', width: '85%' },
                   { rank: '#3', name: 'Chittagong', count: '35 teachers', width: '73%' },
@@ -510,7 +612,31 @@ const AllTeachers = () => {
                       <div className="district-bar-fill" data-width={item.width}></div>
                     </div>
                   </div>
-                ))}
+                ))}*/}
+                {districtStats.map((item, index) => {
+    const topCount = districtStats[0]?.totalTeachers || 1; 
+    const barWidth = item.totalTeachers > 0 ? (item.totalTeachers / topCount) * 100 : 5; // ০ হলেও ছোট একটা দাগ দেখাবে
+
+    return (
+      <div className="district-item" key={index}>
+        <div className="district-rank-row">
+          <div className="district-rank">#{index + 1}</div>
+          <div className="district-name">{item._id}</div>
+          <div className="district-count">{item.totalTeachers} teachers</div>
+        </div>
+        <div className="district-bar-track">
+          <div 
+            className="district-bar-fill" 
+            style={{ 
+              width: `${barWidth}%`, 
+              transition: 'width 1s ease-in-out',
+              backgroundColor: item.totalTeachers > 0 ? 'var(--gold)' : '#e7cf31' // ডাটা না থাকলে হালকা কালার
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  })}
               </div>
             </div>
           </div>
@@ -544,7 +670,7 @@ const AllTeachers = () => {
         </div>
       
             <div className="form-right reveal delay-2">
-              <form id="feedbackForm" onSubmit={submitFeedback}>
+              <form id="regForm" onSubmit={submitReg}>
                 <div className="form-group">
                   <label className="form-label">Full Name</label>
                   <input type="text" name= "fullName" 
@@ -672,7 +798,7 @@ const AllTeachers = () => {
 </div>
 
 {/* Star Rating Section */}
-<div className="form-group">
+{/*<div className="form-group">
   <label className="form-label">Rate Student Behavior</label>
   <div className="star-rating">
     <input type="radio" name="stars" id="s5" value="5" /><label htmlFor="s5">★</label>
@@ -681,6 +807,37 @@ const AllTeachers = () => {
     <input type="radio" name="stars" id="s2" value="2" /><label htmlFor="s2">★</label>
     <input type="radio" name="stars" id="s1" value="1" /><label htmlFor="s1">★</label>
   </div>
+</div>*/}
+
+<div className="form-group">
+  <label className="form-label" style={{marginBottom: '15px', display: 'block', fontWeight: 'bold'}}>Rate Student Behavior (1-5 Stars)</label>
+  
+  {[
+    { label: "Academic Engagement", name: "academicEngagement" },
+    { label: "Classroom Behavior", name: "classroomBehavior" },
+    { label: "Resource Utilization", name: "resourceUtilization" },
+    { label: "Punctuality", name: "punctuality" },
+    { label: "Student Participation", name: "studentParticipation" }
+  ].map((item, idx) => (
+    <div key={idx} className="rating-row" style={{marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+      <span style={{fontSize: '0.9rem', color: 'var(--steel)'}}>{item.label}</span>
+      <div className="star-rating">
+        {[5, 4, 3, 2, 1].map(num => (
+          <React.Fragment key={num}>
+            <input 
+              type="radio" 
+              name={item.name} 
+              id={`${item.name}-${num}`} 
+              value={num} 
+              checked={Number(regData[item.name]) === num}
+              onChange={(e) => setRegData({...regData, [item.name]: Number(e.target.value)})}
+            />
+            <label htmlFor={`${item.name}-${num}`}>★</label>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  ))}
 </div>
 
 {/* Satisfaction Level Section */}
@@ -852,11 +1009,12 @@ const AllTeachers = () => {
               <div className="poll-bar-track">
                 <div 
                   className="poll-bar-fill poll-yes-fill" 
-                  data-width="94%" 
-                  style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}
+                  /*data-width="94%" */
+                  style={{ width: `${stats.yesPercentage}%`, transition: 'width 1.5s ease-in-out' }}
+                  /*style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}*/
                 ></div>
               </div>
-              <div className="poll-pct">94%</div>
+              <div className="poll-pct">{stats.yesPercentage}%</div>
             </div>
 
             {/* NO বার */}
@@ -865,16 +1023,18 @@ const AllTeachers = () => {
               <div className="poll-bar-track">
                 <div 
                   className="poll-bar-fill poll-no-fill" 
-                  data-width="6%" 
-                  style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}
+                  /*data-width="6%" */
+                  style={{ width: `${stats.noPercentage}%`, transition: 'width 1.5s ease-in-out' }}
+                  /*style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}*/
                 ></div>
               </div>
-              <div className="poll-pct poll-no-pct">6%</div>
+              <div className="poll-pct poll-no-pct">{stats.noPercentage}%</div>
             </div>
           </div>
           
           <div className="poll-total">
-            Based on 287 teacher responses · Last updated: just now
+            {/*Based on 287 teacher responses · Last updated: just now*/}
+            Based on {stats.totalTeachers} teacher responses · Last updated: just now
           </div>
         </div>
       </div>
@@ -908,7 +1068,7 @@ const AllTeachers = () => {
 
       {/* ডান পাশের রেজিস্ট্রেশন ফর্ম */}
       <div className="reveal delay-2">
-        <form id="regForm" onSubmit={(e) => {
+        {/*<form id="regForm" onSubmit={(e) => {
           e.preventDefault();
           document.getElementById('regSuccessMsg').style.display = 'block';
         }}>
@@ -956,7 +1116,125 @@ const AllTeachers = () => {
           <div className="form-group">
             <label className="form-label">Upload Photo</label>
             <input type="file" className="form-input" accept="image/*" style={{ padding: '0.65rem 1rem' }} />
-          </div>
+          </div>*/}
+
+          <form id="regForm" onSubmit={submitReg}>
+  {/* Full Name Field */}
+  <div className="form-group">
+    <label className="form-label">Full Name</label>
+    <input 
+      type="text" 
+      name="fullName" 
+      className="form-input" 
+      placeholder="Prof. / Dr. Your Name" 
+      value={regData.fullName}
+      onChange={handleInputChange}
+      required 
+    />
+  </div>
+
+  <div className="form-row">
+    {/* Department Field */}
+    <div className="form-group">
+      <label className="form-label">Department</label>
+      <select 
+        className="form-select" 
+        name="department" 
+        value={regData.department}
+        onChange={handleInputChange}
+        required
+      >
+        <option value="">Select</option>
+        <option value="CSE">CSE</option>
+        <option value="BBA">BBA</option>
+        <option value="Law">Law</option>
+        <option value="EEE">EEE</option>
+        <option value="Pharmacy">Pharmacy</option>
+        <option value="Architecture">Architecture</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="English">English</option>
+        <option value="Biotechnology">Biotechnology</option>
+      </select>
+    </div>
+
+    {/* District Field */}
+    <div className="form-group">
+      <label className="form-label">District</label>
+      <select 
+        className="form-select" 
+        name="district" 
+        value={regData.district}
+        onChange={handleInputChange}
+        required
+      >
+        <option value="">Select</option>
+        <option value="Sylhet">Sylhet</option>
+        <option value="Dhaka">Dhaka</option>
+        <option value="Chittagong">Chittagong</option>
+        <option value="Rajshahi">Rajshahi</option>
+        <option value="Khulna">Khulna</option>
+        <option value="Barisal">Barisal</option>
+      </select>
+    </div>
+  </div>
+
+  <div className="form-row">
+    {/* Experience Field */}
+    <div className="form-group">
+      <label className="form-label">Years of Experience</label>
+      <input 
+        type="number" 
+        name="experience" 
+        className="form-input" 
+        placeholder="e.g. 12" 
+        min="0" 
+        max="50"
+        value={regData.experience}
+        onChange={handleInputChange}
+      />
+    </div>
+
+    {/* Employee ID Field (The Connector) */}
+    <div className="form-group">
+      <label className="form-label">Employee ID</label>
+      <input 
+        type="text" 
+        name="employeeId" 
+        className="form-input" 
+        placeholder="e.g. MU-2010-042" 
+        value={regData.employeeId}
+        onChange={handleInputChange}
+        required
+      />
+    </div>
+  </div>
+
+  {/* Bio Field */}
+  <div className="form-group">
+    <label className="form-label">Short Bio</label>
+    <textarea 
+      name="bio"
+      className="form-textarea" 
+      style={{ minHeight: '80px' }} 
+      placeholder="Brief description of your academic background and expertise..."
+      value={regData.bio}
+      onChange={handleInputChange}
+    ></textarea>
+  </div>
+
+  {/* Photo Upload Field */}
+  <div className="form-group">
+    <label className="form-label">Upload Photo</label>
+    <input 
+      type="file" 
+      className="form-input" 
+      accept="image/*" 
+      style={{ padding: '0.65rem 1rem' }} 
+      onChange={(e) => setPhoto(e.target.files[0])}
+    />
+  </div>
+
+  
 
           <button type="submit" className="btn-gold" style={{ width: '100%', padding: '1rem', fontSize: '0.82rem', letterSpacing: '0.15em' }}>
             Register & Join Faculty Panel →

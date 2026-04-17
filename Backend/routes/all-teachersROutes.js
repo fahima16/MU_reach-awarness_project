@@ -1,27 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const Teacher = require('../models/all-teachers');
+const multer = require('multer');
+
+// ছবি সেভ করার জন্য সাধারণ মেমোরি স্টোরেজ (যাতে এরর না আসে)
+const upload = multer({ dest: 'uploads/' });
 
 // ১. ইমেজ ১ ও ৪ কানেক্টেড রুট: রেজিস্ট্রেশন এবং ফিডব্যাক
 // এই একটি রুট দিয়েই টিচার রেজিস্ট্রেশন হবে এবং পরে ফিডব্যাক দিলে ওই আইডিতেই আপডেট হবে
-router.post('/register', async (req, res) => {
+router.post('/register', upload.single('photo'), async (req, res) => {
     try {
+        console.log("Input Data:", req.body); // টার্মিনালে ডাটা আসছে কি না চেক করো
         const { employeeId } = req.body;
 
-        // upsert: true দেওয়ার কারণে আইডি মিললে আপডেট হবে, না থাকলে নতুন তৈরি হবে
+        if (!employeeId) {
+            return res.status(400).json({ success: false, error: "Employee ID is missing!" });
+        }
+        const updateData={...req.body,
+            ratings:{
+            academicEngagement: Number(req.body.academicEngagement) || 0,
+            classroomBehavior: Number(req.body.classroomBehavior) || 0,
+            resourceUtilization: Number(req.body.resourceUtilization) || 0,
+            punctuality: Number(req.body.punctuality) || 0,
+            studentParticipation: Number(req.body.studentParticipation) || 0}
+        };
+        if(req.file){
+            updateData.photoUrl=req.file.path;
+        }
+
         const teacher = await Teacher.findOneAndUpdate(
-            { employeeId: employeeId }, 
-            { $set: req.body }, 
-            { new: true, upsert: true, runValidators: true }
+            { employeeId: employeeId },
+            { $set: updateData }, 
+            { new: true, upsert: true }
         );
 
-        res.status(201).json({ 
-            success: true, 
-            message: "Data processed successfully!",
-            data: teacher 
-        });
+        res.status(200).json({ success: true, data: teacher });
     } catch (err) {
-        res.status(400).json({ success: false, error: err.message });
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 
@@ -37,9 +52,9 @@ router.get('/featured', async (req, res) => {
 });
 
 // ৩. ইমেজ ৬ ও ৩ এর জন্য: সব টিচারের লিস্ট (Meet Our Faculty Leaders)
-router.get('/all', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const teachers = await Teacher.find().sort({ fullName: 1 });
+        const teachers = await Teacher.find().sort({ createdAt: -1 });
         res.json(teachers);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -73,11 +88,11 @@ router.get('/feedback-stats', async (req, res) => {
                         $sum: { $cond: [{ $eq: ["$recommended", true] }, 1, 0] } 
                     },
                     // ইমেজ ২: ৫টি পয়েন্টের গড় (Average) বের করা
-                    avgAcademic: { $avg: "$ratings.academicEngagement" },
-                    avgBehavior: { $avg: "$ratings.classroomBehavior" },
-                    avgResources: { $avg: "$ratings.resourceUtilization" },
-                    avgPunctuality: { $avg: "$ratings.punctuality" },
-                    avgParticipation: { $avg: "$ratings.studentParticipation" }
+                    avgAcademic: { $avg: "$academicEngagement" },
+                    avgBehavior: { $avg: "$classroomBehavior" },
+                    avgResources: { $avg: "$resourceUtilization" },
+                    avgPunctuality: { $avg: "$punctuality" },
+                    avgParticipation: { $avg: "$studentParticipation" }
                 }
             }
         ]);

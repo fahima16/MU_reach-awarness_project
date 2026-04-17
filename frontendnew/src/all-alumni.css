@@ -170,7 +170,21 @@
 }
         .pin { position: absolute; width: 12px; height: 12px; background: var(--accent-red); border-radius: 50%; box-shadow: 0 0 15px var(--accent-red); cursor: pointer; }
 
-        
+/* পিন এর ওপর মাউস নিলে টুলটিপ দেখাবে */
+.glowing-pin:hover .tooltip-text {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* পিন এর ডিজাইন আরও সুন্দর করতে চাইলে */
+.glowing-pin {
+    transition: transform 0.2s ease-in-out;
+}
+
+.glowing-pin:hover {
+    transform: scale(1.5); /* মাউস নিলে ডটটা একটু বড় হবে */
+    z-index: 10;
+}
         .testimonial-slider {
             max-width: 800px; margin: 0 auto 80px auto; text-align: center;
             padding: 40px; background: var(--glass); border-radius: 24px;
