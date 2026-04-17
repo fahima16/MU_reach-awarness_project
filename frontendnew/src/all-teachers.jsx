@@ -129,10 +129,38 @@ const AllTeachers = () => {
     <div className="teachers-page-wrapper">
       <div className="share-toast" id="shareToast">🔗 Link copied to clipboard!</div>
 
-      <nav>
-        <div className="nav-left">
-          <button onClick={() => window.history.back()} className="nav-link back-btn" style={{background:'none', border:'none', cursor:'pointer', color:'inherit', font:'inherit'}}>Go back</button>
-        </div>
+      <nav style={{borderBottom : 'none',boxShadow : 'none'}}>
+       <div className="nav-left">
+  <button 
+    onClick={() => window.history.back()} 
+    className="nav-link back-btn" 
+    style={{
+      background: 'rgba(59, 130, 246, 0.1)', // Shundor blue tint
+      border: '1px solid rgba(59, 130, 246, 0.3)', 
+      cursor: 'pointer', 
+      color: '#3b82f6', 
+      padding: '8px 16px', 
+      borderRadius: '10px',
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      transition: 'all 0.3s ease',
+      display: 'inline-flex',
+      alignItems: 'center',
+      outline: 'none'
+    }}
+    // Hover effect-er jonno nicher 2-ti line khub guruttopurno
+    onMouseEnter={(e) => {
+      e.currentTarget.style.background = '#3b82f6';
+      e.currentTarget.style.color = 'white';
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+      e.currentTarget.style.color = '#3b82f6';
+    }}
+  >
+    <span style={{ marginRight: '5px' }}>←</span> Go back
+  </button>
+</div>
         <div className="nav-center"></div>
         <div className="nav-right">
           <div className="hamburger" onClick={toggleMenu} id="hamburger">
@@ -380,10 +408,7 @@ const AllTeachers = () => {
           
           </div>
 
-          <div className="know-more-bar reveal">
-            <div className="know-more-text"><strong>320+ faculty members</strong> across all departments — explore every educator at MU.</div>
-            <button className="btn-know">Know More — View All Teachers <span className="btn-know-arrow">→</span></button>
-          </div>
+         
         </div>
       </section>
 
@@ -566,11 +591,9 @@ const AllTeachers = () => {
       <option value="BBA">BBA</option>
       <option value="Law">Law</option>
       <option value="EEE">EEE</option>
-      <option value="Pharmacy">Pharmacy</option>
-      <option value="Architecture">Architecture</option>
-      <option value="Civil Engineering">Civil Engineering</option>
+
       <option value="English">English</option>
-      <option value="Biotechnology">Biotechnology</option>
+
     </select>
   </div>
 
@@ -959,20 +982,28 @@ const AllTeachers = () => {
           A leading private university in Sylhet, Bangladesh. Committed to academic excellence and shaping the leaders of tomorrow.
         </div>
         <div className="footer-socials">
-          <a className="social" href="#">f</a>
-          <a className="social" href="#">in</a>
-          <a className="social" href="#">tw</a>
-          <a className="social" href="#">yt</a>
+          <a 
+    className="social" 
+    href="https://www.facebook.com/share/1Bm393EyEE/?mibextid=wwXIfr" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    fb
+  </a>
+  <a 
+    className="social" 
+    href="https://www.metrouni.edu.bd/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    web
+  </a>
+         
         </div>
       </div>
 
       {/* Quick Links */}
-      <div>
-        <div className="footer-head">Quick Links</div>
-        <ul className="footer-links">
-          <li><a href="/leader">Leader</a></li>
-        </ul>
-      </div>
+      
 
       {/* Teachers Section */}
       <div>
