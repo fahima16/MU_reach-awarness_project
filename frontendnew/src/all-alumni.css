@@ -144,12 +144,29 @@
         .featured-story h2 { font-size: 2.2rem; margin: 10px 0; }
         .advice-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; font-style: italic; border-left: 4px solid var(--accent-blue); }
 
- 
-        .map-section { text-align: center; margin-bottom: 80px; }
-        .map-placeholder {
-            width: 100%; height: 400px; background: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg') no-repeat center;
-            background-size: contain; position: relative; opacity: 0.4; filter: invert(1);
-        }
+ .map-section { 
+    text-align: center; 
+    margin-bottom: 80px; 
+    padding-top: 40px; /* Optional: upore ektu space dibe */
+}
+
+/* Title-er niche gap deyar jonno */
+.map-section h2 {
+    margin-bottom: 50px !important; /* Title ar map-er moddhe gap barabe */
+    font-size: 2rem;
+    color: white;
+}
+
+.map-placeholder {
+    width: 100%; 
+    height: 400px; 
+    background: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg') no-repeat center;
+    background-size: contain; 
+    position: relative; 
+    opacity: 0.4; 
+    filter: invert(1);
+    margin-top: 20px; /* Backup gap */
+}
         .pin { position: absolute; width: 12px; height: 12px; background: var(--accent-red); border-radius: 50%; box-shadow: 0 0 15px var(--accent-red); cursor: pointer; }
 
         
@@ -177,4 +194,7 @@
             .featured-story { grid-template-columns: 1fr; padding: 20px; }
             .stats-bar { grid-template-columns: 1fr 1fr; }
             .filter-section { flex-direction: column; }
+
         }
+
+        
