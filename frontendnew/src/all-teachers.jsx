@@ -236,7 +236,7 @@ const AllTeachers = () => {
         </div>
         <div className="hero-right">
           <div className="hero-stat">
-            <div className="stat-num">320+</div>
+            <div className="stat-num">200+</div>
             <div className="stat-info">
               <div className="stat-lbl">Expert Faculty</div>
               <div className="stat-desc">Across all departments</div>
@@ -261,7 +261,7 @@ const AllTeachers = () => {
 
       <div className="dept-strip">
         <div className="strip-track">
-          {["CSE", "BBA", "Law", "EEE", "Pharmacy", "Architecture", "Civil Engineering", "English", "Biotechnology", "Mathematics", "CSE", "BBA", "Law", "EEE", "Pharmacy", "Architecture", "Civil Engineering", "English"].map((item, index) => (
+          {["CSE", "SWE", "Law & Justice", "EEE", "Data Science", "Economics", "English","CSE", "SWE", "Law & Justice", "EEE", "Data Science", "Economics", "English" ].map((item, index) => (
             <span key={index} className="strip-item">{item} <span className="strip-dot"></span></span>
           ))}
         </div>
