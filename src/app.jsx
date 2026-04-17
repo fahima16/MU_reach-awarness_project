@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 
+
 const RecommendationPoll = () => {
   const [voted, setVoted] = useState(false);
   const [choice, setChoice] = useState(null);
@@ -376,7 +377,7 @@ useEffect(() => {
           <div className="club-showcase-grid">
             <div className="showcase-card">
               <div className="image-container">
-                <img src="football.jpg" alt="Football" />
+                <img src="/sports.jpeg" alt="Football" />
                 <span className="badge-champions">CHAMPIONS</span>
               </div>
               <h4>MU Sports Club</h4>
@@ -384,7 +385,7 @@ useEffect(() => {
             </div>
             <div className="showcase-card">
               <div className="image-container">
-                <img src="rugby.jpg" alt="Rugby" />
+                <img src="/islamic.jpeg" alt="Rugby" />
                 <span className="badge-rising">RISING STARS</span>
               </div>
               <h4>MU Islamic Society</h4>
@@ -392,7 +393,7 @@ useEffect(() => {
             </div>
             <div className="showcase-card">
               <div className="image-container">
-                <img src="athletics.jpg" alt="Athletics" />
+                <img src="/bncc.jpeg" alt="Athletics" />
                 <span className="badge-record">RECORD BREAKERS</span>
               </div>
               <h4>MU BNCC Platoon</h4>
@@ -449,7 +450,7 @@ useEffect(() => {
         <section className="leaders2-section">
           <div className="leaders-grid">
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=11" alt="Faculty" />
+              <img src="/photo15.jpeg" alt="Faculty" />
               <p className="leader-dept">CSE Department</p>
               <h3 className="leader-name">Prof. Dr. M. Choudhury</h3>
               <div className="leader-info">
@@ -459,7 +460,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=12" alt="Faculty" />
+              <img src="/photo16.jpeg" alt="Faculty" />
               <p className="leader-dept">BBA Department</p>
               <h3 className="leader-name">Dr. Fahmida Liza</h3>
               <div className="leader-info">
@@ -469,7 +470,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="leader-card">
-              <img src="https://i.pravatar.cc/150?u=13" alt="Faculty" />
+              <img src="/photo17.jpeg" alt="Faculty" />
               <p className="leader-dept">EEE Department</p>
               <h3 className="leader-name">Prof. Ahmed Rafat</h3>
               <div className="leader-info">
@@ -486,7 +487,7 @@ useEffect(() => {
           </div>*/}
           <div className="btn-container">
             <Link to="/all-teachers" className="know-more-btn">
-                Know More — View All Faculty <i className="fas fa-arrow-right" style={{ marginLeft: '10px' }}></i>
+                Know More — View All Faculty <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
         </section>
@@ -572,9 +573,12 @@ useEffect(() => {
     </div>
 
     <div className="btn-container">
-        <a href="/all-alumni" className="view-all-link">
+        {/*<a href="/all-alumni" className="view-all-link">
             View All Alumni <i className="fas fa-arrow-right"></i>
-        </a>
+        </a>*/}
+        <Link to="/all-alumni" className="view-all-link">
+                View All Alumni <i className="fas fa-arrow-right"></i>
+            </Link>
     </div>
 </section>
 {/* --- ALUMNI SECTION END --- */}
@@ -587,7 +591,7 @@ useEffect(() => {
     <hr className="section-divider" />
 
     <div className="map-top-image">
-        <img src="/photo11.jpeg" alt="Campus View" />
+        <img src="/newphoto.jpg" alt="Campus View" />
     </div>
     <div className="map-guide-box">
     <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
@@ -721,7 +725,7 @@ useEffect(() => {
    
     <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
       
-     <img src="c:\Users\Maliha Reem\Downloads\Avatar Foto de Perfil Hombre Gafas Dibujo Ilustrado Moderno Verde.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+     <img src="cartoon.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
        </div>
 
        <div className="banner-right" style={{ flex: '1', minWidth: '300px' }}>
@@ -733,17 +737,17 @@ useEffect(() => {
         <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
             <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
             <div className="life-video-grid">
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic building.mp4')}>
-                    <img src="/modern-campus.jpg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
+                    <img src="/modern campus.jpeg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/student-life.mp4')}>
-                    <img src="/student-life.jpg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
+                    <img src="/student life photo.jpeg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/evening-views.mp4')}>
-                    <img src="/evening-views.jpg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
+                    <img src="/evening photo.jpeg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
                 </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('frontendnew/public/academic-buildings.mp4')}>
-                    <img src="/academic-buildings.jpg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
+                <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
+                    <img src="/academing photo.jpeg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
                 </div>
             </div>
         </div>

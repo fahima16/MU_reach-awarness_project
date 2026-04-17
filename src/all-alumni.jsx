@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './all-alumni.css';
+import AlumniRegistration from './components/AlumniRegistration';
 
 const AllAlumni = () => {
     // স্লাইডারের জন্য স্টেট
@@ -26,7 +27,7 @@ const AllAlumni = () => {
     }, [testimonials.length]);
 
     return (
-        <div className="alumni-page-wrapper" style={{ backgroundColor: '#050a18', color: 'white', minHeight: '100vh' }}>
+        <div className="alumni-page-wrapper" style={{ backgroundColor: '#050a18', color: 'white', minHeight: '100vh', scrollBehavior: 'smooth' }}>
             {/* Header */}
             <header className="nav-header" style={{ padding: '20px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
                 <div className="nav-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'flex-end' }}>
@@ -101,10 +102,16 @@ const AllAlumni = () => {
                 </div>
 
                 {/* Join CTA */}
-                <div className="join-cta" style={{ background: 'linear-gradient(45deg, #1d4ed8, #3b82f6)', padding: '60px', textAlign: 'center', borderRadius: '30px', marginBottom: '100px' }}>
+                <div className="join-cta" style={{ background: 'linear-gradient(45deg, #1d4ed8, #3b82f6)', padding: '60px', textAlign: 'center', borderRadius: '30px', marginBottom: '50px' }}>
                     <p>Are you a MU Graduate?</p>
                     <h2 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>Join our Alumni Network</h2>
-                    <a href="#" style={{ display: 'inline-block', padding: '15px 40px', background: 'white', color: '#1d4ed8', textDecoration: 'none', borderRadius: '50px', fontWeight: 'bold', marginTop: '20px' }}>Register Here →</a>
+                    {/* ID link updated here */}
+                    <a href="#alumni-reg-form" style={{ display: 'inline-block', padding: '15px 40px', background: 'white', color: '#1d4ed8', textDecoration: 'none', borderRadius: '50px', fontWeight: 'bold', marginTop: '20px' }}>Register Here </a>
+                </div>
+
+                {/* --- ADDED REGISTRATION FORM SECTION --- */}
+                <div id="alumni-reg-form" style={{ paddingBottom: '100px' }}>
+                    <AlumniRegistration />
                 </div>
             </div>
         </div>
