@@ -60,14 +60,20 @@ const AllAlumni = () => {
                 {/* Alumni Grid */}
                 <div className="alumni-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '30px', marginBottom: '80px' }}>
                     <div className="alumni-card" style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '20px', padding: '20px', textAlign: 'center' }}>
-                        <img src="https://i.pravatar.cc/150?u=1" className="card-img" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '15px', border: '2px solid #3b82f6' }} alt="Alumni" />
-                        <h3>Ahmed Rahman</h3>
-                        <p style={{ color: '#3b82f6' }}>Google • CSE</p>
+                        <img src="alumni2.jpeg" className="card-img" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '15px', border: '2px solid #3b82f6' }} alt="Alumni" />
+                        <h3>Emrul Chowdhury</h3>
+                        <p style={{ color: '#3b82f6' }}>Software Engineer • Amazon</p>
                     </div>
                     <div className="alumni-card" style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '20px', padding: '20px', textAlign: 'center' }}>
-                        <img src="https://i.pravatar.cc/150?u=2" className="card-img" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '15px', border: '2px solid #3b82f6' }} alt="Alumni" />
-                        <h3>Nusrat Jahan</h3>
-                        <p style={{ color: '#3b82f6' }}>Microsoft • BBA</p>
+                        <img src="alumni3.jpeg" className="card-img" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '15px', border: '2px solid #3b82f6' }} alt="Alumni" />
+                        <h3>Mahmudul Hasan</h3>
+                        <p style={{ color: '#3b82f6' }}>Practice Manager • Canada</p>
+                    </div>
+
+                    <div className="alumni-card" style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '20px', padding: '20px', textAlign: 'center' }}>
+                        <img src="ALUMNI4.jpeg" className="card-img" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '15px', border: '2px solid #3b82f6' }} alt="Alumni" />
+                        <h3>Syeda Sadia Alam</h3>
+                        <p style={{ color: '#3b82f6' }}>PhD Fellow  • USA</p>
                     </div>
                 </div>
 
@@ -84,14 +90,14 @@ const AllAlumni = () => {
     marginBottom: '20px', /* Onek koman hobe ekhane */
     alignItems: 'center' 
 }}>
-    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600" className="featured-img" style={{ width: '100%', borderRadius: '20px' }} alt="Featured Story" />
+    <img src="alumni.png" className="featured-img" style={{ width: '100%', borderRadius: '20px' }} alt="Featured Story" />
     <div className="story-text">
         <span style={{ color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.8rem' }}>Featured Journey</span>
-        <h2 style={{ fontSize: '2.2rem', margin: '10px 0' }}>From Sylhet to Google Dublin</h2>
-        <p>Meet Tanvir Ishrak, Class of '16.</p>
+        <h2 style={{ fontSize: '2.5rem', margin: '10px 0' }}>From Sylhet to Queen's University , Canada</h2>
+        <p style={{ marginBottom: '45px', color: '#a0a0a0' }}>Fully Funded PhD | CSE 37th</p>
         <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '15px', fontStyle: 'italic', borderLeft: '4px solid #3b82f6' }}>
-            "MU gave me the logic, the world gave me the platform."
-        </div>
+        "MU gave me the logic, the world gave me the platform."
+    </div>
     </div>
 </div>
 
