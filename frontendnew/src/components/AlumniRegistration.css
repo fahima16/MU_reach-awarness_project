@@ -1,0 +1,118 @@
+/* Alumni Registration Container Wrapper */
+.alumni-reg-wrapper {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Form Card */
+.alumni-reg-container {
+    background: #ffffff;
+    max-width: 650px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    border-top: 6px solid #001f3f; /* University Navy Blue */
+}
+
+/* Header Styling */
+.reg-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.reg-header h2 {
+    color: #001f3f;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.reg-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Form Layout */
+.reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Input Group Styling */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+    margin-left: 5px;
+}
+
+.input-group input, 
+.input-group textarea {
+    padding: 14px 18px;
+    border: 1.5px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Input Focus Effect */
+.input-group input:focus, 
+.input-group textarea:focus {
+    border-color: #001f3f;
+    box-shadow: 0 0 8px rgba(0, 31, 63, 0.15);
+}
+
+/* Row for Dept and Grad Year */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Submit Button */
+.submit-btn {
+    background-color: #001f3f;
+    color: #ffffff;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.submit-btn:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+    .alumni-reg-container {
+        padding: 25px;
+    }
+    .reg-header h2 {
+        font-size: 1.8rem;
+    }
+}
