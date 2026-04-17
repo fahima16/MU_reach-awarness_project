@@ -72,26 +72,37 @@ const AllAlumni = () => {
                 </div>
 
                 {/* Featured Story */}
-                <div className="featured-story" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0))', padding: '50px', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '80px', alignItems: 'center' }}>
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600" className="featured-img" style={{ width: '100%', borderRadius: '20px' }} alt="Featured Story" />
-                    <div className="story-text">
-                        <span style={{ color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.8rem' }}>Featured Journey</span>
-                        <h2 style={{ fontSize: '2.2rem', margin: '10px 0' }}>From Sylhet to Google Dublin</h2>
-                        <p>Meet Tanvir Ishrak, Class of '16.</p>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '15px', fontStyle: 'italic', borderLeft: '4px solid #3b82f6' }}>
-                            "MU gave me the logic, the world gave me the platform."
-                        </div>
-                    </div>
-                </div>
+                {/* Featured Story */}
+<div className="featured-story" style={{ 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+    gap: '40px', 
+    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0))', 
+    padding: '50px', 
+    borderRadius: '30px', 
+    border: '1px solid rgba(255, 255, 255, 0.1)', 
+    marginBottom: '20px', /* Onek koman hobe ekhane */
+    alignItems: 'center' 
+}}>
+    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600" className="featured-img" style={{ width: '100%', borderRadius: '20px' }} alt="Featured Story" />
+    <div className="story-text">
+        <span style={{ color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.8rem' }}>Featured Journey</span>
+        <h2 style={{ fontSize: '2.2rem', margin: '10px 0' }}>From Sylhet to Google Dublin</h2>
+        <p>Meet Tanvir Ishrak, Class of '16.</p>
+        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '15px', fontStyle: 'italic', borderLeft: '4px solid #3b82f6' }}>
+            "MU gave me the logic, the world gave me the platform."
+        </div>
+    </div>
+</div>
 
-                {/* Global Presence Map */}
-                <div className="map-section" style={{ textAlign: 'center', marginBottom: '80px' }}>
-                    <h2>Our Global Presence</h2>
-                    <div className="map-placeholder" style={{ width: '100%', height: '400px', background: "url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg') no-repeat center", backgroundSize: 'contain', position: 'relative', opacity: '0.4', filter: 'invert(1)' }}>
-                        <div className="pin" style={{ position: 'absolute', width: '12px', height: '12px', background: '#ff3e3e', borderRadius: '50%', top: '30%', left: '20%' }} title="USA"></div>
-                        <div className="pin" style={{ position: 'absolute', width: '12px', height: '12px', background: '#ff3e3e', borderRadius: '50%', top: '40%', left: '65%' }} title="Bangladesh"></div>
-                    </div>
-                </div>
+{/* Global Presence Map */}
+<div className="map-section" style={{ textAlign: 'center', marginBottom: '80px', paddingTop: '0px' }}> {/* Padding top 0 koro */}
+    <h2 style={{ marginBottom: '20px' }}>Our Global Presence</h2> {/* Title-er nicher gap-o komano holo */}
+    <div className="map-placeholder" style={{ width: '100%', height: '400px', background: "url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg') no-repeat center", backgroundSize: 'contain', position: 'relative', opacity: '0.4', filter: 'invert(1)' }}>
+        <div className="pin" style={{ position: 'absolute', width: '12px', height: '12px', background: '#ff3e3e', borderRadius: '50%', top: '30%', left: '20%' }} title="USA"></div>
+        <div className="pin" style={{ position: 'absolute', width: '12px', height: '12px', background: '#ff3e3e', borderRadius: '50%', top: '40%', left: '65%' }} title="Bangladesh"></div>
+    </div>
+</div>
 
                 {/* Testimonial Slider */}
                 <div className="testimonial-slider" style={{ maxWidth: '800px', margin: '0 auto 80px auto', textAlign: 'center', padding: '40px', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '24px' }}>
@@ -118,4 +129,6 @@ const AllAlumni = () => {
     );
 };
 
+
 export default AllAlumni;
+

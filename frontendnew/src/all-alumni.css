@@ -134,7 +134,7 @@
             gap: 40px;
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));
             padding: 50px;
-            border-radius: 30px;
+            border-radius: 40px;
             border: 1px solid var(--glass-border);
             margin-bottom: 80px;
             align-items: center;
@@ -145,14 +145,15 @@
         .advice-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; font-style: italic; border-left: 4px solid var(--accent-blue); }
 
  .map-section { 
+    margin-top: 0;
     text-align: center; 
-    margin-bottom: 80px; 
+    margin-bottom: 60px; 
     padding-top: 40px; /* Optional: upore ektu space dibe */
 }
 
 /* Title-er niche gap deyar jonno */
 .map-section h2 {
-    margin-bottom: 50px !important; /* Title ar map-er moddhe gap barabe */
+    margin-bottom: 40px !important; /* Title ar map-er moddhe gap barabe */
     font-size: 2rem;
     color: white;
 }
@@ -165,7 +166,7 @@
     position: relative; 
     opacity: 0.4; 
     filter: invert(1);
-    margin-top: 20px; /* Backup gap */
+    margin-top: 0px; /* Backup gap */
 }
         .pin { position: absolute; width: 12px; height: 12px; background: var(--accent-red); border-radius: 50%; box-shadow: 0 0 15px var(--accent-red); cursor: pointer; }
 
