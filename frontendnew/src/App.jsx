@@ -449,33 +449,35 @@ useEffect(() => {
         <section className="leaders2-section">
           <div className="leaders-grid">
             <div className="leader-card">
-              <img src="/photo15.jpeg" alt="Faculty" />
-              <p className="leader-dept">CSE Department</p>
-              <h3 className="leader-name">Prof. Dr. M. Choudhury</h3>
+              <img src="lwader2.jpeg" alt="Faculty" />
+              <p className="leader-dept">Dr. Toufique Rahman Chowdhury</p>
+              <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
                 <div>📍 Region: <strong>Sylhet</strong></div>
                 <div>⏱️ Exp: <strong>15+ Years</strong></div>
-                <div>🎓 Focus: <strong>AI & Robotics</strong></div>
+              
               </div>
             </div>
             <div className="leader-card">
-              <img src="/photo16.jpeg" alt="Faculty" />
-              <p className="leader-dept">BBA Department</p>
-              <h3 className="leader-name">Dr. Fahmida Liza</h3>
+              <img src="leader1.jpeg" alt="Faculty" />
+              <p className="leader-dept">Mr. Tanwir Rahman Chowdhury</p>
+              <h3 className="leader-name">Chairman
+                 Board of Trustees</h3>
+              <div className="leader-info">
+                <div>📍 Region: <strong>Sylhet</strong></div>
+                <div>⏱️ Exp: <strong>10+ Years</strong></div>
+          
+              </div>
+            </div>
+            <div className="leader-card">
+              <img src="leader3.jpeg" alt="Faculty" />
+              <p className="leader-dept">Professor
+Dr Mohammad Jahirul Hoque</p>
+              <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
                 <div>📍 Region: <strong>Dhaka</strong></div>
                 <div>⏱️ Exp: <strong>10+ Years</strong></div>
-                <div>🎓 Focus: <strong>Strategic Finance</strong></div>
-              </div>
-            </div>
-            <div className="leader-card">
-              <img src="/photo17.jpeg" alt="Faculty" />
-              <p className="leader-dept">EEE Department</p>
-              <h3 className="leader-name">Prof. Ahmed Rafat</h3>
-              <div className="leader-info">
-                <div>📍 Region: <strong>Chittagong</strong></div>
-                <div>⏱️ Exp: <strong>12+ Years</strong></div>
-                <div>🎓 Focus: <strong>Renewable Energy</strong></div>
+          
               </div>
             </div>
           </div>
