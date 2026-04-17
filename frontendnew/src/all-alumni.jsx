@@ -210,7 +210,7 @@ const AllAlumni = () => {
                     opacity: '0',
                     transition: 'opacity 0.3s'
                 }}>
-                    {alumni.fullName} ({alumni.country})
+                    ({alumni.country})
                 </span>
                                 </div>
                             );

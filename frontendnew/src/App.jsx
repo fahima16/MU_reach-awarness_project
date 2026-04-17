@@ -1,94 +1,147 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-router-dom';
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 
+const AdminFeedbackPanel = () => {
+    const [messages, setMessages] = useState([]);
 
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                // তোমার ব্যাকএন্ড রুট থেকে ডাটা নিয়ে আসা
+                const res = await axios.get('http://localhost:5000/api/feedback/admin/suggestions');
+                setMessages(res.data);
+            } catch (err) {
+                console.error("মেসেজ লোড করতে সমস্যা:", err);
+            }
+        };
+        fetchMessages();
+    }, []);
+
+    return (
+        <div style={{ padding: '40px', background: '#f8f9fa', borderRadius: '15px', marginTop: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+            <h2 style={{ color: '#001f3f', borderBottom: '4px solid #e6b634', paddingBottom: '10px' }}>
+                Admin Dashboard: Student Feedback
+            </h2>
+            <div style={{ marginTop: '20px' }}>
+                {messages.length > 0 ? messages.map((m) => (
+                    <div key={m._id} style={{ 
+                        background: '#fff', padding: '20px', marginBottom: '15px', 
+                        borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        borderLeft: m.vote === 'No' ? '6px solid #ff4d4d' : '6px solid #2ecc71'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <strong style={{ fontSize: '1.1rem' }}>Vote: {m.vote}</strong>
+                            <small style={{ color: '#888' }}>{new Date(m.createdAt).toLocaleString()}</small>
+                        </div>
+                        <p style={{ marginTop: '10px', fontSize: '1rem', color: '#333', fontStyle: 'italic' }}>
+                            "{m.suggestion}"
+                        </p>
+                    </div>
+                )) : (
+                    <p style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>No feedback available yet.</p>
+                )}
+            </div>
+        </div>
+    );
+};
 const RecommendationPoll = () => {
+  // ১. স্টেটগুলো ব্যাকএন্ডের ডাটার সাথে ম্যাচ করে সেট করা
   const [voted, setVoted] = useState(false);
   const [choice, setChoice] = useState(null);
-  const [stats, setStats] = useState({ yes: 81, no: 19 });
+  const [suggestion, setSuggestion] = useState("");
+  const [voteStats, setVoteStats] = useState({ yesPercentage: 0, noPercentage: 0 });
 
-  const handleVote = (type) => {
-    if (!voted) {
-      setStats({ ...stats, [type]: stats[type] + 1 });
-      setChoice(type);
-      setVoted(true);
+  // ২. পেজ লোড হলে ডাটাবেজ থেকে লাইভ পারসেন্টেজ নিয়ে আসা
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/feedback/stats');
+        setVoteStats(res.data);
+      } catch (err) {
+        console.error("Stats আনতে সমস্যা হচ্ছে:", err);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  // ৩. ভোট এবং সাজেশন সাবমিট করার ফাংশন
+  const handleVoteSubmit = async (selectedType, isSuggestion = false) => {
+    try {
+      // ব্যাকএন্ডে ডাটা পাঠানো
+      await axios.post('http://localhost:5000/api/feedback/vote', {
+        vote: selectedType === 'yes' ? 'Yes' : 'No',
+        suggestion: isSuggestion ? suggestion : ""
+      });
+
+      if (!isSuggestion) {
+        setChoice(selectedType);
+        setVoted(true);
+      } else {
+        alert("Thank you for your suggestions!");
+      }
+
+      // ডাটা সাবমিট হওয়ার পর লাইভ রেজাল্ট আবার আপডেট করা
+      const updatedRes = await axios.get('http://localhost:5000/api/feedback/stats');
+      setVoteStats(updatedRes.data);
+    } catch (err) {
+      console.error("Voting failed:", err);
+      alert("Error submitting vote. Please check backend.");
     }
   };
 
-  const total = stats.yes + stats.no;
-  const yesPer = Math.round((stats.yes / total) * 100);
-  const noPer = 100 - yesPer;
-
   return (
     <div className="poll-card-premium" style={{ 
-      backgroundColor: '#ffffff', 
-      padding: '40px', 
-      borderRadius: '15px',
-      color: '#001f3f',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+      backgroundColor: '#ffffff', padding: '40px', borderRadius: '15px',
+      color: '#001f3f', boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
     }}>
       
-      {/* --- ADDED TITLE SECTION --- */}
       <div style={{ marginBottom: '30px' }}>
-        <h2 style={{ 
-          fontSize: '2.2rem', 
-          fontWeight: '900', 
-          textTransform: 'uppercase', 
-          letterSpacing: '1px',
-          margin: '0',
-          color: '#001f3f'
-        }}>
+        <h2 style={{ fontSize: '2.2rem', fontWeight: '900', textTransform: 'uppercase', color: '#001f3f', margin: '0' }}>
           The Voice of Our Students
         </h2>
-        {/* Signature Gold Line */}
         <div style={{ width: '70px', height: '5px', background: '#e6b634', marginTop: '12px' }}></div>
-        
         <p style={{ marginTop: '20px', fontSize: '1.1rem', color: '#444', lineHeight: '1.5' }}>
           Share your recommendation and help us inspire the next generation of scholars.
         </p>
       </div>
 
-      {/* Result Bars - Always Visible */}
+      {/* লাইভ রেজাল্ট বার - এখন ডাটাবেজ থেকে আসবে */}
       <div style={{ marginBottom: '30px' }}>
         <div style={{ marginBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
             <span>Yes, I Recommend</span>
-            <span style={{ color: '#e6b634' }}>{yesPer}%</span>
+            <span style={{ color: '#e6b634' }}>{voteStats.yesPercentage}%</span>
           </div>
           <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
-            <div style={{ width: `${yesPer}%`, background: '#e6b634', height: '100%', transition: 'width 1s ease' }}></div>
+            <div style={{ width: `${voteStats.yesPercentage}%`, background: '#e6b634', height: '100%', transition: 'width 1s ease' }}></div>
           </div>
         </div>
 
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
             <span>No</span>
-            <span>{noPer}%</span>
+            <span>{voteStats.noPercentage}%</span>
           </div>
           <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
-            <div style={{ width: `${noPer}%`, background: '#001f3f', height: '100%', transition: 'width 1s ease' }}></div>
+            <div style={{ width: `${voteStats.noPercentage}%`, background: '#001f3f', height: '100%', transition: 'width 1s ease' }}></div>
           </div>
         </div>
       </div>
 
-      {/* Buttons Container */}
       {!voted ? (
         <div style={{ display: 'flex', gap: '15px' }}>
           <button 
-            onClick={() => handleVote('yes')} 
-            style={{ flex: 1, padding: '14px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
-          >
-            Vote Yes
-          </button>
+            onClick={() => handleVoteSubmit('yes')} 
+            style={{ flex: 1, padding: '14px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          > Vote Yes </button>
           <button 
-            onClick={() => handleVote('no')} 
-            style={{ flex: 1, padding: '14px', background: 'transparent', color: '#001f3f', border: '2px solid #001f3f', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
-          >
-            Vote No
-          </button>
+            onClick={() => handleVoteSubmit('no')} 
+            style={{ flex: 1, padding: '14px', background: 'transparent', color: '#001f3f', border: '2px solid #001f3f', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          > Vote No </button>
         </div>
       ) : (
         <div style={{ textAlign: 'center', fontWeight: 'bold', color: '#001f3f', padding: '15px', border: '1px dashed #e6b634', borderRadius: '8px' }}>
@@ -96,16 +149,21 @@ const RecommendationPoll = () => {
         </div>
       )}
 
-      {/* Enhanced Feedback Box */}
+      {/* No সিলেক্ট করলে সাজেশন বক্স */}
       {choice === 'no' && (
-        <div className="animate-fade" style={{ marginTop: '30px', padding: '25px', background: '#001f3f', borderRadius: '12px', color: '#fff', borderLeft: '6px solid #e6b634' }}>
-          <p style={{ color: '#e6b634', marginBottom: '15px', fontSize: '1rem', fontWeight: '700', textTransform: 'uppercase' }}>How can we improve?</p>
+        <div style={{ marginTop: '30px', padding: '25px', background: '#001f3f', borderRadius: '12px', color: '#fff', borderLeft: '6px solid #e6b634' }}>
+          <p style={{ color: '#e6b634', marginBottom: '15px', fontWeight: '700' }}>How can we improve?</p>
           <textarea 
-            placeholder="Your suggestions are private and help us grow..." 
+            value={suggestion}
+            onChange={(e) => setSuggestion(e.target.value)}
+            placeholder="Your suggestions are private..." 
             rows="3"
-            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: 'none', marginBottom: '15px', outline: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff' }}
+            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: 'none', marginBottom: '15px', background: 'rgba(255,255,255,0.1)', color: '#fff' }}
           />
-          <button style={{ width: '100%', padding: '12px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}>
+          <button 
+            onClick={() => handleVoteSubmit('no', true)}
+            style={{ width: '100%', padding: '12px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          >
             Submit Suggestions
           </button>
         </div>
@@ -114,8 +172,24 @@ const RecommendationPoll = () => {
   );
 };
 function AppContents() {
+
+  
   const [count, setCount] = useState(0);
    // --- MOVE THIS TO THE TOP (OUTSIDE AppContents) ---
+   const [inputPass, setInputPass] = useState(""); // পাসওয়ার্ড টাইপ করার জন্য
+const [isAuthorized, setIsAuthorized] = useState(false); 
+const [showLogin, setShowLogin] = useState(false);
+// পাসওয়ার্ড মিলেছে কি না
+
+// পাসওয়ার্ড চেক করার ফাংশন
+const handleAdminLogin = () => {
+    if (inputPass === "1234") { // তোমার সিক্রেট পাসওয়ার্ড
+        setIsAuthorized(true);
+        setShowLogin(false);
+    } else {
+        alert("Wrong password! Try again");
+    }
+};
 
 
   
@@ -733,6 +807,57 @@ Dr Mohammad Jahirul Hoque</p>
        <div className="banner-right" style={{ flex: '1', minWidth: '300px' }}>
         {/* Component call korle baki shob auto chole ashbe */}
         <RecommendationPoll />
+
+        {/* --- Admin Area Logic Start --- */}
+<div style={{ marginTop: '50px', textAlign: 'center' }}>
+    
+    {/* Admin Area লেখা - এটি সবসময় দেখা যাবে */}
+    <h4 
+        onClick={() => !isAuthorized && setShowLogin(!showLogin)} 
+        style={{ 
+            cursor: 'pointer', 
+            color: '#888', 
+            fontSize: '0.9rem',
+            borderBottom: '1px dashed #888',
+            display: 'inline-block'
+        }}
+    >
+        {isAuthorized ? 'Admin Dashboard Active' : 'Admin Area ▼'}
+    </h4>
+
+    {/* পাসওয়ার্ড কার্ড - শুধু showLogin true হলেই আসবে */}
+    {showLogin && !isAuthorized && (
+        <div style={{ 
+            marginTop: '15px', 
+            background: '#fff', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+            display: 'inline-block'
+        }}>
+            <input 
+                type="password" 
+                placeholder="Enter Password" 
+                value={inputPass}
+                onChange={(e) => setInputPass(e.target.value)}
+                style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ddd' }}
+            />
+            <button 
+                onClick={handleAdminLogin}
+                style={{ marginLeft: '10px', padding: '8px 15px', background: '#001f3f', color: '#fff', borderRadius: '5px', cursor: 'pointer', border: 'none' }}
+            >
+                Enter
+            </button>
+        </div>
+    )}
+
+    {/* পাসওয়ার্ড মিলে গেলে তোমার সেই ফাংশন কল হবে */}
+    {isAuthorized && <AdminFeedbackPanel />}
+    
+</div>
+{/* --- Admin Area Logic End --- */}
+
+        
        </div>
     </div>
         

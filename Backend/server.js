@@ -8,6 +8,7 @@ const reachRoutes = require('./routes/reachRoutes');
 const alumniRoutes = require('./routes/alumniRoutes');
 const teacherRoutes = require('./routes/all-teachersROutes'); // স্পেলিং চেক করে নিন
 
+
 const app = express();
 
 // Middleware
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 app.use('/api/reach', reachRoutes);
 app.use('/api/alumni', alumniRoutes);
 app.use('/api/teachers', teacherRoutes);
+app.use('/api/feedback', require('./routes/feedbackRoutes'));
 
 // Basic Route
 app.get('/', (req, res) => {
