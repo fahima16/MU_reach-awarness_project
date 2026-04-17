@@ -1,32 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const Alumni = require('../models/alumni');
+const Alumni = require('../models/Alumni');
 
-// ১. নতুন Alumni রেজিস্ট্রেশন করা
+// শর্ত ১: অ্যালুমনাই রেজিস্ট্রেশন (POST request)
 router.post('/register', async (req, res) => {
     try {
-        const alumni = new Alumni(req.body);
-        await alumni.save();
-        res.status(201).json({ message: "Registration Successful", data: alumni });
+        const newAlumni = new Alumni(req.body);
+        const savedAlumni = await newAlumni.save();
+        res.status(201).json({ success: true, data: savedAlumni });
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 
-// ২. সব Alumni-র লিস্ট পাওয়া (All-Alumni পেজের জন্য এবং ফিল্টারিং এর জন্য)
-router.get('/all', async (req, res) => {
+// শর্ত ২ ও ৩: সব অ্যালুমনাই দেখানো এবং সার্চ/ফিল্টার করা
+router.get('/', async (req, res) => {
     try {
-        const { department, country, batch, search } = req.query;
+        const { search, department, country, batchYear } = req.query;
         let query = {};
 
-        // ফিল্টারিং লজিক (আপনার প্রপোজাল অনুযায়ী)
-        if (department && department !== 'Department (All)') query.department = department;
-        if (country && country !== 'Country (All)') query.country = country;
-        if (batch && batch !== 'Batch Year') query.batch = batch;
-        if (search) query.name = { $regex: search, $options: 'i' }; // Search by name
+        // নাম দিয়ে সার্চ করার লজিক
+        if (search) {
+            query.fullName = { $regex: search, $options: 'i' }; 
+        }
 
-        const alumniList = await Alumni.find(query);
+        // ড্রপডাউন ফিল্টারিং (Dept, Country, Year)
+        if (department && department !== 'All') query.department = department;
+        if (country && country !== 'All') query.country = country;
+        if (batchYear) query.graduationYear = Number(batchYear);
+
+        const alumniList = await Alumni.find(query).sort({ createdAt: -1 });
         res.json(alumniList);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// শর্ত ৪: ম্যাপে ডট দেখানোর জন্য শুধু লোকেশন ডাটা নেওয়া
+router.get('/map-dots', async (req, res) => {
+    try {
+        // শুধু কান্ট্রি এবং লোকেশন ডাটা পাঠাবে হোভার ইফেক্টের জন্য
+        const mapData = await Alumni.find({}, 'fullName country location');
+        res.json(mapData);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

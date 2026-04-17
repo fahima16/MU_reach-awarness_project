@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const alumniSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    department: { type: String, required: true }, // CSE, BBA, etc.
-    batch: { type: String, required: true },     // Class of 2018
-    company: { type: String, required: true },
-    jobTitle: { type: String, required: true },  // Software Engineer
-    country: { type: String, required: true },
-    linkedin: { type: String },
-    photo: { type: String, default: 'default-profile.png' }, // ছবির পাথ বা URL
-    coordinates: {
-        lat: { type: Number },
-        lng: { type: Number }
+    fullName: { type: String, required: true },
+    photoUrl: { type: String }, // ১ নং ছবির প্রোফাইল ফটো লিঙ্ক
+    department: { type: String, required: true }, // ৩ নং ছবির ফিল্টার
+    graduationYear: { type: Number, required: true }, // ৩ নং ছবির ব্যাচ ইয়ার
+    recentInvolvement: { type: String }, // ১ নং ছবির কোম্পানি/ইনভলভমেন্ট বক্স
+    
+    // ম্যাপে ডট দেখানোর জন্য কান্ট্রি ডাটা (শর্ত ৪)
+    country: { type: String, required: true }, 
+    location: {
+        lat: { type: Number }, // ম্যাপে ডটের অক্ষাংশ
+        lng: { type: Number }  // ম্যাপে ডটের দ্রাঘিমাংশ
     }
 }, { timestamps: true });
 
