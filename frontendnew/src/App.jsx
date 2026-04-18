@@ -1065,7 +1065,10 @@ Dr Mohammad Jahirul Hoque</p>
 
     {/* --- 8 WHITE BOXES GRID --- */}
     <div className="horizontal-box-grid">
-      <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
+      <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="card-link">
+        <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
+      </a>
+      {/*<div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>*/}
       <div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>
       <div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>
       <div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>
