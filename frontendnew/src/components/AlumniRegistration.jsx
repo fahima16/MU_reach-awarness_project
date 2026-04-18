@@ -20,7 +20,7 @@ const AlumniRegistration = () => {
         e.preventDefault();
         try {
             // তোমার ব্যাকএন্ড পোর্টের সাথে মিলিয়ে URL টা চেক করে নিও (যেমন: http://localhost:5000)
-            const response = await axios.post('http://localhost:5000/api/alumni/register', formData);
+            const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/alumni/register', formData);
             if (response.data.success) {
                 alert("Registration Successful!");
                 window.location.reload(); // ডাটা সেভ হলে পেজ রিলোড হবে যাতে লিস্টে নাম দেখা যায়

@@ -17,7 +17,7 @@ const AllTeachers = () => {
   useEffect(() => {
     const fetchDistrictStats = async () => {
       try {
-      const response = await axios.get('http://localhost:5000/api/teachers/stats-by-district');
+      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/stats-by-district');
       
       // ডাটাবেজ থেকে আসা ডেটাকে ডিফল্ট ডিস্ট্রিক্টগুলোর সাথে মিশিয়ে ফেলা (Merge)
       const mergedData = defaultDistricts.map(defDist => {
@@ -51,7 +51,7 @@ const AllTeachers = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/teachers/feedback-stats');
+        const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/feedback-stats');
         if (response.data && !response.data.message) {
           setStats({
             yesPercentage: response.data.yesPercentage,
@@ -87,7 +87,7 @@ const AllTeachers = () => {
 
     try {
 
-      const response = await axios.get('http://localhost:5000/api/teachers');
+      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers');
 
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
 
@@ -143,7 +143,7 @@ const AllTeachers = () => {
   if(photo) formData.append('photo', photo); 
 
   try {
-      const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
+      const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -322,7 +322,7 @@ const AllTeachers = () => {
             {teacher.photoUrl ? (
               <img 
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`http://localhost:5000/${teacher.photoUrl.replace(/\\/g, '/')}`} 
+                src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl.replace(/\\/g, '/')}`} 
                 alt={teacher.fullName} 
                 className="t-avatar" 
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}

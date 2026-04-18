@@ -27,7 +27,7 @@ const AllAlumni = () => {
         const fetchAlumni = async () => {
             try {
                 // তোমার ব্যাকএন্ড পোর্টের সাথে URL মিলিয়ে নিও (যেমন: 5000)
-                const res = await axios.get(`http://localhost:5000/api/alumni?search=${search}&department=${dept}&country=${country}&batchYear=${batch}`);
+                const res = await axios.get(`https://mu-reach-awarness-project.onrender.com/api/alumni?search=${search}&department=${dept}&country=${country}&batchYear=${batch}`);
                 setAlumniList(res.data);
             } catch (err) {
                 console.error("Fetch error:", err);

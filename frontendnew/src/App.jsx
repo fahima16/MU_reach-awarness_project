@@ -12,7 +12,7 @@ const AdminFeedbackPanel = () => {
         const fetchMessages = async () => {
             try {
                 // তোমার ব্যাকএন্ড রুট থেকে ডাটা নিয়ে আসা
-                const res = await axios.get('http://localhost:5000/api/feedback/admin/suggestions');
+                const res = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/admin/suggestions');
                 setMessages(res.data);
             } catch (err) {
                 console.error("Loading", err);
@@ -59,7 +59,7 @@ const RecommendationPoll = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/feedback/stats');
+        const res = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/stats');
         setVoteStats(res.data);
       } catch (err) {
         console.error("Stats আনতে সমস্যা হচ্ছে:", err);
@@ -72,7 +72,7 @@ const RecommendationPoll = () => {
   const handleVoteSubmit = async (selectedType, isSuggestion = false) => {
     try {
       // ব্যাকএন্ডে ডাটা পাঠানো
-      await axios.post('http://localhost:5000/api/feedback/vote', {
+      await axios.post('https://mu-reach-awarness-project.onrender.com/api/feedback/vote', {
         vote: selectedType === 'yes' ? 'Yes' : 'No',
         suggestion: isSuggestion ? suggestion : ""
       });
@@ -85,7 +85,7 @@ const RecommendationPoll = () => {
       }
 
       // ডাটা সাবমিট হওয়ার পর লাইভ রেজাল্ট আবার আপডেট করা
-      const updatedRes = await axios.get('http://localhost:5000/api/feedback/stats');
+      const updatedRes = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/stats');
       setVoteStats(updatedRes.data);
     } catch (err) {
       console.error("Voting failed:", err);
@@ -282,7 +282,7 @@ const handleAdminLogin = () => {
 
 const fetchReachStats = async () => {
     try {
-        const res = await fetch('http://localhost:5000/api/reach/all-stats');
+        const res = await fetch('https://mu-reach-awarness-project.onrender.com/api/reach/all-stats');
         const data = await res.json();
         
         // ডিস্ট্রিক্টের সিরিয়াল স্থির করার জন্য একটি লিস্ট
@@ -351,7 +351,7 @@ const updateLiveMap = async (e, title, sub) => {
     setActiveLocation({ title, sub });
 
     try {
-        await fetch('http://localhost:5000/api/reach/click', {
+        await fetch('https://mu-reach-awarness-project.onrender.com/api/reach/click', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ districtName: title })
