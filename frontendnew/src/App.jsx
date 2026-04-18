@@ -15,7 +15,7 @@ const AdminFeedbackPanel = () => {
                 const res = await axios.get('http://localhost:5000/api/feedback/admin/suggestions');
                 setMessages(res.data);
             } catch (err) {
-                console.error("মেসেজ লোড করতে সমস্যা:", err);
+                console.error("Loading", err);
             }
         };
         fetchMessages();
@@ -171,6 +171,7 @@ const RecommendationPoll = () => {
     </div>
   );
 };
+
 function AppContents() {
 
   
@@ -179,6 +180,10 @@ function AppContents() {
    const [inputPass, setInputPass] = useState(""); // পাসওয়ার্ড টাইপ করার জন্য
 const [isAuthorized, setIsAuthorized] = useState(false); 
 const [showLogin, setShowLogin] = useState(false);
+const [selectedDistrict, setSelectedDistrict] = useState('Dhaka');
+const [activeLocation, setActiveLocation] = useState({ title: 'Dhaka', sub: 'The Educational Heart' });
+const lineChartRef = useRef(null);
+const barChartRef = useRef(null);
 // পাসওয়ার্ড মিলেছে কি না
 
 // পাসওয়ার্ড চেক করার ফাংশন
@@ -195,8 +200,16 @@ const handleAdminLogin = () => {
   
   
   // 1. URL Copy Function
-  const copyUrl = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const copyUrl = async() => {
+    const shareUrl=`${window.location.origin}/reach`;
+    try{
+      await navigator.clipboard.writeText(shareUrl);
+      alert("Link copied: " + shareUrl);
+    }
+    catch(err){
+      console.error("Failed to copy the link:", err);
+    }
+    
     alert('Page link copied!');
   };
    
@@ -204,8 +217,7 @@ const handleAdminLogin = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [showModal, setShowModal] = useState(false);
   
-  const lineChartRef = useRef(null);
-  const barChartRef = useRef(null);
+  
   
   // --- ADDED: Auto-scroll Target Reference ---
   const resultRef = useRef(null);
@@ -228,7 +240,7 @@ const handleAdminLogin = () => {
   const openMUVideo = (url) => { setVideoUrl(url); setShowModal(true); };
   const closeMUVideo = () => { setVideoUrl(""); setShowModal(false); };
 
-  const updateLiveMap = (e, title, sub) => {
+  /*const updateLiveMap = (e, title, sub) => {
     document.querySelectorAll('.div-card').forEach(card => card.classList.remove('active'));
     e.currentTarget.classList.add('active');
 
@@ -245,7 +257,110 @@ const handleAdminLogin = () => {
             lineChartRef.current.update();
         }
     }
-  };
+  };*/
+
+  /*const fetchReachStats = async () => {
+    try {
+        const res = await fetch('http://localhost:5000/api/reach/all-stats');
+        const data = await res.json();
+        
+        if (barChartRef.current && lineChartRef.current) {
+            // Bar Chart Update
+            barChartRef.current.data.labels = data.barData.map(d => d._id);
+            barChartRef.current.data.datasets[0].data = data.barData.map(d => d.total);
+            barChartRef.current.update();
+
+            // Line Chart Update
+            lineChartRef.current.data.labels = data.lineData.map(d => d._id);
+            lineChartRef.current.data.datasets[0].data = data.lineData.map(d => d.total);
+            lineChartRef.current.update();
+        }
+    } catch (err) {
+        console.error("Stats fetching error");
+    }
+};*/
+
+const fetchReachStats = async () => {
+    try {
+        const res = await fetch('http://localhost:5000/api/reach/all-stats');
+        const data = await res.json();
+        
+        // ডিস্ট্রিক্টের সিরিয়াল স্থির করার জন্য একটি লিস্ট
+        const fixedLabels = ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
+        const fixedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        // বর্তমান মাসের ইনডেক্স বের করা (এপ্রিল হলে ৩ আসবে)
+        const currentMonthIndex = new Date().getMonth();
+
+        if (barChartRef.current && lineChartRef.current) {
+            // --- ১. বার চার্ট ফিক্সড করা ---
+            // ব্যাকএন্ড ডাটাকে একটি অবজেক্টে নিয়ে আসা যাতে সহজে খুঁজে পাওয়া যায়
+            const statsMap = {};
+            data.barData.forEach(item => {
+                statsMap[item._id] = item.total;
+            });
+
+            // আমাদের fixedLabels অনুযায়ী ডাটা সাজানো (যদি ডাটা না থাকে তবে ০ বসবে)
+            const sortedBarData = fixedLabels.map(label => statsMap[label] || 0);
+
+            barChartRef.current.data.labels = fixedLabels;
+            barChartRef.current.data.datasets[0].data = sortedBarData;
+            barChartRef.current.update();
+
+            // --- ২. লাইন চার্ট আপডেট করা ---
+            /*if (data.lineData && data.lineData.length > 0) {
+                // মাস অনুযায়ী সাজানো (যদি ব্যাকএন্ড থেকে মাসের নাম আসে)
+                lineChartRef.current.data.labels = data.lineData.map(d => d._id); 
+                lineChartRef.current.data.datasets[0].data = data.lineData.map(d => d.total);
+                lineChartRef.current.update();
+            } else {
+                // যদি লাইন ডাটা খালি থাকে তবে ডামি ডাটা দিয়ে চেক করতে পারো
+                console.log("Line data is empty from backend");
+            }*/
+           const lineStatsMap = {}; 
+            data.lineData.forEach(item => {
+                lineStatsMap[item._id] = item.total; 
+            });
+           const progressiveLineData = fixedMonths.map((month, index) => {
+                // যদি মাসটি বর্তমান মাসের পরের মাস হয় (Future), তবে null দাও
+                if (index > currentMonthIndex) {
+                    return null; 
+                }
+                // আগের মাস বা বর্তমান মাসের ডাটা থাকলে দাও, না থাকলে ০
+                //return lineStatsMap[month] || 0;
+                return lineStatsMap[month] !== undefined ? lineStatsMap[month] : 0;
+            });
+
+            lineChartRef.current.data.labels = fixedMonths; // Jan-Dec সবসময় নিচে থাকবে
+            lineChartRef.current.data.datasets[0].data = progressiveLineData;
+            
+            // নিচের লাইনটি নিশ্চিত করে যে ফিউচার মাসের গ্যাপগুলো যেন কানেক্ট না হয়
+            lineChartRef.current.options.scales.y.suggestedMax = 10;
+            lineChartRef.current.options.spanGaps = false;
+            
+            lineChartRef.current.update();
+        }
+    } catch (err) {
+        console.error("Stats fetch failed:", err);
+    }
+};
+
+// ২. ক্লিক করলে ব্যাকএন্ডে পাঠানো এবং UI চেঞ্জ করা
+const updateLiveMap = async (e, title, sub) => {
+    setSelectedDistrict(title);
+    setActiveLocation({ title, sub });
+
+    try {
+        await fetch('http://localhost:5000/api/reach/click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ districtName: title })
+        });
+        fetchReachStats(); // ক্লিক করার পর চার্ট রিফ্রেশ
+    } catch (err) {
+        console.log("Click save failed");
+    }
+};
 
   useEffect(() => {
     const ctxLine = document.getElementById('lineChart')?.getContext('2d');
@@ -255,18 +370,46 @@ const handleAdminLogin = () => {
       lineChartRef.current = new window.Chart(ctxLine, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          datasets: [{ data: [20, 40, 35, 55, 45, 60, 50, 70, 65, 80, 75, 90], borderColor: '#c8a951', borderWidth: 3, tension: 0.4, pointRadius: 0, fill: false }]
+            labels: [],
+            datasets: [{ 
+                data: [], 
+                borderColor: '#c8a951', 
+                borderWidth: 3, 
+                tension: 0.4, 
+                pointRadius: 2, 
+                fill: false 
+            }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { ticks: { color: '#aaa', font: { size: 10 } } } } }
-      });
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            animation: {
+                duration: 1000, 
+                easing: 'easeOutQuart',
+                suggestedMax: 100
+            },
+            plugins: { 
+                legend: { display: false } 
+            }, 
+            scales: { 
+                y: { 
+                    display: false, // গ্রিড লাইন দেখাবে না
+                    beginAtZero: true // এই লাইনটি নিশ্চিত করবে ডাটা নিচ থেকে উপরে উঠবে
+                    
+                }, 
+                x: { 
+                    ticks: { color: '#aaa', font: { size: 10 } } 
+                } 
+            } 
+        }
+    });
 
       barChartRef.current = new window.Chart(ctxBar, {
         type: 'bar',
         data: {
-          labels: ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'],
+          labels: [],
           datasets: [{ 
-              data: [70, 85, 60, 50, 45, 40, 35, 30], 
+              data: [], 
               backgroundColor: ['#5dade2', '#f4d03f', '#58d68d', '#eb984e', '#af7ac5', '#ec7063', '#48c9b0', '#a569bd'],
               borderRadius: 5
           }]
@@ -274,6 +417,10 @@ const handleAdminLogin = () => {
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { color: '#aaa', font: { size: 9 } } }, x: { ticks: { color: '#fff', font: { size: 9 } } } } }
       });
     }
+    // ব্যাকএন্ড থেকে প্রথমবার ডাটা নিয়ে আসা
+    fetchReachStats();
+    // ১. ডাটাবেজ থেকে ডাটা এনে চার্ট আপডেট করা
+
     return () => {
         if (lineChartRef.current) lineChartRef.current.destroy();
         if (barChartRef.current) barChartRef.current.destroy();
@@ -739,7 +886,7 @@ Dr Mohammad Jahirul Hoque</p>
         <div className="reach-underline"></div>
 
         <div className="reach-flex-layout">
-            <div className="division-selector">
+            {/*<div className="division-selector">
                 <div className="div-card active" onClick={(e) => updateLiveMap(e, 'Dhaka', 'The Educational Heart')}>
                     <h3>Dhaka</h3>
                     <p>Capital Connectivity</p>
@@ -772,13 +919,36 @@ Dr Mohammad Jahirul Hoque</p>
                     <h3>Mymensingh</h3>
                     <p>Old Brahmaputra Hub</p>
                 </div>
+            </div>*/}
+
+            <div className="division-selector">
+        {[
+            { name: 'Dhaka', sub: 'Capital Connectivity' },
+            { name: 'Sylhet', sub: 'Home of MU' },
+            { name: 'Chittagong', sub: 'Coastal Reach' },
+            { name: 'Rajshahi', sub: 'Silk City Education' },
+            { name: 'Khulna', sub: 'Industrial Reach' },
+            { name: 'Barisal', sub: 'Riverine Outreach' },
+            { name: 'Rangpur', sub: 'Northern Gateway' },
+            { name: 'Mymensingh', sub: 'Cultural Connectivity' }
+        ].map((d) => (
+            <div 
+                key={d.name} 
+                /* এখানে active-district ক্লাস যোগ হবে যদি সিলেক্টেড হয় */
+                className={`div-card ${selectedDistrict === d.name ? 'active-district' : ''}`} 
+                onClick={(e) => updateLiveMap(e, d.name, d.sub)}
+            >
+                <h3>{d.name}</h3>
+                <p>{d.sub}</p>
             </div>
+        ))}
+    </div>
 
             <div className="live-console">
                 <div className="console-top">
                     <span className="status-dot">●</span> <span className="live-label">LIVE SYSTEM STATUS</span>
-                    <h4 id="map-title">Dhaka Division</h4>
-                    <p id="map-subtitle">The Educational Heart</p>
+                    <h4 id="map-title">{activeLocation.title} Division</h4>
+                    <p id="map-subtitle">{activeLocation.sub}</p>
                 </div>
                 <div className="chart-box" style={{ width: '100%', height: '180px', background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '10px', marginBottom: '20px' }}>
                     <p className="chart-label" style={{ fontSize: '11px', color: '#c8a951', fontWeight: 'bold' }}>Growth Trend</p>
@@ -913,6 +1083,7 @@ Dr Mohammad Jahirul Hoque</p>
           
           <Route path="/all-alumni" element={<AllAlumni />} />
           <Route path="/all-teachers" element={<AllTeachers />} />
+          
         </Routes>
 
     {/* Modal Fix: ONLY shows when showModal is true */}
@@ -934,7 +1105,13 @@ Dr Mohammad Jahirul Hoque</p>
 function App() {
   return (
     <Router>
-      <AppContents />
+      <Routes>
+        <Route path="/" element={<AppContents />} />
+        <Route path="/reach" element={<AppContents />} />
+        <Route path="/all-alumni" element={<AllAlumni />} />
+          <Route path="/all-teachers" element={<AllTeachers />} />
+      </Routes>
+      {/*<AppContents />*/}
     </Router>
   );
 }
