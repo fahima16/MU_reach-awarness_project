@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Alumni = require('../models/Alumni');
+const Alumni = require('../models/alumni');
 
 // শর্ত ১: অ্যালুমনাই রেজিস্ট্রেশন (POST request)
 router.post('/register', async (req, res) => {
