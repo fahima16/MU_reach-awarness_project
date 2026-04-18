@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 app.use('/api/reach', reachRoutes);
 app.use('/api/alumni', alumniRoutes);
 app.use('/api/teachers', teacherRoutes);
-app.use('/api/feedback', require('./routes/feedbackRoutes'));
+app.use('/api/feedback', require('./routes/FeedbackRoutes'));
 
 // Basic Route
 app.get('/', (req, res) => {
