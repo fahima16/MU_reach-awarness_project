@@ -1355,6 +1355,17 @@ html {
     font-weight: 500;
 }
 
+.plain-link{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+}
+.plain-link:hover{
+    color: #333;
+    text-decoration: none;
+}
+
 /* --- RESPONSIVE FIXES --- */
 @media (max-width: 1024px) {
     .horizontal-box-grid {

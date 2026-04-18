@@ -816,6 +816,8 @@ Dr Mohammad Jahirul Hoque</p>
     <div className="map-top-image">
         <img src="/newphoto.jpg" alt="Campus View" />
     </div>
+
+    <div id="transportation" style ={{paddingTop: '10px' }}></div>
     <div className="map-guide-box">
     <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
         <h2 className="section-title" style={{ color: '#e6b634', textAlign: 'center', marginBottom: '10px' }}>Visit Campus</h2>
@@ -880,7 +882,8 @@ Dr Mohammad Jahirul Hoque</p>
         )}
     </div>
 </div>
-
+    
+    <div id="reach-dashboard" style ={{paddingTop: '10px' }}></div>
     <div className="reach-awareness-container">
         <h2 className="reach-title">MU Across Bangladesh & Beyond</h2>
         <div className="reach-underline"></div>
@@ -943,7 +946,6 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
         ))}
     </div>
-
             <div className="live-console">
                 <div className="console-top">
                     <span className="status-dot">●</span> <span className="live-label">LIVE SYSTEM STATUS</span>
@@ -960,6 +962,8 @@ Dr Mohammad Jahirul Hoque</p>
                 </div>
             </div>
         </div>
+        {/*</div>*/}
+        
 
          <div className="recommendation-banner" style={{ 
      display: 'flex', 
@@ -1030,6 +1034,7 @@ Dr Mohammad Jahirul Hoque</p>
         
        </div>
     </div>
+    {/*</div>*/}
         
         <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
             <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
@@ -1065,17 +1070,55 @@ Dr Mohammad Jahirul Hoque</p>
 
     {/* --- 8 WHITE BOXES GRID --- */}
     <div className="horizontal-box-grid">
-      <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="card-link">
+      {/*<a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="card-link">
         <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
-      </a>
+      </a>*/}
       {/*<div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>*/}
-      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>
-      <div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>
-      <div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>
-      <div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5><p>Global Impact</p></div>
+      <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5>
+          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Visit Now
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>*/}
+      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5>
+          <a href = "#transportation" className="plain-link">
+          Schedules
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>*/}
+      <div className="mini-card-white"><span>📞</span><h5>Call Us</h5>
+          <a href = "tel:+8801313057859" className="plain-link"> 
+            +880 1313057859
+          </a>
+        </div>
+      {/*<div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>*/}
+      <div className="mini-card-white"><span>📍</span><h5>Location</h5>
+          <a href = "https://www.google.com/maps/place/Sylhet+Metropolitan+University/@25.7526154,89.8043258,17z/data=!4m6!3m5!1s0x3750552bc71c899d:0x804e438bcc32b390!8m2!3d25.7526154!4d89.8043258!16s%2Fm%2F02wcjss?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
+           target="_blank" rel="noreferrer" className="plain-link">
+            Sylhet, BD
+          </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5><p>Global Impact</p></div>*/}
+      <div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5>
+          <a href="/all-alumni" className="plain-link"> 
+            Global Impact
+          </a>
+      </div>
+
       <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>
-      <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>
-      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>
+      {/*<div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>*/}
+      <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5>
+        <a href = "#reach-dashboard" className="plain-link">
+          Our Presence
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>*/}
+      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5>
+          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Collaboration
+        </a>
+      </div>
+
+
+
     </div>
 
   </div>
@@ -1084,8 +1127,8 @@ Dr Mohammad Jahirul Hoque</p>
     </>
           } />
           
-          <Route path="/all-alumni" element={<AllAlumni />} />
-          <Route path="/all-teachers" element={<AllTeachers />} />
+          {/*<Route path="/all-alumni" element={<AllAlumni />} />
+          <Route path="/all-teachers" element={<AllTeachers />} />*/}
           
         </Routes>
 
