@@ -130,14 +130,14 @@ html {
     right: 5%;
     background: var(--gold);
     color: var(--ink);
-    padding: 25px;
-    width: 340px;
+    padding: 20px;
+    width: 300px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .hero-caption h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
+    font-size: 1.3rem;
     margin-bottom: 8px;
 }
 
@@ -768,7 +768,7 @@ html {
 
 .map-top-image {
     width: 100% !important;
-    height: 600px !important;
+    height: 250px !important;
     margin: 0 !important;
     padding: 0 !important;
     line-height: 0;
@@ -1571,4 +1571,149 @@ html {
 .teachers-page-wrapper .t-card {
     width: 100%;
     box-sizing: border-box;
+}
+/* 📱 Maliha's Final Mobile Polish */
+
+@media (max-width: 768px) {
+  /* ড্যাশবোর্ড কন্টেইনার */
+  .reach-awareness-container {
+    padding: 15px !important;
+  }
+
+  /* ফ্লেক্স লেআউট ঠিক করা */
+  .reach-flex-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  /* ডিভিশন সিলেক্টর - এখানে উচ্চতা একটু বাড়িয়ে দিলাম যাতে দেখা যায় */
+  .division-selector {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    
+    /* স্ক্রলিং এর জন্য এই ৩টি লাইন মাস্ট */
+    max-height: 300px !important; /* উচ্চতা ৩০০ পিক্সেল করলাম */
+    overflow-y: auto !important;  /* ওপর-নিচ স্ক্রল */
+    overflow-x: hidden !important; /* ডানে-বামে স্ক্রল বন্ধ */
+    
+    padding: 5px !important;
+    border: 1px solid #eee;
+    background: #fdfdfd;
+  }
+
+  /* কার্ড ডিজাইন - যাতে গায়েব না হয়ে যায় */
+  .division-selector div {
+    display: block !important;    /* নিশ্চিত করা যাতে দেখা যায় */
+    background: #ffffff !important;
+    border: 1px solid #ddd !important;
+    padding: 10px 15px !important;
+    border-radius: 6px !important;
+    text-align: left !important;
+    flex-shrink: 0 !important;    /* এটা খুব জরুরি, যাতে কার্ড চ্যাপ্টা না হয় */
+    min-height: 50px !important;  /* নূন্যতম উচ্চতা */
+  }
+
+  /* লেখাগুলো ঠিক করা */
+  .division-selector div strong {
+    font-size: 0.95rem !important;
+    display: block !important;
+    color: #001f3f;
+  }
+
+  .division-selector div span {
+    font-size: 0.75rem !important;
+    display: block !important;
+    color: #666;
+  }
+
+  /* একটিভ কার্ড */
+  .division-selector div.active {
+    background: #001f3f !important;
+    color: white !important;
+  }
+  
+}
+@media (max-width: 768px) {
+  nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* কোনোভাবেই নিচের লাইনে নামতে দিবে না */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 5px !important;
+    gap: 2px !important;
+  }
+  .nav-logo, .logo-text {
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+  /*aita picture boro korche*/
+  .nav-links, .nav-center {
+    display: flex !important;
+    gap: 4px !important; /* আইটেমগুলোর মাঝখানের গ্যাপ একদম কমিয়ে দিলাম */
+  }
+   .nav-link {
+    font-size: 9px !important; /* ফন্ট ছোট করা ছাড়া উপায় নেই */
+    padding: 2px !important;
+    text-transform: uppercase;
+  }
+  .share-btn {
+    padding: 4px 6px !important;
+    font-size: 9px !important;
+    min-width: fit-content !important;
+    margin: 0 !important;
+  }
+  #home-section {
+    margin-top: 0 !important; /* নেভিবার থেকে দূরত্ব */
+    padding-top: 0;
+  }
+  .hero {
+   height: 260px!important;  
+   min-height: 0 !important;      
+
+    position: relative;
+    display: block !important; /* ফ্লেক্সবক্স সরিয়ে ব্লক দিলাম যাতে ইমেজ আর বক্স আলাদা থাকে */
+}
+  
+  
+  .hero-image {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
+  .hero-caption {
+    position: absolute !important; /* ইমেজের ওপর ভাসানোর জন্য */
+    bottom: 20px !important; /* নিচে থেকে ২০ পিক্সেল উপরে */
+    right: 10px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
+    background: rgba(200, 169, 81, 0.95) !important; /* তোমার গোল্ডেন কালার */
+    padding: 0px 10px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
+    width: 35% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
+    max-width: 200px !important; /* খুব বেশি বড় যাতে না হয় */
+    text-align: left !important; /* লেখা বাম দিক থেকে শুরু হবে */
+    transform: none !important;
+    left: auto !important;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+.hero-caption h2 {
+    font-size: 1rem !important; /* টাইটেল ছোট */
+    margin: 0 !important;
+    color: #001f3f !important;
+    font-weight: bold;
+}
+.hero-caption p {
+    font-size: 0.5rem !important; /* প্যারাগ্রাফ একদম ছোট */
+    margin: 5px 0 0 5px !important;
+    color: #001f3f !important;
+    line-height: 1.5;
+}
+  
+
+
 }

@@ -371,13 +371,13 @@ const AllTeachers = () => {
 
         <div className="t-meta">
           <div className="t-meta-item">
-            <span className="t-meta-icon">📍</span> {teacher.district} District
+            <span className="t-meta-icon"></span> {teacher.district} District
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon">⏱️</span> {teacher.experience} Years Exp.
+            <span className="t-meta-icon">⏱</span> {teacher.experience} Years Exp.
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon">😊</span> {teacher.satisfactionLevel || 'Satisfied'}
+            <span className="t-meta-icon"></span> {teacher.satisfactionLevel || 'Satisfied'}
           </div>
         </div>
 
@@ -529,18 +529,62 @@ const AllTeachers = () => {
           </div>
 
           <div className="map-grid reveal">
-            <div className="map-visual">
-              <div className="map-placeholder-icon">🗺️</div>
-              <div className="map-placeholder-text">Interactive Bangladesh Map</div>
-              <div className="map-placeholder-sub">
-                Leaflet.js map renders here — showing teacher districts
-              </div>
-              <div className="map-dots">
-                {[...Array(12)].map((_, i) => (
-                  <div key={i} className="map-dot"></div>
-                ))}
-              </div>
+  <div className="map-visual" style={{ height: '490px', width: '100%', borderRadius: '15px', overflow: 'hidden', background: '#f8f9fa', position: 'relative' }}>
+    {/* এখানে রিয়েল ম্যাপ বসিয়ে দিলাম যা কোনো এরর দিবে না */}
+    <iframe 
+      title="MU Faculty Map"
+      width="100%" 
+      height="100%" 
+      frameBorder="0" 
+      scrolling="no" 
+      src="https://www.openstreetmap.org/export/embed.html?bbox=88.01%2C20.67%2C92.67%2C26.63&amp;layer=mapnik&amp;marker=24.8949%2C91.8687" 
+      style={{ border: 'none', filter: 'grayscale(0.1) contrast(1.1)' }}
+    ></iframe>
+    
+    {/* তোমার আগের প্লেসহোল্ডার আইকনগুলো চাইলে নিচে রাখতে পারো, তবে ম্যাপ থাকলে এগুলো আর দরকার হয় না */}
+    <div className="map-dots" style={{ pointerEvents: 'none' }}>
+      {[...Array(12)].map((_, i) => (
+        <div key={i} className="map-dot"></div>
+      ))}
+    </div>
+  </div>
+
+  <div className="district-stats">
+    <div className="district-title">Top Districts by Faculty Count</div>
+    <div className="district-list">
+      {/* তোমার সেই কমেন্ট করা অংশগুলোও আমি রেখে দিচ্ছি যাতে তোমার কোড নষ্ট না হয় */}
+      {/*{[
+        { rank: '#1', name: 'Sylhet', count: '48 teachers', width: '100%' },
+        { rank: '#2', name: 'Dhaka', count: '41 teachers', width: '85%' },
+        { rank: '#3', name: 'Chittagong', count: '35 teachers', width: '73%' },
+        { rank: '#4', name: 'Rajshahi', count: '28 teachers', width: '58%' },
+        { rank: '#5', name: 'Khulna', count: '22 teachers', width: '46%' },
+      ].map((item, index) => (
+        <div className="district-item" key={index}>
+          <div className="district-rank-row">
+            <div className="district-rank">{item.rank}</div>
+            <div className="district-name">{item.name}</div>
+            <div className="district-count">{item.count}</div>
+          </div>
+          <div className="district-bar-track">
+            <div className="district-bar-fill" data-width={item.width}></div>
+          </div>
+        </div>
+      ))}*/}
+
+      {/* তোমার ডাইনামিক ডাটা রেন্ডারিং */}
+      {districtStats.map((item, index) => {
+        const topCount = districtStats[0]?.totalTeachers || 1; 
+        const barWidth = item.totalTeachers > 0 ? (item.totalTeachers / topCount) * 100 : 5;
+
+        return (
+          <div className="district-item" key={index}>
+            <div className="district-rank-row">
+              <div className="district-rank">#{index + 1}</div>
+              <div className="district-name">{item._id}</div>
+              <div className="district-count">{item.totalTeachers} teachers</div>
             </div>
+<<<<<<< HEAD
 
             <div className="district-stats">
               <div className="district-title">Top Districts by Faculty Count</div>
@@ -588,8 +632,24 @@ const AllTeachers = () => {
     );
   })}
               </div>
+=======
+            <div className="district-bar-track">
+              <div 
+                className="district-bar-fill" 
+                style={{ 
+                  width: `${barWidth}%`, 
+                  transition: 'width 1s ease-in-out',
+                  backgroundColor: item.totalTeachers > 0 ? 'var(--gold)' : '#e7cf31'
+                }}
+              ></div>
+>>>>>>> bbfbaec055203ff3d14082b5edf563cd3480d448
             </div>
           </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
         </div>
       </section>
 

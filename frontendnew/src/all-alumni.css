@@ -211,5 +211,151 @@
             .filter-section { flex-direction: column; }
 
         }
+        @media (max-width: 768px) {
+  /* ১. স্ট্যাটাস বার: ৪টি আইটেম এক লাইনে রাখার জন্য */
+  .stats-bar {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important; /* ৪ কলাম ১ লাইনে */
+    gap: 5px !important; /* আইটেমগুলোর মাঝখানের গ্যাপ একদম কম */
+    padding: 15px 5px !important; /* প্যাডিং কমিয়ে আনা হয়েছে */
+    margin: 20px 0 !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
 
-        
+  .stat-item h2 {
+    font-size: 1.6rem !important; /* ফন্ট সাইজ ছোট করা হয়েছে যাতে ১ লাইনে ধরে */
+    margin: 0 !important;
+  }
+
+  .stat-item p {
+    font-size: 0.55rem !important; /* সাব-টেক্সট অনেক ছোট করা হয়েছে */
+    white-space: nowrap; /* লেখা যাতে ভেঙে নিচে না যায় */
+    margin: 0 !important;
+  }
+
+  /* ২. ফিল্টার সেকশন: এক লাইনে স্ক্রলেবল করার জন্য */
+  .filter-section {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* এক লাইনে রাখবে */
+    overflow-x: auto !important; /* জায়গা না ধরলে ডানে স্ক্রল করা যাবে */
+    padding: 10px !important;
+    gap: 8px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    -webkit-overflow-scrolling: touch; /* ফোনে স্মুথ স্ক্রলিং এর জন্য */
+  }
+
+  /* ফিল্টার সেকশনের ভেতরে সব আইটেমের জন্য */
+  .search-box, 
+  .filter-section select, 
+  .filter-section input {
+    flex: 0 0 auto !important; /* আইটেমগুলো যাতে সংকুচিত (shrink) না হয় */
+    min-width: 100px !important; /* প্রতিটি বক্সের নূন্যতম প্রস্থ */
+    font-size: 0.75rem !important;
+    padding: 8px !important;
+  }
+
+  .search-box {
+    min-width: 150px !important; /* সার্চ বক্সকে একটু বড় রাখা হয়েছে */
+  }
+
+  /* ৩. স্ক্রলবারটি সুন্দর দেখানোর জন্য (ঐচ্ছিক) */
+  .filter-section::-webkit-scrollbar {
+    height: 3px;
+  }
+  .filter-section::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5); /* ব্লু থিমের সাথে ম্যাচিং */
+    border-radius: 10px;
+  }
+}
+
+    @media (max-width: 768px) {
+  /* ১. টাইটেল এবং ম্যাপের চারপাশের বিশাল গ্যাপ কমানো */
+  .map-section {
+    margin-bottom: 20px !important; /* ৮০ পিক্সেল থেকে ২০ করে দিলাম */
+    padding-top: 0 !important;
+  }
+
+  .map-section h2 {
+    margin-bottom: 10px !important; /* টাইটেলের নিচের গ্যাপ কমানো */
+    font-size: 1.4rem !important;
+  }
+
+  /* ২. ম্যাপের হাইট মোবাইলের জন্য ছোট করা (যাতে নিচে সাদা জায়গা না থাকে) */
+  .map-wrapper {
+    height: 250px !important; /* ৫০০ থেকে কমিয়ে ২৫০ করলাম */
+    background-size: contain !important;
+    margin-top: 0 !important;
+  }
+
+  /* ৩. ম্যাপের পিনগুলো মোবাইলে একটু ছোট করা যাতে গাদাগাদি না লাগে */
+  .glowing-pin {
+    width: 8px !important;
+    height: 8px !important;
+    box-shadow: 0 0 8px #3b82f6 !important;
+  }
+   .join-cta {
+    padding: 30px 20px !important; /* ৬০ পিক্সেল থেকে কমিয়ে ৩০ করলাম */
+    border-radius: 20px !important; /* কোণাগুলো মোবাইলের জন্য একটু কম গোল */
+    margin-bottom: 30px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+
+  /* ২. টেক্সট এবং টাইটেল ছোট করা */
+  .join-cta p {
+    font-size: 0.9rem !important;
+    margin-bottom: 5px !important;
+  }
+
+  .join-cta h2 {
+    font-size: 1.4rem !important; /* ২.৫ থেকে কমিয়ে ১.৪ করলাম যাতে ২ লাইনে না ভাঙে */
+    margin-bottom: 15px !important;
+    line-height: 1.2;
+  }
+
+  /* ৩. রেজিস্টার বাটনটাকে মোবাইল ফ্রেন্ডলি করা */
+  .join-cta a {
+    padding: 10px 25px !important; /* বাটনের সাইজ ছোট করা */
+    font-size: 0.9rem !important;
+    margin-top: 10px !important;
+    border-radius: 25px !important;
+  }
+  @media (max-width: 768px) {
+  /* ১. ছবির নিচের টাইটেল এবং টেক্সট ছোট করা */
+  .story-text {
+    padding: 15px !important;
+  }
+
+  .story-text h2 {
+    font-size: 1.4rem !important; /* ২.৫ থেকে কমিয়ে ১.৪ করা হলো */
+    margin: 8px 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .story-text p {
+    font-size: 0.85rem !important;
+    margin-bottom: 20px !important; /* ৪৫ পিক্সেল থেকে কমিয়ে ২০ করা হলো */
+  }
+
+  /* ২. কোটেশন (Quote) বক্সটা ছোট করা */
+  .story-text div {
+    padding: 12px 15px !important;
+    font-size: 0.85rem !important;
+    border-radius: 10px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ৩. ফিচারড ইমেজের বর্ডার রেডিয়াস মোবাইলের জন্য ঠিক করা */
+  .featured-img {
+    border-radius: 10 px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* ৪. ওপরের নীল টেক্সটটি ছোট করা */
+  .story-text span {
+    font-size: 0.7rem !important;
+    letter-spacing: 1px;
+  }
+}
+}

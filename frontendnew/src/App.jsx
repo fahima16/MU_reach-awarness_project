@@ -522,7 +522,7 @@ useEffect(() => {
     </section>
 
     <div className="container">
-      {/* Welcome Section */}
+      {/* Welcome Section */}   
       <section>
         <h3 className="sec--title">Welcome to Metropolitan University</h3>
         <div className="article-content">
@@ -675,8 +675,8 @@ useEffect(() => {
               <p className="leader-dept">Dr. Toufique Rahman Chowdhury</p>
               <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Sylhet</strong></div>
-                <div>⏱️ Exp: <strong>15+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱ Exp: <strong>15+ Years</strong></div>
               
               </div>
             </div>
@@ -686,8 +686,8 @@ useEffect(() => {
               <h3 className="leader-name">Chairman
                  Board of Trustees</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Sylhet</strong></div>
-                <div>⏱️ Exp: <strong>10+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -697,8 +697,8 @@ useEffect(() => {
 Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Dhaka</strong></div>
-                <div>⏱️ Exp: <strong>10+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱ Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -736,7 +736,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Nafiul Adnan Chowdhury</h3>
-                <span className="batch">CSE • Class of 2018</span>
+          
                 <div className="company-logo">
                     <i className="fab fa-microsoft"></i> <span>Security Software Engineer</span>
                 </div>
@@ -747,11 +747,13 @@ Dr Mohammad Jahirul Hoque</p>
         <div className="glass-card">
             <div className="profile-area">
                 <img src="photo4.jpeg" alt="Majharul Islam Rafat" />
-                <a href="#" className="social-badge"><i className="fab fa-linkedin-in"></i></a>
+               <a href="https://www.facebook.com/share/1HcusH2zxZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="social-badge">
+  <i className="fab fa-facebook-f"></i>
+</a>
             </div>
             <div className="card-info">
                 <h3>Majharul Islam Rafat</h3>
-                <span className="batch">BBA • Class of 2019</span>
+              
                 <div className="company-logo">
                     <img src="https://www.genesys.com/favicon.ico" className="icon-img" alt="logo" /> 
                     <span>Senior Software Engineer</span>
@@ -769,7 +771,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Foysol Ahmed Shuvo</h3>
-                <span className="batch">EEE • Class of 2017</span>
+             
                 <div className="company-logo">
                     <img src="https://www.agoda.com/favicon.ico" className="icon-img" alt="logo" /> 
                     <span>Software Engineer</span>
@@ -787,7 +789,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Amanur Rahman</h3>
-                <span className="batch">English • Class of 2020</span>
+                
                 <div className="company-logo">
                     <i className="fab fa-google"></i> <span>Software Engineer</span>
                 </div>
@@ -825,15 +827,15 @@ Dr Mohammad Jahirul Hoque</p>
         
         {/* City Grid - Forced to be Column/Grid layout */}
       <div className="city-grid">
-    <button className="city-btn" onClick={() => handleShowJourney('Dhaka', 240, 600, 'Green Line / Train')}>Dhaka</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Chittagong', 310, 800, 'S. Alam / Hanif')}>Chittagong</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Rajshahi', 450, 1200, 'Desh Travels')}>Rajshahi</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Khulna', 500, 1500, 'Hanif Enterprise')}>Khulna</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Barisal', 480, 1400, 'Sakura')}>Barisal</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Mymensingh', 210, 550, 'Ena / Soukhin')}>Mymensingh</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Dhaka', 243, 600, 'Green Line / Train')}>Dhaka</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Chittagong', 370, 800, 'S. Alam / Hanif')}>Chittagong</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Rajshahi', 472, 1200, 'Desh Travels')}>Rajshahi</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Khulna', 439, 1500, 'Hanif Enterprise')}>Khulna</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Barisal', 401, 1400, 'Sakura')}>Barisal</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Mymensingh', 279, 550, 'Ena / Soukhin')}>Mymensingh</button>
     
     <div className="rangpur-wrapper">
-        <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 430, 1100, 'Hanif / SR Travels')}>Rangpur</button>
+        <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 495, 1100, 'Hanif / SR Travels')}>Rangpur</button>
     </div>
 </div>
 
@@ -876,7 +878,7 @@ Dr Mohammad Jahirul Hoque</p>
                     </div>
                 </div>
                 <div className="housing-note" style={{ marginTop: '20px', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
-                    <p style={{ color: '#444', margin: 0 }}>🏠 <strong>Accommodation:</strong> University Hostels and private mess options are available near the Bateshwar campus.</p>
+                    <p style={{ color: '#444', margin: 0 }}>🏠 <strong>Accommodation:</strong> I hope this system makes things easier for you.Hostels and private mess options are available near the Bateshwar campus.</p>
                 </div>
             </div>
         )}
@@ -1036,23 +1038,32 @@ Dr Mohammad Jahirul Hoque</p>
     </div>
     {/*</div>*/}
         
-        <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
-            <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
-            <div className="life-video-grid">
-                <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
-                    <img src="/modern campus.jpeg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
-                    <img src="/student life photo.jpeg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
-                    <img src="/evening photo.jpeg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
-                    <img src="/academing photo.jpeg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
-                </div>
-            </div>
+       <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
+    {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
+    <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem', marginBottom: '40px' }}>
+        Life at MU
+    </h2>
+    
+    <div className="life-video-grid">
+        <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
+            <img src="/modern campus.jpeg" alt="Modern Campus" />
+            <div className="mu-video-overlay"><h3>Modern Campus</h3></div>
         </div>
+        {/* বাকি ভিডিও কার্ডগুলো একই থাকবে... */}
+        <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
+            <img src="/student life photo.jpeg" alt="Student Life" />
+            <div className="mu-video-overlay"><h3>Student Life</h3></div>
+        </div>
+        <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
+            <img src="/evening photo.jpeg" alt="Evening Views" />
+            <div className="mu-video-overlay"><h3>Evening Views</h3></div>
+        </div>
+        <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
+            <img src="/academing photo.jpeg" alt="Academic Buildings" />
+            <div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
+        </div>
+    </div>
+</div>
         
 
       
