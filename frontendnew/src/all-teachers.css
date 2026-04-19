@@ -25,6 +25,7 @@
   background:rgba(12,21,32,0.96);
   backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(200,169,81,0.18);
+  border-left:  none;
   transition:all .3s;
 }
 .teachers-page-wrapper .nav-logo{
@@ -70,7 +71,7 @@
   color:rgba(255,255,255,.65);
   text-decoration:none;font-size:.78rem;
   letter-spacing:.06em;
-  border-bottom:none ;
+  border-bottom:none  !important;
   transition:all .2s;
 }
 .teachers-page-wrapper .dropdown a:hover{color:var(--gold);padding-left:1.6rem;background:rgba(200,169,81,.05);}
@@ -92,7 +93,8 @@
   position:fixed;bottom:2rem;right:2rem;z-index:999;
   background:var(--ink);color:var(--gold);
   padding:.8rem 1.5rem;font-size:.82rem;font-weight:600;
-  border-left:3px solid var(--gold);
+  border-left:none;
+  box-shadow: 0 0 15px rgba(200,169,81,0.4); 
   opacity:0;transform:translateY(10px);
   transition:all .3s;pointer-events:none;
 }
@@ -224,7 +226,8 @@
 .teachers-page-wrapper .dept-strip{
   background:var(--ink);height:46px;
   display:flex;align-items:center;overflow:hidden;
-  position:relative;
+  top: 0; bottom: 0;
+  position:relative;width: 80px ; z-index: 2;
 }
 .teachers-page-wrapper .dept-strip::before,.dept-strip::after{
   content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
@@ -246,7 +249,7 @@
 .teachers-page-wrapper .section{padding:90px 0;}
 .teachers-page-wrapper .container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
 .teachers-page-wrapper .sec-eyebrow{
-  display:flex;align-items:center;gap:.8rem;
+  display:flex;align-items:center;gap:.8rem; 
   color:var(--gold);font-size:.68rem;font-weight:600;
   letter-spacing:.35em;text-transform:uppercase;margin-bottom:.9rem;
 }

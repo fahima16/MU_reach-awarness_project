@@ -476,7 +476,7 @@ useEffect(() => {
 Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Dhaka</strong></div>
+                <div>📍 Region: <strong>Sylhet</strong></div>
                 <div>⏱️ Exp: <strong>10+ Years</strong></div>
           
               </div>
