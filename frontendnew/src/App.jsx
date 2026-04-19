@@ -1038,7 +1038,7 @@ Dr Mohammad Jahirul Hoque</p>
     </div>
     {/*</div>*/}
         
-       <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
+       <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
     {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
     <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem', marginBottom: '40px' }}>
         Life at MU
