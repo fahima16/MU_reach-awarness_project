@@ -1038,23 +1038,32 @@ Dr Mohammad Jahirul Hoque</p>
     </div>
     {/*</div>*/}
         
-        <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
-            <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
-            <div className="life-video-grid">
-                <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
-                    <img src="/modern campus.jpeg" alt="Modern Campus" /><div className="mu-video-overlay"><h3>Modern Campus</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
-                    <img src="/student life photo.jpeg" alt="Student Life" /><div className="mu-video-overlay"><h3>Student Life</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
-                    <img src="/evening photo.jpeg" alt="Evening Views" /><div className="mu-video-overlay"><h3>Evening Views</h3></div>
-                </div>
-                <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
-                    <img src="/academing photo.jpeg" alt="Academic Buildings" /><div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
-                </div>
-            </div>
+       <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
+    {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
+    <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem', marginBottom: '40px' }}>
+        Life at MU
+    </h2>
+    
+    <div className="life-video-grid">
+        <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
+            <img src="/modern campus.jpeg" alt="Modern Campus" />
+            <div className="mu-video-overlay"><h3>Modern Campus</h3></div>
         </div>
+        {/* বাকি ভিডিও কার্ডগুলো একই থাকবে... */}
+        <div className="mu-video-card" onClick={() => openMUVideo('/student life.mp4')}>
+            <img src="/student life photo.jpeg" alt="Student Life" />
+            <div className="mu-video-overlay"><h3>Student Life</h3></div>
+        </div>
+        <div className="mu-video-card" onClick={() => openMUVideo('/evening.mp4')}>
+            <img src="/evening photo.jpeg" alt="Evening Views" />
+            <div className="mu-video-overlay"><h3>Evening Views</h3></div>
+        </div>
+        <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
+            <img src="/academing photo.jpeg" alt="Academic Buildings" />
+            <div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
+        </div>
+    </div>
+</div>
         
 
       
