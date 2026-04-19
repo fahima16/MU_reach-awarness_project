@@ -1605,23 +1605,31 @@ html {
   }
   #home-section {
     margin-top: 0 !important; /* নেভিবার থেকে দূরত্ব */
-    padding-top: 0 !important; /* হিরো সেকশনের উপরের প্যাডিং */
+    padding-top: 0;
   }
+  .hero {
+   height: 250px!important;  
+   min-height: 0 !important;      
+
+    position: relative;
+    display: block !important; /* ফ্লেক্সবক্স সরিয়ে ব্লক দিলাম যাতে ইমেজ আর বক্স আলাদা থাকে */
+}
+  
+  
   .hero-image {
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
     display: block !important;
-    margin-top: 30px !important;
-  }
-  
+    margin: 0 !important;
+}
 .hero-caption {
     position: absolute !important; /* ইমেজের ওপর ভাসানোর জন্য */
-    bottom: 120px !important; /* নিচে থেকে ২০ পিক্সেল উপরে */
-    right: 10px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
+    bottom: 20px !important; /* নিচে থেকে ২০ পিক্সেল উপরে */
+    right: 15px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
     background: rgba(200, 169, 81, 0.95) !important; /* তোমার গোল্ডেন কালার */
-    padding: 0px 10px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
-    width: 35% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
-    max-width: 200px !important; /* খুব বেশি বড় যাতে না হয় */
+    padding: 12px 15px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
+    width: 60% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
+    max-width: 250px !important; /* খুব বেশি বড় যাতে না হয় */
     text-align: left !important; /* লেখা বাম দিক থেকে শুরু হবে */
     transform: none !important;
     left: auto !important;
@@ -1636,10 +1644,10 @@ html {
     font-weight: bold;
 }
 .hero-caption p {
-    font-size: 0.5rem !important; /* প্যারাগ্রাফ একদম ছোট */
-    margin: 5px 0 0 5px !important;
+    font-size: 0.7rem !important; /* প্যারাগ্রাফ একদম ছোট */
+    margin: 5px 0 0 0 !important;
     color: #001f3f !important;
-    line-height: 1.5;
+    line-height: 1.2;
 }
 
   
