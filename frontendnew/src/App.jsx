@@ -1,94 +1,147 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-router-dom';
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 
+const AdminFeedbackPanel = () => {
+    const [messages, setMessages] = useState([]);
 
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                // তোমার ব্যাকএন্ড রুট থেকে ডাটা নিয়ে আসা
+                const res = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/admin/suggestions');
+                setMessages(res.data);
+            } catch (err) {
+                console.error("Loading", err);
+            }
+        };
+        fetchMessages();
+    }, []);
+
+    return (
+        <div style={{ padding: '40px', background: '#f8f9fa', borderRadius: '15px', marginTop: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+            <h2 style={{ color: '#001f3f', borderBottom: '4px solid #e6b634', paddingBottom: '10px' }}>
+                Admin Dashboard: Student Feedback
+            </h2>
+            <div style={{ marginTop: '20px' }}>
+                {messages.length > 0 ? messages.map((m) => (
+                    <div key={m._id} style={{ 
+                        background: '#fff', padding: '20px', marginBottom: '15px', 
+                        borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        borderLeft: m.vote === 'No' ? '6px solid #ff4d4d' : '6px solid #2ecc71'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <strong style={{ fontSize: '1.1rem' }}>Vote: {m.vote}</strong>
+                            <small style={{ color: '#888' }}>{new Date(m.createdAt).toLocaleString()}</small>
+                        </div>
+                        <p style={{ marginTop: '10px', fontSize: '1rem', color: '#333', fontStyle: 'italic' }}>
+                            "{m.suggestion}"
+                        </p>
+                    </div>
+                )) : (
+                    <p style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>No feedback available yet.</p>
+                )}
+            </div>
+        </div>
+    );
+};
 const RecommendationPoll = () => {
+  // ১. স্টেটগুলো ব্যাকএন্ডের ডাটার সাথে ম্যাচ করে সেট করা
   const [voted, setVoted] = useState(false);
   const [choice, setChoice] = useState(null);
-  const [stats, setStats] = useState({ yes: 81, no: 19 });
+  const [suggestion, setSuggestion] = useState("");
+  const [voteStats, setVoteStats] = useState({ yesPercentage: 0, noPercentage: 0 });
 
-  const handleVote = (type) => {
-    if (!voted) {
-      setStats({ ...stats, [type]: stats[type] + 1 });
-      setChoice(type);
-      setVoted(true);
+  // ২. পেজ লোড হলে ডাটাবেজ থেকে লাইভ পারসেন্টেজ নিয়ে আসা
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/stats');
+        setVoteStats(res.data);
+      } catch (err) {
+        console.error("Stats আনতে সমস্যা হচ্ছে:", err);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  // ৩. ভোট এবং সাজেশন সাবমিট করার ফাংশন
+  const handleVoteSubmit = async (selectedType, isSuggestion = false) => {
+    try {
+      // ব্যাকএন্ডে ডাটা পাঠানো
+      await axios.post('https://mu-reach-awarness-project.onrender.com/api/feedback/vote', {
+        vote: selectedType === 'yes' ? 'Yes' : 'No',
+        suggestion: isSuggestion ? suggestion : ""
+      });
+
+      if (!isSuggestion) {
+        setChoice(selectedType);
+        setVoted(true);
+      } else {
+        alert("Thank you for your suggestions!");
+      }
+
+      // ডাটা সাবমিট হওয়ার পর লাইভ রেজাল্ট আবার আপডেট করা
+      const updatedRes = await axios.get('https://mu-reach-awarness-project.onrender.com/api/feedback/stats');
+      setVoteStats(updatedRes.data);
+    } catch (err) {
+      console.error("Voting failed:", err);
+      alert("Error submitting vote. Please check backend.");
     }
   };
 
-  const total = stats.yes + stats.no;
-  const yesPer = Math.round((stats.yes / total) * 100);
-  const noPer = 100 - yesPer;
-
   return (
     <div className="poll-card-premium" style={{ 
-      backgroundColor: '#ffffff', 
-      padding: '40px', 
-      borderRadius: '15px',
-      color: '#001f3f',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+      backgroundColor: '#ffffff', padding: '40px', borderRadius: '15px',
+      color: '#001f3f', boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
     }}>
       
-      {/* --- ADDED TITLE SECTION --- */}
       <div style={{ marginBottom: '30px' }}>
-        <h2 style={{ 
-          fontSize: '2.2rem', 
-          fontWeight: '900', 
-          textTransform: 'uppercase', 
-          letterSpacing: '1px',
-          margin: '0',
-          color: '#001f3f'
-        }}>
+        <h2 style={{ fontSize: '2.2rem', fontWeight: '900', textTransform: 'uppercase', color: '#001f3f', margin: '0' }}>
           The Voice of Our Students
         </h2>
-        {/* Signature Gold Line */}
         <div style={{ width: '70px', height: '5px', background: '#e6b634', marginTop: '12px' }}></div>
-        
         <p style={{ marginTop: '20px', fontSize: '1.1rem', color: '#444', lineHeight: '1.5' }}>
           Share your recommendation and help us inspire the next generation of scholars.
         </p>
       </div>
 
-      {/* Result Bars - Always Visible */}
+      {/* লাইভ রেজাল্ট বার - এখন ডাটাবেজ থেকে আসবে */}
       <div style={{ marginBottom: '30px' }}>
         <div style={{ marginBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
             <span>Yes, I Recommend</span>
-            <span style={{ color: '#e6b634' }}>{yesPer}%</span>
+            <span style={{ color: '#e6b634' }}>{voteStats.yesPercentage}%</span>
           </div>
           <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
-            <div style={{ width: `${yesPer}%`, background: '#e6b634', height: '100%', transition: 'width 1s ease' }}></div>
+            <div style={{ width: `${voteStats.yesPercentage}%`, background: '#e6b634', height: '100%', transition: 'width 1s ease' }}></div>
           </div>
         </div>
 
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginBottom: '8px' }}>
             <span>No</span>
-            <span>{noPer}%</span>
+            <span>{voteStats.noPercentage}%</span>
           </div>
           <div style={{ background: '#f0f0f0', height: '12px', borderRadius: '10px', overflow: 'hidden' }}>
-            <div style={{ width: `${noPer}%`, background: '#001f3f', height: '100%', transition: 'width 1s ease' }}></div>
+            <div style={{ width: `${voteStats.noPercentage}%`, background: '#001f3f', height: '100%', transition: 'width 1s ease' }}></div>
           </div>
         </div>
       </div>
 
-      {/* Buttons Container */}
       {!voted ? (
         <div style={{ display: 'flex', gap: '15px' }}>
           <button 
-            onClick={() => handleVote('yes')} 
-            style={{ flex: 1, padding: '14px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
-          >
-            Vote Yes
-          </button>
+            onClick={() => handleVoteSubmit('yes')} 
+            style={{ flex: 1, padding: '14px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          > Vote Yes </button>
           <button 
-            onClick={() => handleVote('no')} 
-            style={{ flex: 1, padding: '14px', background: 'transparent', color: '#001f3f', border: '2px solid #001f3f', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}
-          >
-            Vote No
-          </button>
+            onClick={() => handleVoteSubmit('no')} 
+            style={{ flex: 1, padding: '14px', background: 'transparent', color: '#001f3f', border: '2px solid #001f3f', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          > Vote No </button>
         </div>
       ) : (
         <div style={{ textAlign: 'center', fontWeight: 'bold', color: '#001f3f', padding: '15px', border: '1px dashed #e6b634', borderRadius: '8px' }}>
@@ -96,16 +149,21 @@ const RecommendationPoll = () => {
         </div>
       )}
 
-      {/* Enhanced Feedback Box */}
+      {/* No সিলেক্ট করলে সাজেশন বক্স */}
       {choice === 'no' && (
-        <div className="animate-fade" style={{ marginTop: '30px', padding: '25px', background: '#001f3f', borderRadius: '12px', color: '#fff', borderLeft: '6px solid #e6b634' }}>
-          <p style={{ color: '#e6b634', marginBottom: '15px', fontSize: '1rem', fontWeight: '700', textTransform: 'uppercase' }}>How can we improve?</p>
+        <div style={{ marginTop: '30px', padding: '25px', background: '#001f3f', borderRadius: '12px', color: '#fff', borderLeft: '6px solid #e6b634' }}>
+          <p style={{ color: '#e6b634', marginBottom: '15px', fontWeight: '700' }}>How can we improve?</p>
           <textarea 
-            placeholder="Your suggestions are private and help us grow..." 
+            value={suggestion}
+            onChange={(e) => setSuggestion(e.target.value)}
+            placeholder="Your suggestions are private..." 
             rows="3"
-            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: 'none', marginBottom: '15px', outline: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff' }}
+            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: 'none', marginBottom: '15px', background: 'rgba(255,255,255,0.1)', color: '#fff' }}
           />
-          <button style={{ width: '100%', padding: '12px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer', textTransform: 'uppercase' }}>
+          <button 
+            onClick={() => handleVoteSubmit('no', true)}
+            style={{ width: '100%', padding: '12px', background: '#e6b634', color: '#001f3f', border: 'none', borderRadius: '6px', fontWeight: '800', cursor: 'pointer' }}
+          >
             Submit Suggestions
           </button>
         </div>
@@ -113,16 +171,45 @@ const RecommendationPoll = () => {
     </div>
   );
 };
+
 function AppContents() {
+
+  
   const [count, setCount] = useState(0);
    // --- MOVE THIS TO THE TOP (OUTSIDE AppContents) ---
+   const [inputPass, setInputPass] = useState(""); // পাসওয়ার্ড টাইপ করার জন্য
+const [isAuthorized, setIsAuthorized] = useState(false); 
+const [showLogin, setShowLogin] = useState(false);
+const [selectedDistrict, setSelectedDistrict] = useState('Dhaka');
+const [activeLocation, setActiveLocation] = useState({ title: 'Dhaka', sub: 'The Educational Heart' });
+const lineChartRef = useRef(null);
+const barChartRef = useRef(null);
+// পাসওয়ার্ড মিলেছে কি না
+
+// পাসওয়ার্ড চেক করার ফাংশন
+const handleAdminLogin = () => {
+    if (inputPass === "1234") { // তোমার সিক্রেট পাসওয়ার্ড
+        setIsAuthorized(true);
+        setShowLogin(false);
+    } else {
+        alert("Wrong password! Try again");
+    }
+};
 
 
   
   
   // 1. URL Copy Function
-  const copyUrl = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const copyUrl = async() => {
+    const shareUrl=`${window.location.origin}/reach`;
+    try{
+      await navigator.clipboard.writeText(shareUrl);
+      alert("Link copied: " + shareUrl);
+    }
+    catch(err){
+      console.error("Failed to copy the link:", err);
+    }
+    
     alert('Page link copied!');
   };
    
@@ -130,8 +217,7 @@ function AppContents() {
   const [videoUrl, setVideoUrl] = useState("");
   const [showModal, setShowModal] = useState(false);
   
-  const lineChartRef = useRef(null);
-  const barChartRef = useRef(null);
+  
   
   // --- ADDED: Auto-scroll Target Reference ---
   const resultRef = useRef(null);
@@ -154,7 +240,7 @@ function AppContents() {
   const openMUVideo = (url) => { setVideoUrl(url); setShowModal(true); };
   const closeMUVideo = () => { setVideoUrl(""); setShowModal(false); };
 
-  const updateLiveMap = (e, title, sub) => {
+  /*const updateLiveMap = (e, title, sub) => {
     document.querySelectorAll('.div-card').forEach(card => card.classList.remove('active'));
     e.currentTarget.classList.add('active');
 
@@ -171,7 +257,110 @@ function AppContents() {
             lineChartRef.current.update();
         }
     }
-  };
+  };*/
+
+  /*const fetchReachStats = async () => {
+    try {
+        const res = await fetch('http://localhost:5000/api/reach/all-stats');
+        const data = await res.json();
+        
+        if (barChartRef.current && lineChartRef.current) {
+            // Bar Chart Update
+            barChartRef.current.data.labels = data.barData.map(d => d._id);
+            barChartRef.current.data.datasets[0].data = data.barData.map(d => d.total);
+            barChartRef.current.update();
+
+            // Line Chart Update
+            lineChartRef.current.data.labels = data.lineData.map(d => d._id);
+            lineChartRef.current.data.datasets[0].data = data.lineData.map(d => d.total);
+            lineChartRef.current.update();
+        }
+    } catch (err) {
+        console.error("Stats fetching error");
+    }
+};*/
+
+const fetchReachStats = async () => {
+    try {
+        const res = await fetch('https://mu-reach-awarness-project.onrender.com/api/reach/all-stats');
+        const data = await res.json();
+        
+        // ডিস্ট্রিক্টের সিরিয়াল স্থির করার জন্য একটি লিস্ট
+        const fixedLabels = ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
+        const fixedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        // বর্তমান মাসের ইনডেক্স বের করা (এপ্রিল হলে ৩ আসবে)
+        const currentMonthIndex = new Date().getMonth();
+
+        if (barChartRef.current && lineChartRef.current) {
+            // --- ১. বার চার্ট ফিক্সড করা ---
+            // ব্যাকএন্ড ডাটাকে একটি অবজেক্টে নিয়ে আসা যাতে সহজে খুঁজে পাওয়া যায়
+            const statsMap = {};
+            data.barData.forEach(item => {
+                statsMap[item._id] = item.total;
+            });
+
+            // আমাদের fixedLabels অনুযায়ী ডাটা সাজানো (যদি ডাটা না থাকে তবে ০ বসবে)
+            const sortedBarData = fixedLabels.map(label => statsMap[label] || 0);
+
+            barChartRef.current.data.labels = fixedLabels;
+            barChartRef.current.data.datasets[0].data = sortedBarData;
+            barChartRef.current.update();
+
+            // --- ২. লাইন চার্ট আপডেট করা ---
+            /*if (data.lineData && data.lineData.length > 0) {
+                // মাস অনুযায়ী সাজানো (যদি ব্যাকএন্ড থেকে মাসের নাম আসে)
+                lineChartRef.current.data.labels = data.lineData.map(d => d._id); 
+                lineChartRef.current.data.datasets[0].data = data.lineData.map(d => d.total);
+                lineChartRef.current.update();
+            } else {
+                // যদি লাইন ডাটা খালি থাকে তবে ডামি ডাটা দিয়ে চেক করতে পারো
+                console.log("Line data is empty from backend");
+            }*/
+           const lineStatsMap = {}; 
+            data.lineData.forEach(item => {
+                lineStatsMap[item._id] = item.total; 
+            });
+           const progressiveLineData = fixedMonths.map((month, index) => {
+                // যদি মাসটি বর্তমান মাসের পরের মাস হয় (Future), তবে null দাও
+                if (index > currentMonthIndex) {
+                    return null; 
+                }
+                // আগের মাস বা বর্তমান মাসের ডাটা থাকলে দাও, না থাকলে ০
+                //return lineStatsMap[month] || 0;
+                return lineStatsMap[month] !== undefined ? lineStatsMap[month] : 0;
+            });
+
+            lineChartRef.current.data.labels = fixedMonths; // Jan-Dec সবসময় নিচে থাকবে
+            lineChartRef.current.data.datasets[0].data = progressiveLineData;
+            
+            // নিচের লাইনটি নিশ্চিত করে যে ফিউচার মাসের গ্যাপগুলো যেন কানেক্ট না হয়
+            lineChartRef.current.options.scales.y.suggestedMax = 10;
+            lineChartRef.current.options.spanGaps = false;
+            
+            lineChartRef.current.update();
+        }
+    } catch (err) {
+        console.error("Stats fetch failed:", err);
+    }
+};
+
+// ২. ক্লিক করলে ব্যাকএন্ডে পাঠানো এবং UI চেঞ্জ করা
+const updateLiveMap = async (e, title, sub) => {
+    setSelectedDistrict(title);
+    setActiveLocation({ title, sub });
+
+    try {
+        await fetch('https://mu-reach-awarness-project.onrender.com/api/reach/click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ districtName: title })
+        });
+        fetchReachStats(); // ক্লিক করার পর চার্ট রিফ্রেশ
+    } catch (err) {
+        console.log("Click save failed");
+    }
+};
 
   useEffect(() => {
     const ctxLine = document.getElementById('lineChart')?.getContext('2d');
@@ -181,18 +370,46 @@ function AppContents() {
       lineChartRef.current = new window.Chart(ctxLine, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          datasets: [{ data: [20, 40, 35, 55, 45, 60, 50, 70, 65, 80, 75, 90], borderColor: '#c8a951', borderWidth: 3, tension: 0.4, pointRadius: 0, fill: false }]
+            labels: [],
+            datasets: [{ 
+                data: [], 
+                borderColor: '#c8a951', 
+                borderWidth: 3, 
+                tension: 0.4, 
+                pointRadius: 2, 
+                fill: false 
+            }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { ticks: { color: '#aaa', font: { size: 10 } } } } }
-      });
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            animation: {
+                duration: 1000, 
+                easing: 'easeOutQuart',
+                suggestedMax: 100
+            },
+            plugins: { 
+                legend: { display: false } 
+            }, 
+            scales: { 
+                y: { 
+                    display: false, // গ্রিড লাইন দেখাবে না
+                    beginAtZero: true // এই লাইনটি নিশ্চিত করবে ডাটা নিচ থেকে উপরে উঠবে
+                    
+                }, 
+                x: { 
+                    ticks: { color: '#aaa', font: { size: 10 } } 
+                } 
+            } 
+        }
+    });
 
       barChartRef.current = new window.Chart(ctxBar, {
         type: 'bar',
         data: {
-          labels: ['Dhaka', 'Sylhet', 'Chittagong', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'],
+          labels: [],
           datasets: [{ 
-              data: [70, 85, 60, 50, 45, 40, 35, 30], 
+              data: [], 
               backgroundColor: ['#5dade2', '#f4d03f', '#58d68d', '#eb984e', '#af7ac5', '#ec7063', '#48c9b0', '#a569bd'],
               borderRadius: 5
           }]
@@ -200,6 +417,10 @@ function AppContents() {
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { color: '#aaa', font: { size: 9 } } }, x: { ticks: { color: '#fff', font: { size: 9 } } } } }
       });
     }
+    // ব্যাকএন্ড থেকে প্রথমবার ডাটা নিয়ে আসা
+    fetchReachStats();
+    // ১. ডাটাবেজ থেকে ডাটা এনে চার্ট আপডেট করা
+
     return () => {
         if (lineChartRef.current) lineChartRef.current.destroy();
         if (barChartRef.current) barChartRef.current.destroy();
@@ -595,6 +816,8 @@ Dr Mohammad Jahirul Hoque</p>
     <div className="map-top-image">
         <img src="/newphoto.jpg" alt="Campus View" />
     </div>
+
+    <div id="transportation" style ={{paddingTop: '10px' }}></div>
     <div className="map-guide-box">
     <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
         <h2 className="section-title" style={{ color: '#e6b634', textAlign: 'center', marginBottom: '10px' }}>Visit Campus</h2>
@@ -659,13 +882,14 @@ Dr Mohammad Jahirul Hoque</p>
         )}
     </div>
 </div>
-
+    
+    <div id="reach-dashboard" style ={{paddingTop: '10px' }}></div>
     <div className="reach-awareness-container">
         <h2 className="reach-title">MU Across Bangladesh & Beyond</h2>
         <div className="reach-underline"></div>
 
         <div className="reach-flex-layout">
-            <div className="division-selector">
+            {/*<div className="division-selector">
                 <div className="div-card active" onClick={(e) => updateLiveMap(e, 'Dhaka', 'The Educational Heart')}>
                     <h3>Dhaka</h3>
                     <p>Capital Connectivity</p>
@@ -698,13 +922,35 @@ Dr Mohammad Jahirul Hoque</p>
                     <h3>Mymensingh</h3>
                     <p>Old Brahmaputra Hub</p>
                 </div>
-            </div>
+            </div>*/}
 
+            <div className="division-selector">
+        {[
+            { name: 'Dhaka', sub: 'Capital Connectivity' },
+            { name: 'Sylhet', sub: 'Home of MU' },
+            { name: 'Chittagong', sub: 'Coastal Reach' },
+            { name: 'Rajshahi', sub: 'Silk City Education' },
+            { name: 'Khulna', sub: 'Industrial Reach' },
+            { name: 'Barisal', sub: 'Riverine Outreach' },
+            { name: 'Rangpur', sub: 'Northern Gateway' },
+            { name: 'Mymensingh', sub: 'Cultural Connectivity' }
+        ].map((d) => (
+            <div 
+                key={d.name} 
+                /* এখানে active-district ক্লাস যোগ হবে যদি সিলেক্টেড হয় */
+                className={`div-card ${selectedDistrict === d.name ? 'active-district' : ''}`} 
+                onClick={(e) => updateLiveMap(e, d.name, d.sub)}
+            >
+                <h3>{d.name}</h3>
+                <p>{d.sub}</p>
+            </div>
+        ))}
+    </div>
             <div className="live-console">
                 <div className="console-top">
                     <span className="status-dot">●</span> <span className="live-label">LIVE SYSTEM STATUS</span>
-                    <h4 id="map-title">Dhaka Division</h4>
-                    <p id="map-subtitle">The Educational Heart</p>
+                    <h4 id="map-title">{activeLocation.title} Division</h4>
+                    <p id="map-subtitle">{activeLocation.sub}</p>
                 </div>
                 <div className="chart-box" style={{ width: '100%', height: '180px', background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '10px', marginBottom: '20px' }}>
                     <p className="chart-label" style={{ fontSize: '11px', color: '#c8a951', fontWeight: 'bold' }}>Growth Trend</p>
@@ -716,6 +962,8 @@ Dr Mohammad Jahirul Hoque</p>
                 </div>
             </div>
         </div>
+        {/*</div>*/}
+        
 
          <div className="recommendation-banner" style={{ 
      display: 'flex', 
@@ -733,8 +981,60 @@ Dr Mohammad Jahirul Hoque</p>
        <div className="banner-right" style={{ flex: '1', minWidth: '300px' }}>
         {/* Component call korle baki shob auto chole ashbe */}
         <RecommendationPoll />
+
+        {/* --- Admin Area Logic Start --- */}
+<div style={{ marginTop: '50px', textAlign: 'center' }}>
+    
+    {/* Admin Area লেখা - এটি সবসময় দেখা যাবে */}
+    <h4 
+        onClick={() => !isAuthorized && setShowLogin(!showLogin)} 
+        style={{ 
+            cursor: 'pointer', 
+            color: '#888', 
+            fontSize: '0.9rem',
+            borderBottom: '1px dashed #888',
+            display: 'inline-block'
+        }}
+    >
+        {isAuthorized ? 'Admin Dashboard Active' : 'Admin Area ▼'}
+    </h4>
+
+    {/* পাসওয়ার্ড কার্ড - শুধু showLogin true হলেই আসবে */}
+    {showLogin && !isAuthorized && (
+        <div style={{ 
+            marginTop: '15px', 
+            background: '#fff', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+            display: 'inline-block'
+        }}>
+            <input 
+                type="password" 
+                placeholder="Enter Password" 
+                value={inputPass}
+                onChange={(e) => setInputPass(e.target.value)}
+                style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ddd' }}
+            />
+            <button 
+                onClick={handleAdminLogin}
+                style={{ marginLeft: '10px', padding: '8px 15px', background: '#001f3f', color: '#fff', borderRadius: '5px', cursor: 'pointer', border: 'none' }}
+            >
+                Enter
+            </button>
+        </div>
+    )}
+
+    {/* পাসওয়ার্ড মিলে গেলে তোমার সেই ফাংশন কল হবে */}
+    {isAuthorized && <AdminFeedbackPanel />}
+    
+</div>
+{/* --- Admin Area Logic End --- */}
+
+        
        </div>
     </div>
+    {/*</div>*/}
         
         <div className="life-mu-container" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
             <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem' }}>Life at MU</h2>
@@ -770,14 +1070,55 @@ Dr Mohammad Jahirul Hoque</p>
 
     {/* --- 8 WHITE BOXES GRID --- */}
     <div className="horizontal-box-grid">
-      <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
-      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>
-      <div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>
-      <div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>
-      <div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5><p>Global Impact</p></div>
+      {/*<a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="card-link">
+        <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>
+      </a>*/}
+      {/*<div className="mini-card-white"><span>🌐</span><h5>Official Site</h5><p>Visit Now</p></div>*/}
+      <div className="mini-card-white"><span>🌐</span><h5>Official Site</h5>
+          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Visit Now
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>*/}
+      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5>
+          <a href = "#transportation" className="plain-link">
+          Schedules
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>*/}
+      <div className="mini-card-white"><span>📞</span><h5>Call Us</h5>
+          <a href = "tel:+8801313057859" className="plain-link"> 
+            +880 1313057859
+          </a>
+        </div>
+      {/*<div className="mini-card-white"><span>📍</span><h5>Location</h5><p>Sylhet, BD</p></div>*/}
+      <div className="mini-card-white"><span>📍</span><h5>Location</h5>
+          <a href = "https://www.google.com/maps/place/Sylhet+Metropolitan+University/@25.7526154,89.8043258,17z/data=!4m6!3m5!1s0x3750552bc71c899d:0x804e438bcc32b390!8m2!3d25.7526154!4d89.8043258!16s%2Fm%2F02wcjss?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
+           target="_blank" rel="noreferrer" className="plain-link">
+            Sylhet, BD
+          </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5><p>Global Impact</p></div>*/}
+      <div className="mini-card-white"><span>🎓</span><h5>Our Graduates</h5>
+          <a href="/all-alumni" className="plain-link"> 
+            Global Impact
+          </a>
+      </div>
+
       <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>
-      <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>
-      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>
+      {/*<div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>*/}
+      <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5>
+        <a href = "#reach-dashboard" className="plain-link">
+          Our Presence
+        </a>
+      </div>
+      {/*<div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>*/}
+      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5>
+          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Collaboration
+        </a>
+      </div>
+
+
+
     </div>
 
   </div>
@@ -786,8 +1127,9 @@ Dr Mohammad Jahirul Hoque</p>
     </>
           } />
           
-          <Route path="/all-alumni" element={<AllAlumni />} />
-          <Route path="/all-teachers" element={<AllTeachers />} />
+          {/*<Route path="/all-alumni" element={<AllAlumni />} />
+          <Route path="/all-teachers" element={<AllTeachers />} />*/}
+          
         </Routes>
 
     {/* Modal Fix: ONLY shows when showModal is true */}
@@ -809,7 +1151,13 @@ Dr Mohammad Jahirul Hoque</p>
 function App() {
   return (
     <Router>
-      <AppContents />
+      <Routes>
+        <Route path="/" element={<AppContents />} />
+        <Route path="/reach" element={<AppContents />} />
+        <Route path="/all-alumni" element={<AllAlumni />} />
+          <Route path="/all-teachers" element={<AllTeachers />} />
+      </Routes>
+      {/*<AppContents />*/}
     </Router>
   );
 }
