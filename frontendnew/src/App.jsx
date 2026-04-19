@@ -753,7 +753,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Majharul Islam Rafat</h3>
-                <span className="batch">BBA • Class of 2019</span>
+              
                 <div className="company-logo">
                     <img src="https://www.genesys.com/favicon.ico" className="icon-img" alt="logo" /> 
                     <span>Senior Software Engineer</span>
@@ -771,7 +771,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Foysol Ahmed Shuvo</h3>
-                <span className="batch">EEE • Class of 2017</span>
+             
                 <div className="company-logo">
                     <img src="https://www.agoda.com/favicon.ico" className="icon-img" alt="logo" /> 
                     <span>Software Engineer</span>
