@@ -827,15 +827,15 @@ Dr Mohammad Jahirul Hoque</p>
         
         {/* City Grid - Forced to be Column/Grid layout */}
       <div className="city-grid">
-    <button className="city-btn" onClick={() => handleShowJourney('Dhaka', 240, 600, 'Green Line / Train')}>Dhaka</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Chittagong', 310, 800, 'S. Alam / Hanif')}>Chittagong</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Rajshahi', 450, 1200, 'Desh Travels')}>Rajshahi</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Khulna', 500, 1500, 'Hanif Enterprise')}>Khulna</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Barisal', 480, 1400, 'Sakura')}>Barisal</button>
-    <button className="city-btn" onClick={() => handleShowJourney('Mymensingh', 210, 550, 'Ena / Soukhin')}>Mymensingh</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Dhaka', 243, 600, 'Green Line / Train')}>Dhaka</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Chittagong', 370, 800, 'S. Alam / Hanif')}>Chittagong</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Rajshahi', 472, 1200, 'Desh Travels')}>Rajshahi</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Khulna', 439, 1500, 'Hanif Enterprise')}>Khulna</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Barisal', 401, 1400, 'Sakura')}>Barisal</button>
+    <button className="city-btn" onClick={() => handleShowJourney('Mymensingh', 279, 550, 'Ena / Soukhin')}>Mymensingh</button>
     
     <div className="rangpur-wrapper">
-        <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 430, 1100, 'Hanif / SR Travels')}>Rangpur</button>
+        <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 495, 1100, 'Hanif / SR Travels')}>Rangpur</button>
     </div>
 </div>
 
@@ -878,7 +878,7 @@ Dr Mohammad Jahirul Hoque</p>
                     </div>
                 </div>
                 <div className="housing-note" style={{ marginTop: '20px', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
-                    <p style={{ color: '#444', margin: 0 }}>🏠 <strong>Accommodation:</strong> University Hostels and private mess options are available near the Bateshwar campus.</p>
+                    <p style={{ color: '#444', margin: 0 }}>🏠 <strong>Accommodation:</strong> I hope this system makes things easier for you.Hostels and private mess options are available near the Bateshwar campus.</p>
                 </div>
             </div>
         )}
