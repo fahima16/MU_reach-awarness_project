@@ -747,7 +747,9 @@ Dr Mohammad Jahirul Hoque</p>
         <div className="glass-card">
             <div className="profile-area">
                 <img src="photo4.jpeg" alt="Majharul Islam Rafat" />
-                <a href="#" className="social-badge"><i className="fab fa-linkedin-in"></i></a>
+               <a href="https://www.facebook.com/share/1HcusH2zxZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="social-badge">
+  <i className="fab fa-facebook-f"></i>
+</a>
             </div>
             <div className="card-info">
                 <h3>Majharul Islam Rafat</h3>
