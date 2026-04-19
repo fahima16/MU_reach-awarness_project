@@ -321,4 +321,41 @@
     margin-top: 10px !important;
     border-radius: 25px !important;
   }
+  @media (max-width: 768px) {
+  /* ১. ছবির নিচের টাইটেল এবং টেক্সট ছোট করা */
+  .story-text {
+    padding: 15px !important;
+  }
+
+  .story-text h2 {
+    font-size: 1.4rem !important; /* ২.৫ থেকে কমিয়ে ১.৪ করা হলো */
+    margin: 8px 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .story-text p {
+    font-size: 0.85rem !important;
+    margin-bottom: 20px !important; /* ৪৫ পিক্সেল থেকে কমিয়ে ২০ করা হলো */
+  }
+
+  /* ২. কোটেশন (Quote) বক্সটা ছোট করা */
+  .story-text div {
+    padding: 12px 15px !important;
+    font-size: 0.85rem !important;
+    border-radius: 10px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ৩. ফিচারড ইমেজের বর্ডার রেডিয়াস মোবাইলের জন্য ঠিক করা */
+  .featured-img {
+    border-radius: 10 px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* ৪. ওপরের নীল টেক্সটটি ছোট করা */
+  .story-text span {
+    font-size: 0.7rem !important;
+    letter-spacing: 1px;
+  }
+}
 }

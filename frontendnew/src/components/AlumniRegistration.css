@@ -116,65 +116,81 @@
         font-size: 1.8rem;
     }
 }
+/* ১. টিচার্স গ্রিড লেআউট - প্রতি লাইনে ৩টি */
+.teachers-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important; /* ৩টি করে কলাম */
+  gap: 30px !important; /* কার্ডগুলোর মাঝখানের গ্যাপ */
+  padding: 40px 0 !important;
+}
+
+/* ২. কার্ড ডেকোরেশন (Premium Look) */
+.t-card {
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important;
+}
+
+.t-card:hover {
+  transform: translateY(-10px) !important; /* হোভার করলে একটু উপরে উঠবে */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+  border-color: #c8a951 !important; /* গোল্ডেন বর্ডার */
+}
+
+/* ৩. কার্ডের ভেতরের কন্টেন্ট গুছিয়ে আনা */
+.t-card-body {
+  padding: 25px !important;
+}
+
+.t-avatar-wrap {
+  width: 100px !important;
+  height: 100px !important;
+  margin-bottom: 15px !important;
+  border: 3px solid #f0e0a8 !important; /* আভাটার চারদিকে রিং */
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.t-name {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #001f3f !important;
+  margin-bottom: 5px !important;
+}
+
+.t-dept-badge {
+  background: rgba(200, 169, 81, 0.1) !important;
+  color: #c8a951 !important;
+  padding: 4px 12px !important;
+  border-radius: 50px !important;
+  font-size: 0.75rem !important;
+  display: inline-block !important;
+}
+
+/* ৪. টিচার্স কার্ড ফুটার */
+.t-card-footer {
+  background: #fdfaf0 !important;
+  padding: 15px 25px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.03) !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ৫. মোবাইল রেসপন্সিভ - মোবাইলে ৩টি রাখা সম্ভব না, তাই ১টি করে থাকবে */
+@media (max-width: 1024px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* ট্যাবে ২টি করে */
+  }
+}
+
 @media (max-width: 768px) {
-  /* ১. মেইন কন্টেইনার ছোট করা */
-  .alumni-reg-container {
-    padding: 20px !important; /* প্যাডিং কমিয়ে আনা */
-    width: 95% !important;
-    margin: 0 auto !important;
-    border-radius: 15px !important;
-  }
-
-  /* ২. হেডার ছোট করা */
-  .reg-header h2 {
-    font-size: 1.5rem !important;
-    margin-bottom: 5px !important;
-  }
-
-  .reg-header p {
-    font-size: 0.8rem !important;
-    margin-bottom: 20px !important;
-  }
-
-  /* ৩. ইনপুট ফিল্ড এবং লেবেল আঁটসাঁট করা */
-  .input-group {
-    margin-bottom: 12px !important;
-  }
-
-  .input-group label {
-    font-size: 0.85rem !important;
-    margin-bottom: 4px !important;
-  }
-
-  .input-group input, 
-  .input-group textarea {
-    padding: 10px !important; /* প্যাডিং কমানো হয়েছে */
-    font-size: 0.9rem !important;
-    border-radius: 8px !important;
-  }
-
-  /* ৪. রো (Row) ফিক্স: ডিপার্টমেন্ট আর ইয়ার পাশাপাশি রাখা */
-  .reg-form .row {
-    display: flex !important;
-    gap: 10px !important;
-    flex-direction: row !important; /* কলাম না করে পাশাপাশি রাখা */
-  }
-
-  .reg-form .row .input-group {
-    flex: 1 !important;
-  }
-
-  /* ৫. টেক্সট এরিয়া ছোট করা */
-  textarea {
-    rows: 3 !important; /* ডিফল্ট ৪ থেকে কমিয়ে ৩ করার মতো জায়গা রাখা */
-    height: 80px !important;
-  }
-
-  /* ৬. সাবমিট বাটন */
-  .submit-btn {
-    padding: 12px !important;
-    font-size: 1rem !important;
-    margin-top: 10px !important;
-    border-radius: 10px !important;
+  .teachers-grid {
+    grid-template-columns: 1fr !important; /* মোবাইলে ১টি করে */
   }
 }

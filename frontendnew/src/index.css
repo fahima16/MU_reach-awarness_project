@@ -1573,6 +1573,69 @@ html {
     box-sizing: border-box;
 }
 /* 📱 Maliha's Final Mobile Polish */
+
+@media (max-width: 768px) {
+  /* ড্যাশবোর্ড কন্টেইনার */
+  .reach-awareness-container {
+    padding: 15px !important;
+  }
+
+  /* ফ্লেক্স লেআউট ঠিক করা */
+  .reach-flex-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  /* ডিভিশন সিলেক্টর - এখানে উচ্চতা একটু বাড়িয়ে দিলাম যাতে দেখা যায় */
+  .division-selector {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    
+    /* স্ক্রলিং এর জন্য এই ৩টি লাইন মাস্ট */
+    max-height: 300px !important; /* উচ্চতা ৩০০ পিক্সেল করলাম */
+    overflow-y: auto !important;  /* ওপর-নিচ স্ক্রল */
+    overflow-x: hidden !important; /* ডানে-বামে স্ক্রল বন্ধ */
+    
+    padding: 5px !important;
+    border: 1px solid #eee;
+    background: #fdfdfd;
+  }
+
+  /* কার্ড ডিজাইন - যাতে গায়েব না হয়ে যায় */
+  .division-selector div {
+    display: block !important;    /* নিশ্চিত করা যাতে দেখা যায় */
+    background: #ffffff !important;
+    border: 1px solid #ddd !important;
+    padding: 10px 15px !important;
+    border-radius: 6px !important;
+    text-align: left !important;
+    flex-shrink: 0 !important;    /* এটা খুব জরুরি, যাতে কার্ড চ্যাপ্টা না হয় */
+    min-height: 50px !important;  /* নূন্যতম উচ্চতা */
+  }
+
+  /* লেখাগুলো ঠিক করা */
+  .division-selector div strong {
+    font-size: 0.95rem !important;
+    display: block !important;
+    color: #001f3f;
+  }
+
+  .division-selector div span {
+    font-size: 0.75rem !important;
+    display: block !important;
+    color: #666;
+  }
+
+  /* একটিভ কার্ড */
+  .division-selector div.active {
+    background: #001f3f !important;
+    color: white !important;
+  }
+  
+}
 @media (max-width: 768px) {
   nav {
     display: flex !important;
@@ -1653,65 +1716,4 @@ html {
   
 
 
-}
-@media (max-width: 768px) {
-  /* ড্যাশবোর্ড কন্টেইনার */
-  .reach-awareness-container {
-    padding: 15px !important;
-  }
-
-  /* ফ্লেক্স লেআউট ঠিক করা */
-  .reach-flex-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 15px !important;
-  }
-
-  /* ডিভিশন সিলেক্টর - এখানে উচ্চতা একটু বাড়িয়ে দিলাম যাতে দেখা যায় */
-  .division-selector {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-    width: 100% !important;
-    
-    /* স্ক্রলিং এর জন্য এই ৩টি লাইন মাস্ট */
-    max-height: 300px !important; /* উচ্চতা ৩০০ পিক্সেল করলাম */
-    overflow-y: auto !important;  /* ওপর-নিচ স্ক্রল */
-    overflow-x: hidden !important; /* ডানে-বামে স্ক্রল বন্ধ */
-    
-    padding: 5px !important;
-    border: 1px solid #eee;
-    background: #fdfdfd;
-  }
-
-  /* কার্ড ডিজাইন - যাতে গায়েব না হয়ে যায় */
-  .division-selector div {
-    display: block !important;    /* নিশ্চিত করা যাতে দেখা যায় */
-    background: #ffffff !important;
-    border: 1px solid #ddd !important;
-    padding: 10px 15px !important;
-    border-radius: 6px !important;
-    text-align: left !important;
-    flex-shrink: 0 !important;    /* এটা খুব জরুরি, যাতে কার্ড চ্যাপ্টা না হয় */
-    min-height: 50px !important;  /* নূন্যতম উচ্চতা */
-  }
-
-  /* লেখাগুলো ঠিক করা */
-  .division-selector div strong {
-    font-size: 0.95rem !important;
-    display: block !important;
-    color: #001f3f;
-  }
-
-  .division-selector div span {
-    font-size: 0.75rem !important;
-    display: block !important;
-    color: #666;
-  }
-
-  /* একটিভ কার্ড */
-  .division-selector div.active {
-    background: #001f3f !important;
-    color: white !important;
-  }
 }

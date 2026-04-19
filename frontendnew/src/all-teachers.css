@@ -25,7 +25,6 @@
   background:rgba(12,21,32,0.96);
   backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(200,169,81,0.18);
-  border-left:  none;
   transition:all .3s;
 }
 .teachers-page-wrapper .nav-logo{
@@ -71,7 +70,7 @@
   color:rgba(255,255,255,.65);
   text-decoration:none;font-size:.78rem;
   letter-spacing:.06em;
-  border-bottom:none  !important;
+  border-bottom:none ;
   transition:all .2s;
 }
 .teachers-page-wrapper .dropdown a:hover{color:var(--gold);padding-left:1.6rem;background:rgba(200,169,81,.05);}
@@ -93,8 +92,7 @@
   position:fixed;bottom:2rem;right:2rem;z-index:999;
   background:var(--ink);color:var(--gold);
   padding:.8rem 1.5rem;font-size:.82rem;font-weight:600;
-  border-left:none;
-  box-shadow: 0 0 15px rgba(200,169,81,0.4); 
+  border-left:3px solid var(--gold);
   opacity:0;transform:translateY(10px);
   transition:all .3s;pointer-events:none;
 }
@@ -226,8 +224,7 @@
 .teachers-page-wrapper .dept-strip{
   background:var(--ink);height:46px;
   display:flex;align-items:center;overflow:hidden;
-  top: 0; bottom: 0;
-  position:relative;width: 80px ; z-index: 2;
+  position:relative;
 }
 .teachers-page-wrapper .dept-strip::before,.dept-strip::after{
   content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
@@ -249,7 +246,7 @@
 .teachers-page-wrapper .section{padding:90px 0;}
 .teachers-page-wrapper .container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
 .teachers-page-wrapper .sec-eyebrow{
-  display:flex;align-items:center;gap:.8rem; 
+  display:flex;align-items:center;gap:.8rem;
   color:var(--gold);font-size:.68rem;font-weight:600;
   letter-spacing:.35em;text-transform:uppercase;margin-bottom:.9rem;
 }
@@ -595,6 +592,32 @@
 .teachers-page-wrapper .reveal.visible{opacity:1;transform:translateY(0);}
 .teachers-page-wrapper .delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.4s;}
 
+
+/* ১. বাড়তি রিং সরিয়ে ফেলা */
+.t-avatar-ring {
+  display: none !important; /* এই লাইনটি ডাবল সার্কেল রিমুভ করবে */
+}
+
+/* ২. আভাটার র‍্যাপারটি ছবির সাথে ফিক্স করা */
+.t-avatar-wrap {
+  position: relative;
+  width: 60px !important; /* আমরা মোবাইলে ২ কলামের জন্য ৬০ পিক্সেল ঠিক করেছিলাম */
+  height: 60px !important;
+  margin: 0 auto 10px !important;
+  border-radius: 50% !important;
+  /* এখানে ৩ পিক্সেলের একটা সুন্দর বর্ডার থাকবে */
+  border: 2px solid #f0e0a8 !important; 
+  padding: 2px !important; /* ছবি আর বর্ডারের মাঝে সামান্য গ্যাপ */
+  background: transparent !important;
+}
+
+/* ৩. ইমেজের স্টাইল */
+.t-avatar {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
 /* ══ MOBILE ══ */
 @media(max-width:900px){
   .teachers-page-wrapper nav{padding:0 1.5rem;}
@@ -617,5 +640,283 @@
   .teachers-page-wrapper .section{padding:60px 0;}
   .teachers-page-wrapper .footer-grid{grid-template-columns:1fr;}
   .teachers-page-wrapper .hero-left{padding:50px 1.5rem 40px;}
+  
 }
 
+@media (max-width: 768px) {
+  /* হিরো সেকশনকে কলাম করা যাতে কার্ডগুলো নিচে নামে */
+  .hero {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* কালো অংশ (টাইটেল ও সাবটাইটেল) */
+  .hero-left {
+    width: 100% !important;
+    padding: 40px 20px !important;
+    text-align: left !important;
+  }
+
+  /* হোয়াইট কার্ডের অংশ (২০০+, ২০+, ৯৬%) */
+  .hero-right {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 25px 20px !important;
+    background: #fdfaf0 !important; /* হালকা অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+    gap: 15px !important;
+  }
+
+  /* প্রতিটি কার্ডকে সুন্দরভাবে সাজানো */
+  .hero-stat {
+    display: flex !important;
+    flex-direction: row !important; /* নাম্বার আর টেক্সট পাশাপাশি */
+    align-items: center !important;
+    background: #ffffff !important;
+    padding: 15px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    width: 100% !important;
+  }
+
+  /* নাম্বারগুলো (যেমন ২০০+) */
+  .stat-num {
+    font-size: 1.6rem !important;
+    color: #001f3f !important;
+    font-weight: bold !important;
+    min-width: 80px !important;
+    margin-right: 15px !important;
+  }
+
+  /* হলুদ বা কালো স্ট্রিপ যেটা সবার নিচে থাকবে */
+  .dept-strip {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+}
+/* --- Final Compact 2-Column Code --- */
+
+/* ল্যাপটপ ভিউ: ৩টি করে কার্ড থাকবে */
+.teachers-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  padding: 30px 0 !important;
+}
+
+/* --- মোবাইল রেসপন্সিভ: এক লাইনে ২টি করে কার্ড --- */
+@media (max-width: 768px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* এক লাইনে ২ কলাম */
+    gap: 12px !important; /* কার্ডের মাঝখানে গ্যাপ */
+    padding: 10px 10px !important;
+  }
+
+  .t-card-body {
+    padding: 15px 10px !important; /* প্যাডিং একটু বাড়ানো হলো যাতে ২ কলামে সুন্দর লাগে */
+    text-align: center !important;
+  }
+
+  /* ইমেজ সাইজ (২ কলামের জন্য পারফেক্ট সাইজ) */
+  .t-avatar-wrap {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 auto 8px !important;
+  }
+
+  /* নাম এবং ব্যাজ */
+  .t-name {
+    font-size: 0.9rem !important;
+    font-weight: bold !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .t-dept-badge {
+    font-size: 0.6rem !important;
+    padding: 2px 6px !important;
+    display: inline-block !important;
+  }
+
+  /* অপ্রয়োজনীয় অংশ এবং "Joined in MU" হাইড করা */
+  .t-meta, 
+  .t-arrow, 
+  .t-card-num, 
+  .t-card-footer, 
+  .t-card-accent {
+    display: none !important;
+  }
+
+  /* বায়ো/উক্তিটি ২-৩ লাইনে সীমাবদ্ধ */
+  .t-quote {
+    font-size: 0.7rem !important;
+    margin-top: 8px !important;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.3 !important;
+    color: #666 !important;
+  }
+
+  .t-card {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+  }
+  
+}
+/* --- Interactive Map & District Stats CSS --- */
+
+.map-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* ম্যাপ বড় থাকবে, স্ট্যাটাস ছোট */
+  gap: 30px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+.map-visual {
+  position: relative;
+  background: #fdfaf0;
+  border: 2px solid rgba(200, 169, 81, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  height: 600px;
+}
+
+/* ম্যাপের ওপরের ছোট ডটগুলো (মালিহা তোমার অরিজিনাল ডিজাইন) */
+.map-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* যাতে ম্যাপ ক্লিক করা যায় */
+  z-index: 5;
+}
+
+.map-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--gold, #c8a951);
+  border-radius: 50%;
+  opacity: 0.4;
+  /* ডটগুলোকে ম্যাপের বিভিন্ন জায়গায় ছড়িয়ে দেওয়া */
+  &:nth-child(1) { top: 20%; left: 30%; }
+  &:nth-child(2) { top: 45%; left: 60%; }
+  &:nth-child(3) { top: 70%; left: 40%; }
+  /* আরও ডট অটোমেটিক ডিস্ট্রিবিউটেড থাকবে */
+}
+
+/* ডিস্ট্রিক্ট স্ট্যাটাস সেকশন */
+.district-stats {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.district-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #001f3f;
+  margin-bottom: 20px;
+}
+
+.district-item {
+  margin-bottom: 18px;
+}
+
+.district-rank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.district-rank {
+  font-weight: bold;
+  color: var(--gold, #c8a951);
+  font-size: 0.9rem;
+}
+
+.district-name {
+  flex: 1;
+  margin-left: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.district-count {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* প্রগ্রেস বার অ্যানিমেশন */
+.district-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.district-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  /* ব্যাকগ্রাউন্ড কালার জাভাস্ক্রিপ্ট থেকে ইনলাইন স্টাইলে আসবে */
+}
+.map-visual {
+  position: relative; /* এটি নিশ্চিত করে যে ডটগুলো এর ভেতরেই থাকবে */
+  height: 500px; 
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden; /* বাইরে চলে যাওয়া অংশ কেটে যাবে */
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.map-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10; /* ম্যাপের ওপর দেখানোর জন্য */
+}
+
+.map-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #c8a951; /* তোমার গোল্ডেন কালার */
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(200, 169, 81, 0.8);
+  animation: pulse 2s infinite;
+}
+
+/* ডটগুলো যাতে ম্যাপের বাইরে না যায়, তাই পজিশন পার্সেন্টেজে দাও */
+.map-dot:nth-child(1) { top: 30%; left: 80%; } /* সিলেট এরিয়া */
+.map-dot:nth-child(2) { top: 50%; left: 50%; } /* ঢাকা এরিয়া */
+.map-dot:nth-child(3) { top: 70%; left: 45%; } /* বরিশাল/খুলনা এরিয়া */
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+/* মোবাইল রেসপন্সিভ - মোবাইলে ম্যাপ উপরে, স্ট্যাটাস নিচে আসবে */
+@media (max-width: 992px) {
+  .map-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .map-visual {
+    height: 300px;
+  }
+}
