@@ -116,3 +116,65 @@
         font-size: 1.8rem;
     }
 }
+@media (max-width: 768px) {
+  /* ১. মেইন কন্টেইনার ছোট করা */
+  .alumni-reg-container {
+    padding: 20px !important; /* প্যাডিং কমিয়ে আনা */
+    width: 95% !important;
+    margin: 0 auto !important;
+    border-radius: 15px !important;
+  }
+
+  /* ২. হেডার ছোট করা */
+  .reg-header h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 5px !important;
+  }
+
+  .reg-header p {
+    font-size: 0.8rem !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* ৩. ইনপুট ফিল্ড এবং লেবেল আঁটসাঁট করা */
+  .input-group {
+    margin-bottom: 12px !important;
+  }
+
+  .input-group label {
+    font-size: 0.85rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .input-group input, 
+  .input-group textarea {
+    padding: 10px !important; /* প্যাডিং কমানো হয়েছে */
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+  }
+
+  /* ৪. রো (Row) ফিক্স: ডিপার্টমেন্ট আর ইয়ার পাশাপাশি রাখা */
+  .reg-form .row {
+    display: flex !important;
+    gap: 10px !important;
+    flex-direction: row !important; /* কলাম না করে পাশাপাশি রাখা */
+  }
+
+  .reg-form .row .input-group {
+    flex: 1 !important;
+  }
+
+  /* ৫. টেক্সট এরিয়া ছোট করা */
+  textarea {
+    rows: 3 !important; /* ডিফল্ট ৪ থেকে কমিয়ে ৩ করার মতো জায়গা রাখা */
+    height: 80px !important;
+  }
+
+  /* ৬. সাবমিট বাটন */
+  .submit-btn {
+    padding: 12px !important;
+    font-size: 1rem !important;
+    margin-top: 10px !important;
+    border-radius: 10px !important;
+  }
+}
