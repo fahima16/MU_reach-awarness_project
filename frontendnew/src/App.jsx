@@ -522,7 +522,7 @@ useEffect(() => {
     </section>
 
     <div className="container">
-      {/* Welcome Section */}
+      {/* Welcome Section */}   
       <section>
         <h3 className="sec-title">Welcome to Metropolitan University</h3>
         <div className="article-content">
@@ -675,8 +675,8 @@ useEffect(() => {
               <p className="leader-dept">Dr. Toufique Rahman Chowdhury</p>
               <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Sylhet</strong></div>
-                <div>⏱️ Exp: <strong>15+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱ Exp: <strong>15+ Years</strong></div>
               
               </div>
             </div>
@@ -686,8 +686,8 @@ useEffect(() => {
               <h3 className="leader-name">Chairman
                  Board of Trustees</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Sylhet</strong></div>
-                <div>⏱️ Exp: <strong>10+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -697,8 +697,8 @@ useEffect(() => {
 Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
-                <div>📍 Region: <strong>Sylhet</strong></div>
-                <div>⏱️ Exp: <strong>10+ Years</strong></div>
+                <div> Region: <strong>Sylhet</strong></div>
+                <div>⏱ Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>

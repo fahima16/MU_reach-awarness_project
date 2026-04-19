@@ -1572,3 +1572,107 @@ html {
     width: 100%;
     box-sizing: border-box;
 }
+/* 📱 Maliha's Final Mobile Polish */
+@media (max-width: 768px) {
+  
+  /* ১. নেভিগেশন আইটেমগুলোর সাইজ কমিয়ে এক লাইনে আনা */
+  nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 5px !important;
+    height: auto !important;
+  }
+
+  .nav-links, .nav-center {
+    display: flex !important;
+    gap: 8px !important; /* মেনুর মাঝখানের গ্যাপ কমিয়ে দিলাম */
+  }
+
+  .nav-link {
+    font-size: 10px !important; /* লেখা ছোট করলাম যাতে সব ধরে */
+    padding: 4px !important;
+  }
+
+  .share-btn {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    margin-left: 5px !important;
+  }
+
+  /* ২. হিরো সেকশন যেটা ঢাকা পড়ে যাচ্ছিল সেটা ঠিক করা */
+  .hero {
+    margin-top: 20px !important; /* নেভিবার থেকে দূরত্ব বাড়ালাম */
+    display: block !important;
+    position: relative !important;
+    z-index: 1;
+  }
+
+  .hero-caption {
+    position: relative !important;
+    background: #001f3f !important;
+    margin-top: -5px; /* ইমেজের সাথে লেগে থাকবে */
+    padding: 15px !important;
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    opacity: 1 !important; /* যাতে আবছা না লাগে */
+  }
+
+  /* ৩. লোগো সাইজ ছোট করা যাতে জায়গা বাঁচে */
+  .nav-logo {
+    font-size: 14px !important;
+  }
+}
+@media (max-width: 768px) {
+  /* ১. নেভিবারকে ফিক্সড হাইট থেকে মুক্তি দাও */
+  nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* কোনোভাবেই নিচের লাইনে নামতে দিবে না */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 5px !important;
+    gap: 2px !important;
+  }
+
+  /* ২. লোগো ছোট করো যাতে বামপাশে জায়গা বাঁচে */
+  .nav-logo, .logo-text {
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  /* ৩. মেনু আইটেমগুলোকে একদম ঠাসাঠাসি করে এক লাইনে ঢোকাও */
+  .nav-links, .nav-center {
+    display: flex !important;
+    gap: 4px !important; /* আইটেমগুলোর মাঝখানের গ্যাপ একদম কমিয়ে দিলাম */
+  }
+
+  .nav-link {
+    font-size: 9px !important; /* ফন্ট ছোট করা ছাড়া উপায় নেই */
+    padding: 2px !important;
+    text-transform: uppercase;
+  }
+
+  /* ৪. শেয়ার বাটনকে ডানপাশে ছোট করে সেট করো */
+  .share-btn {
+    padding: 4px 6px !important;
+    font-size: 9px !important;
+    min-width: fit-content !important;
+    margin: 0 !important;
+  }
+
+  /* ৫. হিরো সেকশন যেটা উপরে উঠে যাচ্ছিল সেটাকে নিচে নামাও */
+  #home-section {
+    margin-top: 20px !important; /* নেভিবার থেকে দূরত্ব */
+  }
+
+  .hero-caption {
+    position: relative !important;
+    transform: none !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 20px 10px !important;
+    background: #001f3f !important;
+  }
+}
