@@ -736,7 +736,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Nafiul Adnan Chowdhury</h3>
-                <span className="batch">CSE • Class of 2018</span>
+          
                 <div className="company-logo">
                     <i className="fab fa-microsoft"></i> <span>Security Software Engineer</span>
                 </div>
@@ -789,7 +789,7 @@ Dr Mohammad Jahirul Hoque</p>
             </div>
             <div className="card-info">
                 <h3>Amanur Rahman</h3>
-                <span className="batch">English • Class of 2020</span>
+                
                 <div className="company-logo">
                     <i className="fab fa-google"></i> <span>Software Engineer</span>
                 </div>
