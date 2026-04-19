@@ -335,7 +335,7 @@ const fetchReachStats = async () => {
             lineChartRef.current.data.datasets[0].data = progressiveLineData;
             
             // নিচের লাইনটি নিশ্চিত করে যে ফিউচার মাসের গ্যাপগুলো যেন কানেক্ট না হয়
-            lineChartRef.current.options.scales.y.suggestedMax = 10;
+            lineChartRef.current.options.scales.y.suggestedMax = 100;
             lineChartRef.current.options.spanGaps = false;
             
             lineChartRef.current.update();
@@ -524,7 +524,7 @@ useEffect(() => {
     <div className="container">
       {/* Welcome Section */}
       <section>
-        <h3 className="sec-title">Welcome to Metropolitan University</h3>
+        <h3 className="sec--title">Welcome to Metropolitan University</h3>
         <div className="article-content">
           <img src="photo8.jpeg" alt="Welcome to MU" className="wrapped-photo" />
           <p>
@@ -538,7 +538,7 @@ useEffect(() => {
 
       {/* Campus Spotlight Section */}
       <aside>
-        <h3 className="sec-title">Campus Spotlight 📰</h3>
+        <h3 className="sec--title">Campus Spotlight 📰</h3>
         <div className="article-content">
           <img src="photo9.jpeg" alt="Campus Spotlight" className="wrapped-photo" />
           <p>
@@ -551,7 +551,7 @@ useEffect(() => {
       </aside>
 
       <section>
-        <h3 className="sec-title">Architects of Academic Excellence</h3>
+        <h3 className="sec--title">Architects of Academic Excellence</h3>
         <div className="article-content">
           <img src="photo13.jpeg" alt="Welcome to MU" className="wrapped-photo" />
           <p>
@@ -564,7 +564,7 @@ useEffect(() => {
       </section>
 
        <aside>
-        <h3 className="sec-title">MU Cafetaria 📰</h3>
+        <h3 className="sec--title">MU Cafetaria 📰</h3>
         <div className="article-content">
           <img src="Photo12.jpeg" alt="Campus Spotlight" className="wrapped-photo" />
           <p>
@@ -1079,9 +1079,9 @@ Dr Mohammad Jahirul Hoque</p>
         </a>
       </div>
       {/*<div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>*/}
-      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5>
+      <div className="mini-card-white"><span>🚌</span><h5>Regional</h5>
           <a href = "#transportation" className="plain-link">
-          Schedules
+          Support
         </a>
       </div>
       {/*<div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>*/}
@@ -1104,7 +1104,11 @@ Dr Mohammad Jahirul Hoque</p>
           </a>
       </div>
 
-      <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>
+      {/*<div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>*/}
+      <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5>
+        <a href = "https://i.postimg.cc/sgXs5XR8/uni.jpg" target="_blank" rel="noreferrer" className="plain-link"> Schedule
+        </a>
+      </div>
       {/*<div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>*/}
       <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5>
         <a href = "#reach-dashboard" className="plain-link">
@@ -1112,8 +1116,8 @@ Dr Mohammad Jahirul Hoque</p>
         </a>
       </div>
       {/*<div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>*/}
-      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5>
-          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Collaboration
+      <div className="mini-card-white"><span>🤝</span><h5>Transport</h5>
+          <a href = "https://bus-voyage.vercel.app/" target="_blank" rel="noreferrer" className="plain-link"> Schedule
         </a>
       </div>
 

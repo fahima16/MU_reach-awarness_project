@@ -17,7 +17,7 @@ const AllTeachers = () => {
   useEffect(() => {
     const fetchDistrictStats = async () => {
       try {
-      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/stats-by-district');
+      const response = await axios.get('http://localhost:5000/api/teachers/stats-by-district');
       
       // ডাটাবেজ থেকে আসা ডেটাকে ডিফল্ট ডিস্ট্রিক্টগুলোর সাথে মিশিয়ে ফেলা (Merge)
       const mergedData = defaultDistricts.map(defDist => {
@@ -42,21 +42,41 @@ const AllTeachers = () => {
   };
     fetchDistrictStats();
   }, []);
+
+  
   const [stats, setStats] = useState({
     yesPercentage: 0,
     noPercentage: 0,
-    totalTeachers: 0
+    totalTeachers: 0,
+    overallPercentage: 0,
+    individualRatings: {
+    academic: 0,
+    behavior: 0,
+    resources: 0,
+    punctuality: 0,
+    participation: 0
+  }
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/feedback-stats');
-        if (response.data && !response.data.message) {
+        
+        const response = await axios.get('http://localhost:5000/api/teachers/feedback-stats');
+        if (response.data && response.data.individualRatings) {
           setStats({
             yesPercentage: response.data.yesPercentage,
             noPercentage: response.data.noPercentage,
-            totalTeachers: response.data.totalTeachers
+            totalTeachers: response.data.totalTeachers,
+            overallPercentage: response.data.overallPercentage || 0,
+          // ব্যাকএন্ড থেকে আসা individualRatings অবজেক্টটি এখানে ম্যাপ হচ্ছে
+          individualRatings: {
+            academic: Number(response.data.individualRatings?.academic || 0),
+            behavior: Number(response.data.individualRatings?.behavior || 0),
+            resources: Number(response.data.individualRatings?.resources || 0),
+            punctuality: Number(response.data.individualRatings?.punctuality || 0),
+            participation: Number(response.data.individualRatings?.participation || 0)
+          }
           });
         }
       } catch (err) {
@@ -68,7 +88,7 @@ const AllTeachers = () => {
   // রেজিস্ট্রেশন ফর্মের জন্য স্টেট
   const [teachers, setTeachers]=useState([]);
   const [regData, setRegData] = useState({
-    fullName: '', department: '', district: '', experience: '', employeeId: '', bio: '', recommended: '',
+    fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '', bio: '', recommended: 'true',
     whyNoMessage: '', satisfactionLevel: '',
   // ratings fields
   academicEngagement: 0,
@@ -87,7 +107,7 @@ const AllTeachers = () => {
 
     try {
 
-      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers');
+      const response = await axios.get('http://localhost:5000/api/teachers');
 
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
 
@@ -124,8 +144,9 @@ const AllTeachers = () => {
   formData.append('fullName', regData.fullName);
     formData.append('department', regData.department);
     formData.append('district', regData.district);
-    formData.append('your_experience', Number(regData.your_experience));
-    formData.append('experience', regData.experience);
+    //formData.append('years_experience', Number(regData.years_experience || 0));
+    formData.append('experience', Number(regData.experience));
+    formData.append('ex_details', regData.ex_details);
     formData.append('employeeId', regData.employeeId); // This is the KEY
     formData.append('bio', regData.bio);
     formData.append('recommended', regData.recommended);
@@ -143,13 +164,17 @@ const AllTeachers = () => {
   if(photo) formData.append('photo', photo); 
 
   try {
-      const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', formData, {
+      const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
       if (response.data.success) {
         alert("Data successfully synced with Database!");
-        setRegData({ ...regData, fullName: '', bio: '' }); // Form clear
+        //setRegData({ ...regData, fullName: '', bio: '' }); // Form clear
+        setRegData({fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '', 
+          bio: '', recommended: '', satisfactionLevel: '', academicEngagement: 0, classroomBehavior: 0,
+          resourceUtilization: 0, punctuality: 0, studentParticipation: 0
+        })
         setPhoto(null);
         fetchTeachers(); // সাথে সাথে ড্যাশবোর্ড আপডেট হবে
       }
@@ -172,9 +197,12 @@ const AllTeachers = () => {
             setTimeout(()=>{ bar.style.width = bar.dataset.width; }, 200);
           });
           // Donut animation
-          const circle = e.target.querySelector('#donutCircle');
-          if(circle){ setTimeout(()=>{ circle.style.strokeDashoffset = 502*(1-0.96); },300); }
-          barObs.unobserve(e.target);
+          /*const circle = e.target.querySelector('#donutCircle');
+          if(circle){ 
+            const currentPercentage = stats.overallPercentage || 0;
+            const offsetValue = 502*(1-currentPercentage/100);
+            setTimeout(()=>{ circle.style.strokeDashoffset = offsetValue; },300); }
+          barObs.unobserve(e.target);*/
         }
       });
     },{threshold:.3});
@@ -278,7 +306,7 @@ const AllTeachers = () => {
             </div>
           </div>
           <div className="hero-stat">
-            <div className="stat-num">96%</div>
+            <div className="stat-num">{stats.overallPercentage}%</div>
             <div className="stat-info">
               <div className="stat-lbl">Satisfaction Rate</div>
               <div className="stat-desc">Faculty satisfaction score</div>
@@ -322,7 +350,7 @@ const AllTeachers = () => {
             {teacher.photoUrl ? (
               <img 
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl.replace(/\\/g, '/')}`} 
+                src={`http://localhost:5000/${teacher.photoUrl?.replace(/\\/g, '/')}`} 
                 alt={teacher.fullName} 
                 className="t-avatar" 
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
@@ -354,8 +382,37 @@ const AllTeachers = () => {
         </div>
 
         <div className="t-quote">
-          "{teacher.bio || "No bio provided."}"
+          <strong>Bio:</strong> "{teacher.bio || "No bio provided."}"
         </div>
+
+        <div className="t-quote">
+          <strong>Experience:</strong> "{teacher.ex_details || "No experience provided."}"
+        </div>
+
+                <div className="t-content-area" style={{ marginTop: '10px', fontSize: '0.9rem', color: 'var(--steel)' }}>
+  
+  {/* যদি Bio থাকে তবে সেটা দেখাবে */}
+  {/*{teacher.bio && (
+    <div className="t-bio" style={{ marginBottom: '8px', fontStyle: 'italic' }}>
+       <strong>Bio:</strong> {teacher.bio}
+    </div>
+  )}*/}
+
+  {/* যদি Experience (String) থাকে তবে সেটা দেখাবে */}
+  {/*{teacher.experience && (
+    <div className="t-exp-details" style={{ borderTop: teacher.bio ? '1px solid #eee' : 'none', paddingTop: teacher.bio ? '5px' : '0' }}>
+       <strong>Expertise:</strong> {teacher.experience}
+    </div>
+  )}*/}
+
+  {/* যদি কোনটাই না থাকে তবে ডিফল্ট টেক্সট */}
+  {/*{!teacher.bio && !teacher.experience && (
+    <div className="t-no-info">Dedicated faculty member at MU.</div>
+  )}*/}
+
+</div>
+
+        
       </div>
 
       <div className="t-card-footer">
@@ -371,144 +428,7 @@ const AllTeachers = () => {
      No faculty profiles found. Please register to see your card here!
   </div>
 )}
-            {/* Teacher Card 01 */}
-            {/*<div className="t-card reveal delay-1">
-              <div className="t-card-accent"></div>
-              <div className="t-card-body">
-                <div className="t-card-num">01</div>
-                <div className="t-card-top">
-                  <div className="t-avatar-wrap">
-                    <div className="t-avatar av1">AK</div>
-                    <div className="t-avatar-ring"></div>
-                  </div>
-                  <div className="t-card-info">
-                    <div className="t-name">Prof. Amir Khan</div>
-                    <div className="t-dept-badge">💻 CSE Department</div>
-                  </div>
-                </div>
-                <div className="t-meta">
-                  <div className="t-meta-item"><span className="t-meta-icon">📍</span> Sylhet District</div>
-                  <div className="t-meta-item"><span className="t-meta-icon">⏱️</span> 14 Years Exp.</div>
-                  <div className="t-meta-item">
-                    <span className="t-meta-icon">⭐</span>
-                    <div className="t-stars">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div> 4.9/5
-                  </div>
-                  <div className="t-meta-item"><span className="t-meta-icon">😊</span> Very Satisfied</div>
-                </div>
-                <div className="t-quote">"The students at MU are incredibly motivated. Watching them grow into professionals is the greatest reward of my career."</div>
-              </div>
-              <div className="t-card-footer">
-                <div className="t-joined">Joined MU · 2010</div>
-                <div className="t-arrow">↗</div>
-              </div>
-            </div>8/}
-
-            {/* Repeat similar structure for cards 02, 03, 04... আমি সময়ের অভাবে ছোট করছি না, তুমি কার্ডগুলো HTML থেকে এখানে পেস্ট করে className বদলে দিলেই হবে */}
-            {/*<div className="t-card reveal delay-2">
-        <div className="t-card-accent"></div>
-        <div className="t-card-body">
-          <div className="t-card-num">02</div>
-          <div className="t-card-top">
-            <div className="t-avatar-wrap">
-              <div className="t-avatar av2">SR</div>
-              <div className="t-avatar-ring"></div>
             </div>
-            <div className="t-card-info">
-              <div className="t-name">Dr. Sabina Rahman</div>
-              <div className="t-dept-badge">📊 BBA Department</div>
-            </div>
-          </div>
-          <div className="t-meta">
-            <div className="t-meta-item"><span className="t-meta-icon">📍</span> Dhaka District</div>
-            <div className="t-meta-item"><span className="t-meta-icon">⏱️</span> 11 Years Exp.</div>
-            <div className="t-meta-item">
-              <span className="t-meta-icon">⭐</span>
-              <div className="t-stars">
-                <span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span>
-              </div> 4.8/5
-            </div>
-            <div className="t-meta-item"><span className="t-meta-icon">😊</span> Very Satisfied</div>
-          </div>
-          <div className="t-quote">"MU gives educators the freedom to innovate. I've been able to bring real-world business cases into every lecture."</div>
-        </div>
-        <div className="t-card-footer">
-          <div className="t-joined">Joined MU · 2013</div>
-          <div className="t-arrow">↗</div>
-        </div>
-      </div>
-
-      <div className="t-card reveal delay-3">
-        <div className="t-card-accent"></div>
-        <div className="t-card-body">
-          <div className="t-card-num">03</div>
-          <div className="t-card-top">
-            <div className="t-avatar-wrap">
-              <div className="t-avatar av3">MH</div>
-              <div className="t-avatar-ring"></div>
-            </div>
-            <div className="t-card-info">
-              <div className="t-name">Prof. Masud Hossain</div>
-              <div className="t-dept-badge">⚖️ Law Department</div>
-            </div>
-          </div>
-          <div className="t-meta">
-            <div className="t-meta-item"><span className="t-meta-icon">📍</span> Chittagong District</div>
-            <div className="t-meta-item"><span className="t-meta-icon">⏱️</span> 18 Years Exp.</div>
-            <div className="t-meta-item">
-              <span className="t-meta-icon">⭐</span>
-              <div className="t-stars">
-                <span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star empty">★</span>
-              </div> 4.6/5
-            </div>
-            <div className="t-meta-item"><span class="t-meta-icon">😊</span> Satisfied</div>
-          </div>
-          <div className="t-quote">"Law is about justice and precision. MU's students embrace both with remarkable dedication and intellectual curiosity."</div>
-        </div>
-        <div className="t-card-footer">
-          <div className="t-joined">Joined MU · 2008</div>
-          <div className="t-arrow">↗</div>
-        </div>
-      </div>
-
-      <div className="t-card reveal delay-4">
-        <div className="t-card-accent"></div>
-        <div className="t-card-body">
-          <div className="t-card-num">04</div>
-          <div className="t-card-top">
-            <div className="t-avatar-wrap">
-              <div className="t-avatar av4">FI</div>
-              <div className="t-avatar-ring"></div>
-            </div>
-            <div className="t-card-info">
-              <div className="t-name">Dr. Farida Islam</div>
-              <div className="t-dept-badge">🔌 EEE Department</div>
-            </div>
-          </div>
-          <div className="t-meta">
-            <div className="t-meta-item"><span className="t-meta-icon">📍</span> Rajshahi District</div>
-            <div className="t-meta-item"><span className="t-meta-icon">⏱️</span> 9 Years Exp.</div>
-            <div className="t-meta-item">
-              <span className="t-meta-icon">⭐</span>
-              <div className="t-stars">
-                <span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span><span className="star">★</span>
-              </div> 4.9/5
-            </div>
-            <div className="t-meta-item"><span className="t-meta-icon">😊</span> Very Satisfied</div>
-          </div>
-          <div className="t-quote">"Engineering students here are hungry to learn. The lab facilities at MU allow me to teach beyond just theory."</div>
-        </div>
-        <div className="t-card-footer">
-          <div className="t-joined">Joined MU · 2015</div>
-          <div className="t-arrow">↗</div>
-        </div>
-      </div>*/}
-
-          
-
-          
-          </div>
 
          
         </div>
@@ -528,8 +448,10 @@ const AllTeachers = () => {
                 <svg width="200" height="200" viewBox="0 0 200 200">
                   <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="16"/>
                   <circle cx="100" cy="100" r="80" fill="none" stroke="url(#goldGrad)" strokeWidth="16"
-                    strokeDasharray="502" strokeDashoffset="502" strokeLinecap="round"
-                    id="donutCircle"/>
+                    strokeDasharray="502"  strokeLinecap="round"
+                    id="donutCircle"
+                    style={{strokeDashoffset:stats.overallPercentage?502*(1-stats.overallPercentage/100):502, transition: 'stroke-dashoffset 1.5s ease-in-out'}}
+                    />
                   <defs>
                     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" style={{stopColor:'#c8a951'}}/>
@@ -538,11 +460,11 @@ const AllTeachers = () => {
                   </defs>
                 </svg>
                 <div className="donut-center">
-                  <div className="donut-pct">96%</div>
+                  <div className="donut-pct">{stats.overallPercentage}%</div>
                   <div className="donut-lbl">Satisfied<br />Teachers</div>
                 </div>
               </div>
-              <div className="donut-caption">Based on 287 teacher responses</div>
+              <div className="donut-caption">Based on {stats.totalTeachers} teacher responses</div>
             </div>
             <div className="bars-wrap">
               <div style={{marginBottom:'1rem'}}>
@@ -550,7 +472,7 @@ const AllTeachers = () => {
                 <div style={{fontFamily:'Cormorant Garamond,serif', fontSize:'1.6rem', fontWeight:'700', color:'var(--white)', marginBottom:'.4rem'}}>Student Behavior Ratings</div>
                 <div style={{fontSize:'.82rem', color:'rgba(255,255,255,.4)'}}>Rated by faculty members across departments</div>
               </div>
-              {[
+              {/*{[
                 {label: "Academic Engagement", val: "4.8/5", width: "96%"},
                 {label: "Classroom Behavior", val: "4.7/5", width: "94%"},
                 {label: "Assignment Quality", val: "4.6/5", width: "92%"},
@@ -561,7 +483,35 @@ const AllTeachers = () => {
                   <div className="bar-label-row"><span className="bar-label">{item.label}</span><span className="bar-val">{item.val}</span></div>
                   <div className="bar-track"><div className="bar-fill" data-width={item.width}></div></div>
                 </div>
-              ))}
+              ))}*/}
+              {[
+    { label: "Academic Engagement", key: "academic" },
+    { label: "Classroom Behavior", key: "behavior" },
+    { label: "Assignment Quality", key: "resources" }, // backend এ resources নামে আছে
+    { label: "Punctuality", key: "punctuality" },
+    { label: "Participation", key: "participation" }
+  ].map((item, idx) => {
+    // এখানে stats.individualRatings থেকে ভ্যালু নেওয়া হচ্ছে
+    const ratingValue = stats.individualRatings ? stats.individualRatings[item.key] : 0;
+    const barWidth = (ratingValue / 5) * 100;
+
+    return (
+      <div key={idx} className="bar-item">
+        <div className="bar-label-row">
+          <span className="bar-label">{item.label}</span>
+          <span className="bar-val">{ratingValue}/5</span>
+        </div>
+        <div className="bar-track">
+          {/* data-width অ্যানিমেশনের জন্য, এবং সরাসরি width ও দেওয়া হলো যেন ডাটা আসার সাথে সাথে দেখায় */}
+          <div 
+            className="bar-fill" 
+            data-width={`${barWidth}%`} 
+            style={{ width: `${barWidth}%`, transition: 'width 1s ease-in-out' }}
+          ></div>
+        </div>
+      </div>
+    );
+  })}
             </div>
           </div>
         </div>
@@ -613,7 +563,7 @@ const AllTeachers = () => {
                     </div>
                   </div>
                 ))}*/}
-                {districtStats.map((item, index) => {
+               {districtStats.map((item, index) => {
     const topCount = districtStats[0]?.totalTeachers || 1; 
     const barWidth = item.totalTeachers > 0 ? (item.totalTeachers / topCount) * 100 : 5; // ০ হলেও ছোট একটা দাগ দেখাবে
 
@@ -929,8 +879,8 @@ const AllTeachers = () => {
   <label className="form-label">Your Experience</label>
   <textarea 
     className="form-textarea" 
-    name="bio" // স্টেটের 'bio' এর সাথে মিল
-    value={regData.bio}
+    name="ex_details" // স্টেটের 'bio' এর সাথে মিল
+    value={regData.ex_details}
     onChange={handleInputChange}
     placeholder="Share your teaching experience at MU..."
   ></textarea>

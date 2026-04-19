@@ -10,6 +10,7 @@ const teacherRoutes = require('./routes/all-teachersROutes'); // স্পেল
 
 
 const app = express();
+const path = require('path');
 
 // Middleware
 app.use(cors());
@@ -26,6 +27,7 @@ app.use('/api/reach', reachRoutes);
 app.use('/api/alumni', alumniRoutes);
 app.use('/api/teachers', teacherRoutes);
 app.use('/api/feedback', require('./routes/FeedbackRoutes'));
+app.use('/uploads', express.static(path.join(__dirname,'uploads')));
 
 // Basic Route
 app.get('/', (req, res) => {

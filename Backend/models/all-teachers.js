@@ -3,7 +3,9 @@ const teacherSchema = new mongoose.Schema({
     fullName: { type: String},
     department: { type: String},
     district: { type: String}, // ডিস্ট্রিক্ট ফিল্টার করার জন্য জরুরি
-    experience: { type: Number},
+    //years_experience: { type: Number, default: 0},
+    experience: {type: Number, default: 0},
+    ex_details: {type: String},
     employeeId: { type: String, required: [true, "Employee ID is required"], unique: true },
     bio: { type: String},
     photoUrl: { type: String}, // ছবির লিংক সেভ করার জন্য

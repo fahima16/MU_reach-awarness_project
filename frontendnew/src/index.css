@@ -159,7 +159,7 @@ html {
 }
 
 /* TITLES */
-.sec-title {
+.sec--title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.7rem;
   margin-bottom: 25px;
