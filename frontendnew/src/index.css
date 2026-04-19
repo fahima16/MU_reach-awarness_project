@@ -130,14 +130,14 @@ html {
     right: 5%;
     background: var(--gold);
     color: var(--ink);
-    padding: 25px;
-    width: 340px;
+    padding: 20px;
+    width: 300px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .hero-caption h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
+    font-size: 1.3rem;
     margin-bottom: 8px;
 }
 
@@ -1622,14 +1622,15 @@ html {
     display: block !important;
     margin: 0 !important;
 }
-.hero-caption {
+
+  .hero-caption {
     position: absolute !important; /* ইমেজের ওপর ভাসানোর জন্য */
     bottom: 20px !important; /* নিচে থেকে ২০ পিক্সেল উপরে */
-    right: 15px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
+    right: 10px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
     background: rgba(200, 169, 81, 0.95) !important; /* তোমার গোল্ডেন কালার */
-    padding: 12px 15px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
-    width: 60% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
-    max-width: 250px !important; /* খুব বেশি বড় যাতে না হয় */
+    padding: 0px 10px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
+    width: 35% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
+    max-width: 200px !important; /* খুব বেশি বড় যাতে না হয় */
     text-align: left !important; /* লেখা বাম দিক থেকে শুরু হবে */
     transform: none !important;
     left: auto !important;
@@ -1644,13 +1645,11 @@ html {
     font-weight: bold;
 }
 .hero-caption p {
-    font-size: 0.7rem !important; /* প্যারাগ্রাফ একদম ছোট */
-    margin: 5px 0 0 0 !important;
+    font-size: 0.5rem !important; /* প্যারাগ্রাফ একদম ছোট */
+    margin: 5px 0 0 5px !important;
     color: #001f3f !important;
-    line-height: 1.2;
+    line-height: 1.5;
 }
-
-  
   
 
 
