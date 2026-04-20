@@ -460,7 +460,7 @@ const handleLogin = () => {
             <span className="t-meta-icon">⏱️</span> {teacher.experience} Years Exp.
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon">😊</span> {teacher.satisfactionLevel || 'Satisfied'}
+            <span className="t-meta-icon"></span> {teacher.satisfactionLevel || 'Satisfied'}
           </div>
         </div>
 
@@ -928,7 +928,7 @@ const handleLogin = () => {
         onChange={handleInputChange}
         required
       />
-      <span>😊 Very High</span>
+      <span>Very High</span>
     </label>
 
 
@@ -941,7 +941,7 @@ const handleLogin = () => {
         checked={regData.satisfactionLevel === "High"}
         onChange={handleInputChange}
       />
-      <span>🙂 High</span>
+      <span>High</span>
     </label>
 
 
@@ -954,7 +954,7 @@ const handleLogin = () => {
         checked={regData.satisfactionLevel === "Medium"}
         onChange={handleInputChange}
       />
-      <span>😐 Medium</span>
+      <span>Medium</span>
     </label>
 
 
@@ -967,7 +967,7 @@ const handleLogin = () => {
         checked={regData.satisfactionLevel === "Low"}
         onChange={handleInputChange}
       />
-      <span>😔 Low</span>
+      <span>Low</span>
     </label>
   </div>
 </div>

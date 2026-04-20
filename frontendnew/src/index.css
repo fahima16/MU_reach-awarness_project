@@ -1667,7 +1667,7 @@ html {
     margin: 0 !important;
   }
   #home-section {
-    margin-top: -5px !important; /* নেভিবার থেকে দূরত্ব */
+    margin-top: -10px !important; /* নেভিবার থেকে দূরত্ব */
     padding-top: 0;
   }
   .hero {

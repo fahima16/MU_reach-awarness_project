@@ -643,13 +643,13 @@ useEffect(() => {
         </div>
         
         <div className="milestone-card purple">
-            <span className="m-icon">📍</span>
+            <span className="m-icon">🌐</span>
             <h3>Global</h3>
             <p>Alumni Network</p>
         </div>
         
         <div className="milestone-card gold">
-            <span className="m-icon">🏅</span>
+            <span className="m-icon">🎖️</span>
             <h3>1st</h3>
             <p>Permanent Charter in Sylhet</p>
         </div>
