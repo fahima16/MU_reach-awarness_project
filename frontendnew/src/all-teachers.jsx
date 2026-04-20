@@ -4,6 +4,9 @@ import axios from 'axios';
 
 
 
+
+
+
 const AllTeachers = () => {
   const [districtStats, setDistrictStats] = useState([]);
   const defaultDistricts = [
@@ -14,25 +17,29 @@ const AllTeachers = () => {
   { _id: 'Khulna', totalTeachers: 0 }
 ];
 
+
   useEffect(() => {
     const fetchDistrictStats = async () => {
       try {
       const response = await axios.get('http://localhost:5000/api/teachers/stats-by-district');
-      
+     
       // ডাটাবেজ থেকে আসা ডেটাকে ডিফল্ট ডিস্ট্রিক্টগুলোর সাথে মিশিয়ে ফেলা (Merge)
       const mergedData = defaultDistricts.map(defDist => {
         const found = response.data.find(d => d._id === defDist._id);
         return found ? found : defDist;
       });
 
+
       // এরপর ডাটাবেজের অন্য কোনো নতুন জেলা থাকলে সেগুলোকেও যোগ করা (যদি সেরা ৫-এ থাকে)
       const dbOnlyDistricts = response.data.filter(
         d => !defaultDistricts.find(def => def._id === d._id)
       );
 
+
       const finalDisplay = [...mergedData, ...dbOnlyDistricts]
         .sort((a, b) => b.totalTeachers - a.totalTeachers) // সংখ্যা অনুযায়ী সাজানো
         .slice(0, 5); // সব সময় সেরা ৫টি দেখানো
+
 
       setDistrictStats(finalDisplay);
     } catch (err) {
@@ -43,7 +50,8 @@ const AllTeachers = () => {
     fetchDistrictStats();
   }, []);
 
-  
+
+ 
   const [stats, setStats] = useState({
     yesPercentage: 0,
     noPercentage: 0,
@@ -58,10 +66,11 @@ const AllTeachers = () => {
   }
   });
 
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        
+       
         const response = await axios.get('http://localhost:5000/api/teachers/feedback-stats');
         if (response.data && response.data.individualRatings) {
           setStats({
@@ -97,33 +106,47 @@ const AllTeachers = () => {
   punctuality: 0,
   studentParticipation: 0
   });
-  
+ 
   // ফটো আপলোডের জন্য আলাদা স্টেট
   const [photo, setPhoto] = useState(null);
 
+
   useEffect(()=> {fetchTeachers();}, []);
+
 
   const fetchTeachers = async () => {
 
+
     try {
+
 
       const response = await axios.get('http://localhost:5000/api/teachers');
 
+
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
+
 
         console.log("Backend response:", response.data);
 
 
 
+
+
+
 // যদি সরাসরি অ্যারে আসে তবে এটা কাজ করবে
+
 
         setTeachers(response.data);
 
+
       } catch (err) {
+
 
       console.error("Data load error:", err);
 
+
   }
+
 
 }
   // ইনপুট হ্যান্ডলার ফাংশন
@@ -136,9 +159,12 @@ const AllTeachers = () => {
   };
 
 
+
+
   const submitReg = async (e) => {
   e.preventDefault();
   const formData = new FormData();
+
 
   // ১. সাধারণ টেক্সট ফিল্ডগুলো (Image 9 এর স্কিমা অনুযায়ী)
   formData.append('fullName', regData.fullName);
@@ -153,6 +179,7 @@ const AllTeachers = () => {
     formData.append('satisfactionLevel', regData.satisfactionLevel);
     formData.append('whyNoMessage', regData.whyNoMessage);
 
+
     // রেটিং অবজেক্ট (ব্যাকএন্ডের রিকোয়ারমেন্ট অনুযায়ী)
     formData.append('academicEngagement', Number(regData.academicEngagement));
     formData.append('classroomBehavior', Number(regData.classroomBehavior));
@@ -160,18 +187,21 @@ const AllTeachers = () => {
     formData.append('punctuality', Number(regData.punctuality));
     formData.append('studentParticipation', Number(regData.studentParticipation));
 
+
   // ৩. ফটো (Image 9 এ photoUrl নামে আছে)
-  if(photo) formData.append('photo', photo); 
+  if(photo) formData.append('photo', photo);
+
 
   try {
       const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
+
       if (response.data.success) {
         alert("Data successfully synced with Database!");
         //setRegData({ ...regData, fullName: '', bio: '' }); // Form clear
-        setRegData({fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '', 
+        setRegData({fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '',
           bio: '', recommended: '', satisfactionLevel: '', academicEngagement: 0, classroomBehavior: 0,
           resourceUtilization: 0, punctuality: 0, studentParticipation: 0
         })
@@ -189,6 +219,7 @@ const AllTeachers = () => {
     }, {threshold:.1});
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+
     // ── BARS ANIMATION ──
     const barObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -198,7 +229,7 @@ const AllTeachers = () => {
           });
           // Donut animation
           /*const circle = e.target.querySelector('#donutCircle');
-          if(circle){ 
+          if(circle){
             const currentPercentage = stats.overallPercentage || 0;
             const offsetValue = 502*(1-currentPercentage/100);
             setTimeout(()=>{ circle.style.strokeDashoffset = offsetValue; },300); }
@@ -209,11 +240,13 @@ const AllTeachers = () => {
     document.querySelectorAll('.graphs-section,.map-section,.poll-section').forEach(s=>barObs.observe(s));
   }, []);
 
+
   const toggleHidden = (show) => {
     const f = document.getElementById('hiddenField');
     if(show) f.classList.add('visible');
     else f.classList.remove('visible');
   }
+
 
   const submitFeedback = (e) => {
     e.preventDefault();
@@ -221,32 +254,36 @@ const AllTeachers = () => {
     document.getElementById('successMsg').classList.add('show');
   }
 
+
   /*const submitReg = (e) => {
     e.preventDefault();
     document.getElementById('regForm').style.display='none';
     document.getElementById('regSuccessMsg').classList.add('show');
   }*/
 
+
   const toggleMenu = () => {
     const m = document.getElementById('mobileMenu');
     m.classList.toggle('open');
   }
 
+
   return (
     <div className="teachers-page-wrapper">
       <div className="share-toast" id="shareToast">🔗 Link copied to clipboard!</div>
 
+
       <nav style={{borderBottom : 'none',boxShadow : 'none'}}>
        <div className="nav-left">
-  <button 
-    onClick={() => window.history.back()} 
-    className="nav-link back-btn" 
+  <button
+    onClick={() => window.history.back()}
+    className="nav-link back-btn"
     style={{
       background: 'rgba(59, 130, 246, 0.1)', // Shundor blue tint
-      border: '1px solid rgba(59, 130, 246, 0.3)', 
-      cursor: 'pointer', 
-      color: '#3b82f6', 
-      padding: '8px 16px', 
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      cursor: 'pointer',
+      color: '#3b82f6',
+      padding: '8px 16px',
       borderRadius: '10px',
       fontSize: '0.9rem',
       fontWeight: '600',
@@ -276,9 +313,11 @@ const AllTeachers = () => {
         </div>
       </nav>
 
+
       <div className="mobile-menu" id="mobileMenu">
         <a href="/leader" className="mobile-link">Leader</a>
       </div>
+
 
       <section className="hero">
         <div className="hero-left">
@@ -315,6 +354,7 @@ const AllTeachers = () => {
         </div>
       </section>
 
+
       <div className="dept-strip">
         <div className="strip-track">
           {["CSE", "SWE", "Law & Justice", "EEE", "Data Science", "Economics", "English","CSE", "SWE", "Law & Justice", "EEE", "Data Science", "Economics", "English" ].map((item, index) => (
@@ -322,6 +362,7 @@ const AllTeachers = () => {
           ))}
         </div>
       </div>
+
 
       <section className="section bg-cream" id="teachers">
         <div className="container">
@@ -331,7 +372,9 @@ const AllTeachers = () => {
             <p className="sec-sub">Handpicked senior educators shaping academic excellence at Metropolitan University.</p>
           </div>
 
+
           <div className="teachers-grid">
+
 
             {teachers && teachers.length > 0 ? (
   // filter দিয়ে নিশ্চিত করছি যেন শুধু নাম আছে এমন টিচারদের দেখায়
@@ -339,20 +382,20 @@ const AllTeachers = () => {
     <div className="t-card reveal visible" key={teacher._id || index}>
       <div className="t-card-accent"></div>
       <div className="t-card-body">
-        
+       
         {/* কার্ড নম্বর ঠিক করা হয়েছে: এখানে ব্যাকটিক্স (`) হবে */}
         <div className="t-card-num">
           {index + 1 < 10 ? `0${index + 1}` : index + 1}
         </div>
-        
+       
         <div className="t-card-top">
           <div className="t-avatar-wrap">
             {teacher.photoUrl ? (
-              <img 
+              <img
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`http://localhost:5000/${teacher.photoUrl?.replace(/\\/g, '/')}`} 
-                alt={teacher.fullName} 
-                className="t-avatar" 
+                src={`http://localhost:5000/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                alt={teacher.fullName}
+                className="t-avatar"
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
               />
             ) : (
@@ -362,41 +405,46 @@ const AllTeachers = () => {
             )}
             <div className="t-avatar-ring"></div>
           </div>
-          
+         
           <div className="t-card-info">
             <div className="t-name">{teacher.fullName}</div>
             <div className="t-dept-badge">💻 {teacher.department} Department</div>
           </div>
         </div>
 
+
         <div className="t-meta">
           <div className="t-meta-item">
-            <span className="t-meta-icon"></span> {teacher.district} District
+            <span className="t-meta-icon">📍</span> {teacher.district} District
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon">⏱</span> {teacher.experience} Years Exp.
+            <span className="t-meta-icon">⏱️</span> {teacher.experience} Years Exp.
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon"></span> {teacher.satisfactionLevel || 'Satisfied'}
+            <span className="t-meta-icon">😊</span> {teacher.satisfactionLevel || 'Satisfied'}
           </div>
         </div>
+
 
         <div className="t-quote">
           <strong>Bio:</strong> "{teacher.bio || "No bio provided."}"
         </div>
 
+
         <div className="t-quote">
           <strong>Experience:</strong> "{teacher.ex_details || "No experience provided."}"
         </div>
 
+
                 <div className="t-content-area" style={{ marginTop: '10px', fontSize: '0.9rem', color: 'var(--steel)' }}>
-  
+ 
   {/* যদি Bio থাকে তবে সেটা দেখাবে */}
   {/*{teacher.bio && (
     <div className="t-bio" style={{ marginBottom: '8px', fontStyle: 'italic' }}>
        <strong>Bio:</strong> {teacher.bio}
     </div>
   )}*/}
+
 
   {/* যদি Experience (String) থাকে তবে সেটা দেখাবে */}
   {/*{teacher.experience && (
@@ -405,15 +453,19 @@ const AllTeachers = () => {
     </div>
   )}*/}
 
+
   {/* যদি কোনটাই না থাকে তবে ডিফল্ট টেক্সট */}
   {/*{!teacher.bio && !teacher.experience && (
     <div className="t-no-info">Dedicated faculty member at MU.</div>
   )}*/}
 
+
 </div>
 
-        
+
+       
       </div>
+
 
       <div className="t-card-footer">
         <div className="t-joined">
@@ -430,9 +482,11 @@ const AllTeachers = () => {
 )}
             </div>
 
+
          
         </div>
       </section>
+
 
       {/* --- Graphs Section --- */}
       <section className="graphs-section" id="graphs">
@@ -495,6 +549,7 @@ const AllTeachers = () => {
     const ratingValue = stats.individualRatings ? stats.individualRatings[item.key] : 0;
     const barWidth = (ratingValue / 5) * 100;
 
+
     return (
       <div key={idx} className="bar-item">
         <div className="bar-label-row">
@@ -503,9 +558,9 @@ const AllTeachers = () => {
         </div>
         <div className="bar-track">
           {/* data-width অ্যানিমেশনের জন্য, এবং সরাসরি width ও দেওয়া হলো যেন ডাটা আসার সাথে সাথে দেখায় */}
-          <div 
-            className="bar-fill" 
-            data-width={`${barWidth}%`} 
+          <div
+            className="bar-fill"
+            data-width={`${barWidth}%`}
             style={{ width: `${barWidth}%`, transition: 'width 1s ease-in-out' }}
           ></div>
         </div>
@@ -518,6 +573,8 @@ const AllTeachers = () => {
       </section>
 
 
+
+
       <section className="map-section">
         <div className="container">
           <div className="sec-header reveal">
@@ -528,63 +585,21 @@ const AllTeachers = () => {
             </p>
           </div>
 
+
           <div className="map-grid reveal">
-  <div className="map-visual" style={{ height: '490px', width: '100%', borderRadius: '15px', overflow: 'hidden', background: '#f8f9fa', position: 'relative' }}>
-    {/* এখানে রিয়েল ম্যাপ বসিয়ে দিলাম যা কোনো এরর দিবে না */}
-    <iframe 
-      title="MU Faculty Map"
-      width="100%" 
-      height="100%" 
-      frameBorder="0" 
-      scrolling="no" 
-      src="https://www.openstreetmap.org/export/embed.html?bbox=88.01%2C20.67%2C92.67%2C26.63&amp;layer=mapnik&amp;marker=24.8949%2C91.8687" 
-      style={{ border: 'none', filter: 'grayscale(0.1) contrast(1.1)' }}
-    ></iframe>
-    
-    {/* তোমার আগের প্লেসহোল্ডার আইকনগুলো চাইলে নিচে রাখতে পারো, তবে ম্যাপ থাকলে এগুলো আর দরকার হয় না */}
-    <div className="map-dots" style={{ pointerEvents: 'none' }}>
-      {[...Array(12)].map((_, i) => (
-        <div key={i} className="map-dot"></div>
-      ))}
-    </div>
-  </div>
-
-  <div className="district-stats">
-    <div className="district-title">Top Districts by Faculty Count</div>
-    <div className="district-list">
-      {/* তোমার সেই কমেন্ট করা অংশগুলোও আমি রেখে দিচ্ছি যাতে তোমার কোড নষ্ট না হয় */}
-      {/*{[
-        { rank: '#1', name: 'Sylhet', count: '48 teachers', width: '100%' },
-        { rank: '#2', name: 'Dhaka', count: '41 teachers', width: '85%' },
-        { rank: '#3', name: 'Chittagong', count: '35 teachers', width: '73%' },
-        { rank: '#4', name: 'Rajshahi', count: '28 teachers', width: '58%' },
-        { rank: '#5', name: 'Khulna', count: '22 teachers', width: '46%' },
-      ].map((item, index) => (
-        <div className="district-item" key={index}>
-          <div className="district-rank-row">
-            <div className="district-rank">{item.rank}</div>
-            <div className="district-name">{item.name}</div>
-            <div className="district-count">{item.count}</div>
-          </div>
-          <div className="district-bar-track">
-            <div className="district-bar-fill" data-width={item.width}></div>
-          </div>
-        </div>
-      ))}*/}
-
-      {/* তোমার ডাইনামিক ডাটা রেন্ডারিং */}
-      {districtStats.map((item, index) => {
-        const topCount = districtStats[0]?.totalTeachers || 1; 
-        const barWidth = item.totalTeachers > 0 ? (item.totalTeachers / topCount) * 100 : 5;
-
-        return (
-          <div className="district-item" key={index}>
-            <div className="district-rank-row">
-              <div className="district-rank">#{index + 1}</div>
-              <div className="district-name">{item._id}</div>
-              <div className="district-count">{item.totalTeachers} teachers</div>
+            <div className="map-visual">
+              <div className="map-placeholder-icon">🗺️</div>
+              <div className="map-placeholder-text">Interactive Bangladesh Map</div>
+              <div className="map-placeholder-sub">
+                Leaflet.js map renders here — showing teacher districts
+              </div>
+              <div className="map-dots">
+                {[...Array(12)].map((_, i) => (
+                  <div key={i} className="map-dot"></div>
+                ))}
+              </div>
             </div>
-<<<<<<< HEAD
+
 
             <div className="district-stats">
               <div className="district-title">Top Districts by Faculty Count</div>
@@ -608,8 +623,9 @@ const AllTeachers = () => {
                   </div>
                 ))}*/}
                {districtStats.map((item, index) => {
-    const topCount = districtStats[0]?.totalTeachers || 1; 
+    const topCount = districtStats[0]?.totalTeachers || 1;
     const barWidth = item.totalTeachers > 0 ? (item.totalTeachers / topCount) * 100 : 5; // ০ হলেও ছোট একটা দাগ দেখাবে
+
 
     return (
       <div className="district-item" key={index}>
@@ -619,10 +635,10 @@ const AllTeachers = () => {
           <div className="district-count">{item.totalTeachers} teachers</div>
         </div>
         <div className="district-bar-track">
-          <div 
-            className="district-bar-fill" 
-            style={{ 
-              width: `${barWidth}%`, 
+          <div
+            className="district-bar-fill"
+            style={{
+              width: `${barWidth}%`,
               transition: 'width 1s ease-in-out',
               backgroundColor: item.totalTeachers > 0 ? 'var(--gold)' : '#e7cf31' // ডাটা না থাকলে হালকা কালার
             }}
@@ -632,26 +648,11 @@ const AllTeachers = () => {
     );
   })}
               </div>
-=======
-            <div className="district-bar-track">
-              <div 
-                className="district-bar-fill" 
-                style={{ 
-                  width: `${barWidth}%`, 
-                  transition: 'width 1s ease-in-out',
-                  backgroundColor: item.totalTeachers > 0 ? 'var(--gold)' : '#e7cf31'
-                }}
-              ></div>
->>>>>>> bbfbaec055203ff3d14082b5edf563cd3480d448
             </div>
           </div>
-        );
-      })}
-    </div>
-  </div>
-</div>
         </div>
       </section>
+
 
       {/* --- Feedback Form --- */}
       <section className="form-section" id="feedback-form">
@@ -661,6 +662,8 @@ const AllTeachers = () => {
               <div className="sec-eyebrow">Share Your Voice</div>
               <h2 className="sec-title">Your Experience<br />Matters</h2>
               <p className="sec-sub">Help Metropolitan University grow by sharing your honest feedback as a faculty member.</p>
+
+
 
 
             <div className="form-points">
@@ -678,16 +681,16 @@ const AllTeachers = () => {
           </div>
         </div>
         </div>
-      
+     
             <div className="form-right reveal delay-2">
               <form id="regForm" onSubmit={submitReg}>
                 <div className="form-group">
                   <label className="form-label">Full Name</label>
-                  <input type="text" name= "fullName" 
+                  <input type="text" name= "fullName"
                   value = {regData.fullName} onChange={handleInputChange}
                   className="form-input" placeholder="e.g. Dr. Your Name" required />
                 </div>
-                
+               
                 {/* Department & District Row */}
               {/*<div className="form-row">
               <div className="form-group">
@@ -699,6 +702,8 @@ const AllTeachers = () => {
               <option>Civil Engineering</option><option>English</option><option>Biotechnology</option>
               </select>
             </div>
+
+
 
 
   <div className="form-group">
@@ -715,8 +720,8 @@ const AllTeachers = () => {
   {/* Department Selection */}
   <div className="form-group">
     <label className="form-label">Department</label>
-    <select 
-      className="form-select" 
+    <select
+      className="form-select"
       name="department" // ১. স্টেটের ভ্যারিয়েবল নামের সাথে মিল
       value={regData.department} // ২. স্টেট থেকে ভ্যালু পড়া
       onChange={handleInputChange} // ৩. সিলেক্ট করলে স্টেট আপডেট করা
@@ -728,19 +733,22 @@ const AllTeachers = () => {
       <option value="Law">Law</option>
       <option value="EEE">EEE</option>
 
+
       <option value="English">English</option>
+
 
     </select>
   </div>
 
+
   {/* District Selection */}
   <div className="form-group">
     <label className="form-label">District</label>
-    <select 
-      className="form-select" 
+    <select
+      className="form-select"
       name="district" // স্টেটের সাথে মিল
-      value={regData.district} 
-      onChange={handleInputChange} 
+      value={regData.district}
+      onChange={handleInputChange}
       required
     >
       <option value="">Select District</option>
@@ -755,6 +763,7 @@ const AllTeachers = () => {
     </select>
   </div>
 </div>
+
 
 {/* Experience & Employee ID Row */}
 {/*<div className="form-row">
@@ -772,15 +781,16 @@ const AllTeachers = () => {
   </div>
 </div>*/}
 
+
 <div className="form-row">
   {/* Experience Selection */}
   <div className="form-group">
     <label className="form-label">Years of Experience at MU</label>
-    <select 
-      className="form-select" 
+    <select
+      className="form-select"
       name="experience" // স্টেটের নামের সাথে মিল
-      value={regData.experience} 
-      onChange={handleInputChange} 
+      value={regData.experience}
+      onChange={handleInputChange}
       required
     >
       <option value="">Select Experience</option>
@@ -792,20 +802,22 @@ const AllTeachers = () => {
     </select>
   </div>
 
+
   {/* Employee ID Input */}
   <div className="form-group">
     <label className="form-label">Employee ID</label>
-    <input 
-      type="text" 
+    <input
+      type="text"
       name="employeeId" // স্টেটের নামের সাথে মিল (I বড় হাতের)
-      className="form-input" 
-      placeholder="e.g. MU-2010-042" 
-      value={regData.employeeId} 
-      onChange={handleInputChange} 
-      required 
+      className="form-input"
+      placeholder="e.g. MU-2010-042"
+      value={regData.employeeId}
+      onChange={handleInputChange}
+      required
     />
   </div>
 </div>
+
 
 {/* Star Rating Section */}
 {/*<div className="form-group">
@@ -819,9 +831,10 @@ const AllTeachers = () => {
   </div>
 </div>*/}
 
+
 <div className="form-group">
   <label className="form-label" style={{marginBottom: '15px', display: 'block', fontWeight: 'bold'}}>Rate Student Behavior (1-5 Stars)</label>
-  
+ 
   {[
     { label: "Academic Engagement", name: "academicEngagement" },
     { label: "Classroom Behavior", name: "classroomBehavior" },
@@ -834,11 +847,11 @@ const AllTeachers = () => {
       <div className="star-rating">
         {[5, 4, 3, 2, 1].map(num => (
           <React.Fragment key={num}>
-            <input 
-              type="radio" 
-              name={item.name} 
-              id={`${item.name}-${num}`} 
-              value={num} 
+            <input
+              type="radio"
+              name={item.name}
+              id={`${item.name}-${num}`}
+              value={num}
               checked={Number(regData[item.name]) === num}
               onChange={(e) => setRegData({...regData, [item.name]: Number(e.target.value)})}
             />
@@ -849,6 +862,7 @@ const AllTeachers = () => {
     </div>
   ))}
 </div>
+
 
 {/* Satisfaction Level Section */}
 {/*<div className="form-group">
@@ -861,59 +875,64 @@ const AllTeachers = () => {
   </div>
 </div>*/}
 
+
 <div className="form-group">
   <label className="form-label">Satisfaction Level</label>
   <div className="radio-group">
     {/* Very High */}
     <label className="radio-opt">
-      <input 
-        type="radio" 
+      <input
+        type="radio"
         name="satisfactionLevel" // স্টেটের ভ্যারিয়েবল নামের সাথে হুবহু মিল
-        value="Very High" 
+        value="Very High"
         checked={regData.satisfactionLevel === "Very High"} // এটি রেডিও বাটন সিলেক্টেড রাখবে
-        onChange={handleInputChange} 
-        required 
+        onChange={handleInputChange}
+        required
       />
       <span>😊 Very High</span>
     </label>
 
+
     {/* High */}
     <label className="radio-opt">
-      <input 
-        type="radio" 
-        name="satisfactionLevel" 
-        value="High" 
-        checked={regData.satisfactionLevel === "High"} 
-        onChange={handleInputChange} 
+      <input
+        type="radio"
+        name="satisfactionLevel"
+        value="High"
+        checked={regData.satisfactionLevel === "High"}
+        onChange={handleInputChange}
       />
       <span>🙂 High</span>
     </label>
 
+
     {/* Medium */}
     <label className="radio-opt">
-      <input 
-        type="radio" 
-        name="satisfactionLevel" 
-        value="Medium" 
-        checked={regData.satisfactionLevel === "Medium"} 
-        onChange={handleInputChange} 
+      <input
+        type="radio"
+        name="satisfactionLevel"
+        value="Medium"
+        checked={regData.satisfactionLevel === "Medium"}
+        onChange={handleInputChange}
       />
       <span>😐 Medium</span>
     </label>
 
+
     {/* Low */}
     <label className="radio-opt">
-      <input 
-        type="radio" 
-        name="satisfactionLevel" 
-        value="Low" 
-        checked={regData.satisfactionLevel === "Low"} 
-        onChange={handleInputChange} 
+      <input
+        type="radio"
+        name="satisfactionLevel"
+        value="Low"
+        checked={regData.satisfactionLevel === "Low"}
+        onChange={handleInputChange}
       />
       <span>😔 Low</span>
     </label>
   </div>
 </div>
+
 
 {/* Experience Textarea */}
 {/*<div className="form-group">
@@ -935,10 +954,11 @@ const AllTeachers = () => {
                   </div>
                 </div>*/}
 
+
                 <div className="form-group">
   <label className="form-label">Your Experience</label>
-  <textarea 
-    className="form-textarea" 
+  <textarea
+    className="form-textarea"
     name="ex_details" // স্টেটের 'bio' এর সাথে মিল
     value={regData.ex_details}
     onChange={handleInputChange}
@@ -946,46 +966,48 @@ const AllTeachers = () => {
   ></textarea>
 </div>
 
+
 <div className="form-group">
   <label className="form-label">Would you recommend MU to other educators?</label>
   <div className="radio-group">
     <label className="radio-opt">
-      <input 
-        type="radio" 
+      <input
+        type="radio"
         name="recommended" // স্টেটের সাথে মিল
-        value="true" 
+        value="true"
         checked={regData.recommended === true || regData.recommended === 'true'}
         onChange={(e) => {
           setRegData({...regData, recommended: true});
           toggleHidden(false); // তোমার আগের ফাংশনটি কল হবে
-        }} 
-        required 
+        }}
+        required
       />
       <span>✅ Yes</span>
     </label>
     <label className="radio-opt">
-      <input 
-        type="radio" 
-        name="recommended" 
-        value="false" 
+      <input
+        type="radio"
+        name="recommended"
+        value="false"
         checked={regData.recommended === false || regData.recommended === 'false'}
         onChange={(e) => {
           setRegData({...regData, recommended: false});
           toggleHidden(true); // 'No' দিলে হিডেন ফিল্ড দেখাবে
-        }} 
+        }}
       />
       <span>❌ No</span>
     </label>
   </div>
 </div>
 
+
 {/* 'No' সিলেক্ট করলে এই ঘরটি আসবে */}
 <div className="hidden-field" id="hiddenField" style={{ display: regData.recommended ? 'none' : 'block' }}>
   <div className="form-group">
     <div className="hidden-note">🔒 This response is private — only admin can view it</div>
     <label className="form-label">Why not? (Admin only)</label>
-    <textarea 
-      className="form-textarea" 
+    <textarea
+      className="form-textarea"
       name="whyNoMessage" // স্টেটের সাথে মিল
       value={regData.whyNoMessage}
       onChange={handleInputChange}
@@ -1002,6 +1024,8 @@ const AllTeachers = () => {
       </section>
 
 
+
+
       <section className="poll-section">
       <div className="container">
         <div className="poll-inner">
@@ -1011,14 +1035,14 @@ const AllTeachers = () => {
           <h2 className="sec-title sec-title-white reveal" style={{ textAlign: 'center' }}>
             Would You Recommend MU<br />to Other Educators?
           </h2>
-          
+         
           <div className="poll-bars reveal">
             {/* YES বার */}
             <div className="poll-bar-row">
               <div className="poll-bar-label">YES</div>
               <div className="poll-bar-track">
-                <div 
-                  className="poll-bar-fill poll-yes-fill" 
+                <div
+                  className="poll-bar-fill poll-yes-fill"
                   /*data-width="94%" */
                   style={{ width: `${stats.yesPercentage}%`, transition: 'width 1.5s ease-in-out' }}
                   /*style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}*/
@@ -1027,12 +1051,13 @@ const AllTeachers = () => {
               <div className="poll-pct">{stats.yesPercentage}%</div>
             </div>
 
+
             {/* NO বার */}
             <div className="poll-bar-row">
               <div className="poll-bar-label" style={{ color: 'var(--steel)' }}>NO</div>
               <div className="poll-bar-track">
-                <div 
-                  className="poll-bar-fill poll-no-fill" 
+                <div
+                  className="poll-bar-fill poll-no-fill"
                   /*data-width="6%" */
                   style={{ width: `${stats.noPercentage}%`, transition: 'width 1.5s ease-in-out' }}
                   /*style={{ width: '0%', transition: 'width 1.5s ease-in-out' }}*/
@@ -1041,7 +1066,7 @@ const AllTeachers = () => {
               <div className="poll-pct poll-no-pct">{stats.noPercentage}%</div>
             </div>
           </div>
-          
+         
           <div className="poll-total">
             {/*Based on 287 teacher responses · Last updated: just now*/}
             Based on {stats.totalTeachers} teacher responses · Last updated: just now
@@ -1049,6 +1074,7 @@ const AllTeachers = () => {
         </div>
       </div>
     </section>
+
 
     <section className="reg-section" id="register">
   <div className="container">
@@ -1058,7 +1084,7 @@ const AllTeachers = () => {
         <div className="sec-eyebrow">Join Our Panel</div>
         <h2 className="sec-title">Are You an<br />MU Teacher?</h2>
         <p className="sec-sub">Register to appear on our faculty showcase. Your profile will be visible to students and visitors automatically.</p>
-        
+       
         <div className="preview-card">
           <div className="preview-label">✨ Your profile will look like this</div>
           <div className="preview-card-top">
@@ -1076,6 +1102,7 @@ const AllTeachers = () => {
         </div>
       </div>
 
+
       {/* ডান পাশের রেজিস্ট্রেশন ফর্ম */}
       <div className="reveal delay-2">
         {/*<form id="regForm" onSubmit={(e) => {
@@ -1086,6 +1113,7 @@ const AllTeachers = () => {
             <label className="form-label">Full Name</label>
             <input type="text" className="form-input" placeholder="Prof. / Dr. Your Name" required />
           </div>
+
 
           <div className="form-row">
             <div className="form-group">
@@ -1107,6 +1135,7 @@ const AllTeachers = () => {
             </div>
           </div>
 
+
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Years of Experience</label>
@@ -1118,38 +1147,42 @@ const AllTeachers = () => {
             </div>
           </div>
 
+
           <div className="form-group">
             <label className="form-label">Short Bio</label>
             <textarea className="form-textarea" style={{ minHeight: '80px' }} placeholder="Brief description of your academic background and expertise..."></textarea>
           </div>
+
 
           <div className="form-group">
             <label className="form-label">Upload Photo</label>
             <input type="file" className="form-input" accept="image/*" style={{ padding: '0.65rem 1rem' }} />
           </div>*/}
 
+
           <form id="regForm" onSubmit={submitReg}>
   {/* Full Name Field */}
   <div className="form-group">
     <label className="form-label">Full Name</label>
-    <input 
-      type="text" 
-      name="fullName" 
-      className="form-input" 
-      placeholder="Prof. / Dr. Your Name" 
+    <input
+      type="text"
+      name="fullName"
+      className="form-input"
+      placeholder="Prof. / Dr. Your Name"
       value={regData.fullName}
       onChange={handleInputChange}
-      required 
+      required
     />
   </div>
+
 
   <div className="form-row">
     {/* Department Field */}
     <div className="form-group">
       <label className="form-label">Department</label>
-      <select 
-        className="form-select" 
-        name="department" 
+      <select
+        className="form-select"
+        name="department"
         value={regData.department}
         onChange={handleInputChange}
         required
@@ -1167,12 +1200,13 @@ const AllTeachers = () => {
       </select>
     </div>
 
+
     {/* District Field */}
     <div className="form-group">
       <label className="form-label">District</label>
-      <select 
-        className="form-select" 
-        name="district" 
+      <select
+        className="form-select"
+        name="district"
         value={regData.district}
         onChange={handleInputChange}
         required
@@ -1188,30 +1222,32 @@ const AllTeachers = () => {
     </div>
   </div>
 
+
   <div className="form-row">
     {/* Experience Field */}
     <div className="form-group">
       <label className="form-label">Years of Experience</label>
-      <input 
-        type="number" 
-        name="experience" 
-        className="form-input" 
-        placeholder="e.g. 12" 
-        min="0" 
+      <input
+        type="number"
+        name="experience"
+        className="form-input"
+        placeholder="e.g. 12"
+        min="0"
         max="50"
         value={regData.experience}
         onChange={handleInputChange}
       />
     </div>
 
+
     {/* Employee ID Field (The Connector) */}
     <div className="form-group">
       <label className="form-label">Employee ID</label>
-      <input 
-        type="text" 
-        name="employeeId" 
-        className="form-input" 
-        placeholder="e.g. MU-2010-042" 
+      <input
+        type="text"
+        name="employeeId"
+        className="form-input"
+        placeholder="e.g. MU-2010-042"
         value={regData.employeeId}
         onChange={handleInputChange}
         required
@@ -1219,37 +1255,42 @@ const AllTeachers = () => {
     </div>
   </div>
 
+
   {/* Bio Field */}
   <div className="form-group">
     <label className="form-label">Short Bio</label>
-    <textarea 
+    <textarea
       name="bio"
-      className="form-textarea" 
-      style={{ minHeight: '80px' }} 
+      className="form-textarea"
+      style={{ minHeight: '80px' }}
       placeholder="Brief description of your academic background and expertise..."
       value={regData.bio}
       onChange={handleInputChange}
     ></textarea>
   </div>
 
+
   {/* Photo Upload Field */}
   <div className="form-group">
     <label className="form-label">Upload Photo</label>
-    <input 
-      type="file" 
-      className="form-input" 
-      accept="image/*" 
-      style={{ padding: '0.65rem 1rem' }} 
+    <input
+      type="file"
+      className="form-input"
+      accept="image/*"
+      style={{ padding: '0.65rem 1rem' }}
       onChange={(e) => setPhoto(e.target.files[0])}
     />
   </div>
 
-  
+
+ 
+
 
           <button type="submit" className="btn-gold" style={{ width: '100%', padding: '1rem', fontSize: '0.82rem', letterSpacing: '0.15em' }}>
             Register & Join Faculty Panel →
           </button>
         </form>
+
 
         <div className="success-msg" id="regSuccessMsg" style={{ display: 'none', marginTop: '20px' }}>
           🎉 Registration successful! Your profile will appear on the All Teachers page shortly.
@@ -1258,6 +1299,7 @@ const AllTeachers = () => {
     </div>
   </div>
 </section>
+
 
       {/* Footer remains same, just change class to className */}
       <footer>
@@ -1270,18 +1312,18 @@ const AllTeachers = () => {
           A leading private university in Sylhet, Bangladesh. Committed to academic excellence and shaping the leaders of tomorrow.
         </div>
         <div className="footer-socials">
-          <a 
-    className="social" 
-    href="https://www.facebook.com/share/1Bm393EyEE/?mibextid=wwXIfr" 
-    target="_blank" 
+          <a
+    className="social"
+    href="https://www.facebook.com/share/1Bm393EyEE/?mibextid=wwXIfr"
+    target="_blank"
     rel="noopener noreferrer"
   >
     fb
   </a>
-  <a 
-    className="social" 
-    href="https://www.metrouni.edu.bd/" 
-    target="_blank" 
+  <a
+    className="social"
+    href="https://www.metrouni.edu.bd/"
+    target="_blank"
     rel="noopener noreferrer"
   >
     web
@@ -1290,8 +1332,10 @@ const AllTeachers = () => {
         </div>
       </div>
 
+
       {/* Quick Links */}
-      
+     
+
 
       {/* Teachers Section */}
       <div>
@@ -1303,6 +1347,7 @@ const AllTeachers = () => {
           <li><a href="#graphs">Stats & Graphs</a></li>
         </ul>
       </div>
+
 
       {/* Contact Section */}
       <div>
@@ -1316,6 +1361,7 @@ const AllTeachers = () => {
       </div>
     </div>
 
+
     {/* Footer Bottom */}
     <div className="footer-bottom">
       <div className="footer-copy">© 2026 Metropolitan University, Sylhet. All rights reserved.</div>
@@ -1326,5 +1372,6 @@ const AllTeachers = () => {
     </div>
   );
 };
+
 
 export default AllTeachers;
