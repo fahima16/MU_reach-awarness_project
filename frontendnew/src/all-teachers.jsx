@@ -1137,7 +1137,7 @@ const handleLogin = () => {
          
           <div className="poll-total">
             {/*Based on 287 teacher responses · Last updated: just now*/}
-            Based on {stats.totalTeachers} teacher responses · Last updated: just now
+            Based on {stats.totalTeachers} teacher responses ·
           </div>
         </div>
       </div>
