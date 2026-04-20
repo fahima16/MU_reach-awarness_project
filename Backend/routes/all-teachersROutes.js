@@ -6,6 +6,8 @@ const multer = require('multer');
 // ছবি সেভ করার জন্য সাধারণ মেমোরি স্টোরেজ (যাতে এরর না আসে)
 //const upload = multer({ dest: 'uploads/' });
 
+
+
 const path = require('path');
 
 // ছবির এক্সটেনশনসহ সেভ করার জন্য স্টোরেজ ইঞ্জিন
@@ -33,7 +35,7 @@ router.post('/register', upload.single('photo'), async (req, res) => {
             return res.status(400).json({ success: false, error: "Employee ID is missing!" });
         }
         const updateData={...req.body,
-            
+            /*isUrgent: req.body.whyNoMessage ? true : false,*/
             ratings:{
             academicEngagement: Number(req.body.academicEngagement) || 0,
             classroomBehavior: Number(req.body.classroomBehavior) || 0,
@@ -55,6 +57,17 @@ router.post('/register', upload.single('photo'), async (req, res) => {
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
+});
+
+
+
+router.get('/complaints', async(req, res)=>{
+        try {
+            const complaints= await Teacher.find({ whyNoMessage: { $exists: true, $ne: ""}});
+            res.status(200).json({success: true, data:complaints});
+        } catch(err){
+            res.status(500).json(err);
+        }
 });
 
 // ২. ইমেজ ১ এর জন্য: হোম পেজে ৩ জন টিচার দেখানো (isFeatured লজিক)

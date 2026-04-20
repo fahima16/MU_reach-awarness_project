@@ -3,11 +3,50 @@ import './all-teachers.css';
 import axios from 'axios';
 
 
+const TeacherComplaintPanel = () => {
+    const [complaints, setComplaints] = useState([]);
 
+    useEffect(() => {
+        const fetchComplaints = async () => {
+            try {
+                const res = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/complaints');
+                setComplaints(res.data.data);
+            } catch (err) {
+                console.error("Error", err);
+            }
+        };
+        fetchComplaints();
+    }, []);
 
-
+    return (
+        <div style={{ padding: '20px', background: '#fff0f0', borderRadius: '10px', marginTop: '20px', textAlign: 'left' }}>
+            <h3 style={{ color: '#d9534f' }}>Urgent Teacher Complaints</h3>
+            {complaints.length > 0 ? complaints.map((c) => (
+                <div key={c._id} style={{ background: '#fff', padding: '15px', marginBottom: '10px', borderRadius: '8px', borderLeft: '5px solid #d9534f' }}>
+                    <p><strong>Teacher:</strong> {c.fullName} ({c.employeeId})</p>
+                    <p style={{ color: '#721c24', background: '#fff5f5', padding: '8px', borderRadius: '5px' }}>
+                        <strong>Reason:</strong> {c.whyNoMessage}
+                    </p>
+                </div>
+            )) : <p>No complaints yet.</p>}
+        </div>
+    );
+};
 
 const AllTeachers = () => {
+
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [isAdminAuth, setIsAdminAuth] = useState(false);
+  const [passInput, setPassInput] = useState("");
+
+const handleLogin = () => {
+    if (passInput === "1234") { // তোমার পছন্দমতো পাসওয়ার্ড দাও
+        setIsAdminAuth(true);
+        setShowAdminLogin(false);
+    } else {
+        alert("Wrong Password!");
+    }
+};
   const [districtStats, setDistrictStats] = useState([]);
   const defaultDistricts = [
   { _id: 'Sylhet', totalTeachers: 0 },
@@ -21,7 +60,7 @@ const AllTeachers = () => {
   useEffect(() => {
     const fetchDistrictStats = async () => {
       try {
-      const response = await axios.get('http://localhost:5000/api/teachers/stats-by-district');
+      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/stats-by-district');
      
       // ডাটাবেজ থেকে আসা ডেটাকে ডিফল্ট ডিস্ট্রিক্টগুলোর সাথে মিশিয়ে ফেলা (Merge)
       const mergedData = defaultDistricts.map(defDist => {
@@ -71,7 +110,7 @@ const AllTeachers = () => {
     const fetchStats = async () => {
       try {
        
-        const response = await axios.get('http://localhost:5000/api/teachers/feedback-stats');
+        const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers/feedback-stats');
         if (response.data && response.data.individualRatings) {
           setStats({
             yesPercentage: response.data.yesPercentage,
@@ -120,7 +159,7 @@ const AllTeachers = () => {
     try {
 
 
-      const response = await axios.get('http://localhost:5000/api/teachers');
+      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers');
 
 
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
@@ -193,7 +232,7 @@ const AllTeachers = () => {
 
 
   try {
-      const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
+      const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -393,7 +432,7 @@ const AllTeachers = () => {
             {teacher.photoUrl ? (
               <img
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`http://localhost:5000/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl?.replace(/\\/g, '/')}`}
                 alt={teacher.fullName}
                 className="t-avatar"
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
@@ -1018,6 +1057,35 @@ const AllTeachers = () => {
                 <button type="submit" className="btn-submit">Submit Feedback →</button>
               </form>
               <div className="success-msg" id="successMsg">✅ Thank you! Your feedback has been submitted and the dashboard has been updated.</div>
+              {/* --- Teacher Page Admin Area --- */}
+<div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+    <p 
+        onClick={() => !isAdminAuth && setShowAdminLogin(!showAdminLogin)} 
+        style={{ cursor: 'pointer', color: '#999', fontSize: '0.8rem' }}
+    >
+        {isAdminAuth ? "✅ Admin View Active" : "🔒 Admin Access (For Complaints)"}
+    </p>
+
+    {showAdminLogin && !isAdminAuth && (
+        <div style={{ marginTop: '10px' }}>
+            <input 
+                type="password" 
+                placeholder="Password" 
+                value={passInput}
+                onChange={(e) => setPassInput(e.target.value)}
+                style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc' }}
+            />
+            <button onClick={handleLogin} style={{ marginLeft: '5px', cursor: 'pointer' }}>Enter</button>
+        </div>
+    )}
+
+    {/* ৩. পাসওয়ার্ড মিলে গেলে তোমার সেই প্যানেলটি দেখাবে */}
+    {isAdminAuth && (
+        <div style={{ marginTop: '20px' }}>
+            <TeacherComplaintPanel /> 
+        </div>
+    )}
+</div>
             </div>
           </div>
         </div>
