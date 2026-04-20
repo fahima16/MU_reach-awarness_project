@@ -337,7 +337,7 @@ const fetchReachStats = async () => {
             lineChartRef.current.data.datasets[0].data = progressiveLineData;
             
             // নিচের লাইনটি নিশ্চিত করে যে ফিউচার মাসের গ্যাপগুলো যেন কানেক্ট না হয়
-            lineChartRef.current.options.scales.y.suggestedMax = 100;
+            lineChartRef.current.options.scales.y.suggestedMax = 3000;
             lineChartRef.current.options.spanGaps = false;
             
             lineChartRef.current.update();
