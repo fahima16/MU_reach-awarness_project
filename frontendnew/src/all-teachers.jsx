@@ -447,17 +447,17 @@ const handleLogin = () => {
          
           <div className="t-card-info">
             <div className="t-name">{teacher.fullName}</div>
-            <div className="t-dept-badge">💻 {teacher.department} Department</div>
+            <div className="t-dept-badge">{teacher.department} Department</div>
           </div>
         </div>
 
 
         <div className="t-meta">
           <div className="t-meta-item">
-            <span className="t-meta-icon">📍</span> {teacher.district} District
+            <span className="t-meta-icon"></span> {teacher.district} District
           </div>
           <div className="t-meta-item">
-            <span className="t-meta-icon">⏱️</span> {teacher.experience} Years Exp.
+            <span className="t-meta-icon"></span> {teacher.experience} Years Exp.
           </div>
           <div className="t-meta-item">
             <span className="t-meta-icon"></span> {teacher.satisfactionLevel || 'Satisfied'}
@@ -506,12 +506,12 @@ const handleLogin = () => {
       </div>
 
 
-      <div className="t-card-footer">
+      {/*<div className="t-card-footer">
         <div className="t-joined">
           Joined MU · {teacher.createdAt ? new Date(teacher.createdAt).getFullYear() : '2026'}
         </div>
         <div className="t-arrow">↗</div>
-      </div>
+      </div>*/}
     </div>
   ))
 ) : (
