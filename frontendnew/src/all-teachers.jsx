@@ -1021,7 +1021,7 @@ const handleLogin = () => {
         }}
         required
       />
-      <span>✅ Yes</span>
+      <span>Yes</span>
     </label>
     <label className="radio-opt">
       <input
@@ -1034,7 +1034,7 @@ const handleLogin = () => {
           toggleHidden(true); // 'No' দিলে হিডেন ফিল্ড দেখাবে
         }}
       />
-      <span>❌ No</span>
+      <span>No</span>
     </label>
   </div>
 </div>
