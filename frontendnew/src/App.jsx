@@ -713,7 +713,9 @@ Dr Mohammad Jahirul Hoque</p>
             </a>
           </div>*/}
           <div className="btn-container">
-            <Link to="/all-teachers" className="know-more-btn">
+            <Link to="/all-teachers" 
+                onClick={()=>window.scrollTo(0,0)}
+                className="know-more-btn">
                 Know More — View All Faculty <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
@@ -805,7 +807,9 @@ Dr Mohammad Jahirul Hoque</p>
         {/*<a href="/all-alumni" className="view-all-link">
             View All Alumni <i className="fas fa-arrow-right"></i>
         </a>*/}
-        <Link to="/all-alumni" className="view-all-link">
+        <Link to="/all-alumni" 
+                onClick={()=>window.scrollTo(0,0)}
+                className="view-all-link">
                 View All Alumni <i className="fas fa-arrow-right"></i>
             </Link>
     </div>
