@@ -761,9 +761,9 @@ const handleLogin = () => {
     <label className="form-label">Department</label>
     <select
       className="form-select"
-      name="department" // ১. স্টেটের ভ্যারিয়েবল নামের সাথে মিল
-      value={regData.department} // ২. স্টেট থেকে ভ্যালু পড়া
-      onChange={handleInputChange} // ৩. সিলেক্ট করলে স্টেট আপডেট করা
+      name="department" 
+      value={regData.department} 
+      onChange={handleInputChange} 
       required
     >
       <option value="">Select Department</option>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-router-dom';
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
+import GlobalReachMap from "./components/GlobalReachMap";
 
 
 const AdminFeedbackPanel = () => {
@@ -656,10 +657,10 @@ useEffect(() => {
     </div>
 
     <div className="highlights-row">
-        <div className="h-item">✅ UGC Approved</div>
-        <div className="h-item">✅ Ranked Top University in Sylhet</div>
-        <div className="h-item">✅ 10,000+ Alumni Globally</div>
-        <div className="h-item">✅ Modern Research Facilities</div>
+        <div className="h-item">✔️ UGC Approved</div>
+        <div className="h-item">✔️ Ranked Top University in Sylhet</div>
+        <div className="h-item">✔️ 10,000+ Alumni Globally</div>
+        <div className="h-item">✔️ Modern Research Facilities</div>
     </div>
       </section>
 
@@ -678,7 +679,7 @@ useEffect(() => {
               <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>15+ Years</strong></div>
+                <div> Exp: <strong>15+ Years</strong></div>
               
               </div>
             </div>
@@ -689,7 +690,7 @@ useEffect(() => {
                  Board of Trustees</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -700,7 +701,7 @@ Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -817,9 +818,7 @@ Dr Mohammad Jahirul Hoque</p>
     padding: '80px 20px'  }}>
     <hr className="section-divider" />
 
-    <div className="map-top-image">
-        <img src="/newphoto.jpg" alt="Campus View" />
-    </div>
+    <GlobalReachMap />
 
     <div id="transportation" style ={{paddingTop: '10px' }}></div>
     <div className="map-guide-box">
