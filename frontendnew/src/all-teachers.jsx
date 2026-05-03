@@ -902,7 +902,7 @@ const handleLogin = () => {
               checked={Number(regData[item.name]) === num}
               onChange={(e) => setRegData({...regData, [item.name]: Number(e.target.value)})}
             />
-            <label htmlFor={`${item.name}-${num}`}>★</label>
+            <label htmlFor={`${item.name}-${num}`}></label>
           </React.Fragment>
         ))}
       </div>
@@ -1051,7 +1051,7 @@ const handleLogin = () => {
 {/* 'No' সিলেক্ট করলে এই ঘরটি আসবে */}
 <div className="hidden-field" id="hiddenField" style={{ display: regData.recommended ? 'none' : 'block' }}>
   <div className="form-group">
-    <div className="hidden-note">🔒 This response is private — only admin can view it</div>
+    <div className="hidden-note">This response is private — only admin can view it</div>
     <label className="form-label">Why not? (Admin only)</label>
     <textarea
       className="form-textarea"
@@ -1064,14 +1064,14 @@ const handleLogin = () => {
 </div>
                 <button type="submit" className="btn-submit">Submit Feedback →</button>
               </form>
-              <div className="success-msg" id="successMsg">✅ Thank you! Your feedback has been submitted and the dashboard has been updated.</div>
+              <div className="success-msg" id="successMsg">Thank you! Your feedback has been submitted and the dashboard has been updated.</div>
               {/* --- Teacher Page Admin Area --- */}
 <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
     <p 
         onClick={() => !isAdminAuth && setShowAdminLogin(!showAdminLogin)} 
         style={{ cursor: 'pointer', color: '#999', fontSize: '0.8rem' }}
     >
-        {isAdminAuth ? "✅ Admin View Active" : "🔒 Admin Access (For Complaints)"}
+        {isAdminAuth ? "Admin View Active" : " Admin Access (For Complaints)"}
     </p>
 
     {showAdminLogin && !isAdminAuth && (
@@ -1162,7 +1162,7 @@ const handleLogin = () => {
         <p className="sec-sub">Register to appear on our faculty showcase. Your profile will be visible to students and visitors automatically.</p>
        
         <div className="preview-card">
-          <div className="preview-label">✨ Your profile will look like this</div>
+          <div className="preview-label">Your profile will look like this</div>
           <div className="preview-card-top">
             <div className="preview-avatar">👤</div>
             <div>
