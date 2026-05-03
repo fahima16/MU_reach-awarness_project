@@ -1,0 +1,86 @@
+.safety-minimal-section {
+  width: 100%;
+  padding: 100px 0;
+  background-color: #f9f4f0; /* Soft beige from your reference image */
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+}
+
+.safety-minimal-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.safety-main-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+  color: #0c1520; /* Brand Navy */
+}
+
+.safety-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 50px;
+  color: #444;
+}
+
+.safety-list-wrapper {
+  border-top: 1.5px solid #d1ccc7;
+}
+
+.safety-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0;
+  border-bottom: 1.5px solid #d1ccc7;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.safety-list-item.no-click {
+  cursor: default;
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-title {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.item-detail {
+  font-size: 0.95rem;
+  color: #c8a951; /* Brand Gold */
+  font-weight: 600;
+}
+
+.item-arrow {
+  color: #e66b4d; /* Muted accent color */
+}
+
+.safety-footer {
+  margin-top: 50px;
+}
+
+.footer-link {
+  font-size: 1.4rem;
+  color: #e66b4d;
+  text-decoration: none;
+  border-bottom: 2px solid #e66b4d;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .safety-main-title { font-size: 2.5rem; }
+  .item-title { font-size: 1.1rem; }
+}
