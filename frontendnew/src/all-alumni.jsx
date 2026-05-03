@@ -100,15 +100,26 @@ const AllAlumni = () => {
                     </div>
                     <select onChange={(e) => setDept(e.target.value)} style={{ flex: '1', padding: '12px', borderRadius: '10px', background: '#101827', color: 'white' }}>
                         <option value="All">Department (All)</option>
-                        <option value="CSE">CSE</option>
-                        <option value="BBA">BBA</option>
-                        <option value="English">English</option>
+                     
+      <option value="CSE">CSE</option>
+      <option value="BBA">BBA</option>
+      <option value="Law">LL.B</option>
+      <option value="EEE">EEE</option>
+      <option value="Economics">Economics</option>
+      
+      <option value="ETE">ETE</option>
+      <option value="Data Science">Data Science</option>
+      <option value="SWE">SWE</option>
                     </select>
                     <select onChange={(e) => setCountry(e.target.value)} style={{ flex: '1', padding: '12px', borderRadius: '10px', background: '#101827', color: 'white' }}>
                         <option value="All">Country (All)</option>
                         <option value="USA">USA</option>
                         <option value="Canada">Canada</option>
                         <option value="Bangladesh">Bangladesh</option>
+                        <option value="UK">UK</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Other">Other</option>
                     </select>
                     <input 
                         type="number" 

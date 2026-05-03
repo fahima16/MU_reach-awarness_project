@@ -135,6 +135,7 @@ const handleLogin = () => {
   }, []);
   // রেজিস্ট্রেশন ফর্মের জন্য স্টেট
   const [teachers, setTeachers]=useState([]);
+  const [loading, setLoading] = useState(true);
   const [regData, setRegData] = useState({
     fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '', bio: '', recommended: 'true',
     whyNoMessage: '', satisfactionLevel: '',
@@ -228,7 +229,8 @@ const handleLogin = () => {
 
 
   // ৩. ফটো (Image 9 এ photoUrl নামে আছে)
-  if(photo) formData.append('photo', photo);
+  //if(photo) formData.append('photo', photo);
+  formData.append('photoUrl', regData.photoUrl);
 
 
   try {
@@ -432,7 +434,8 @@ const handleLogin = () => {
             {teacher.photoUrl ? (
               <img
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                //src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                src={teacher.photoUrl}
                 alt={teacher.fullName}
                 className="t-avatar"
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
@@ -761,16 +764,21 @@ const handleLogin = () => {
     <label className="form-label">Department</label>
     <select
       className="form-select"
-      name="department" // ১. স্টেটের ভ্যারিয়েবল নামের সাথে মিল
-      value={regData.department} // ২. স্টেট থেকে ভ্যালু পড়া
-      onChange={handleInputChange} // ৩. সিলেক্ট করলে স্টেট আপডেট করা
+      name="department" 
+      value={regData.department} 
+      onChange={handleInputChange} 
       required
     >
       <option value="">Select Department</option>
       <option value="CSE">CSE</option>
       <option value="BBA">BBA</option>
-      <option value="Law">Law</option>
+      <option value="Law">LL.B</option>
       <option value="EEE">EEE</option>
+      <option value="Economics">Economics</option>
+      
+      <option value="ETE">ETE</option>
+      <option value="Data Science">Data Science</option>
+      <option value="SWE">SWE</option>
 
 
       <option value="English">English</option>
@@ -894,7 +902,7 @@ const handleLogin = () => {
               checked={Number(regData[item.name]) === num}
               onChange={(e) => setRegData({...regData, [item.name]: Number(e.target.value)})}
             />
-            <label htmlFor={`${item.name}-${num}`}>★</label>
+            <label htmlFor={`${item.name}-${num}`}></label>
           </React.Fragment>
         ))}
       </div>
@@ -1043,7 +1051,7 @@ const handleLogin = () => {
 {/* 'No' সিলেক্ট করলে এই ঘরটি আসবে */}
 <div className="hidden-field" id="hiddenField" style={{ display: regData.recommended ? 'none' : 'block' }}>
   <div className="form-group">
-    <div className="hidden-note">🔒 This response is private — only admin can view it</div>
+    <div className="hidden-note">This response is private — only admin can view it</div>
     <label className="form-label">Why not? (Admin only)</label>
     <textarea
       className="form-textarea"
@@ -1056,14 +1064,14 @@ const handleLogin = () => {
 </div>
                 <button type="submit" className="btn-submit">Submit Feedback →</button>
               </form>
-              <div className="success-msg" id="successMsg">✅ Thank you! Your feedback has been submitted and the dashboard has been updated.</div>
+              <div className="success-msg" id="successMsg">Thank you! Your feedback has been submitted and the dashboard has been updated.</div>
               {/* --- Teacher Page Admin Area --- */}
 <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
     <p 
         onClick={() => !isAdminAuth && setShowAdminLogin(!showAdminLogin)} 
         style={{ cursor: 'pointer', color: '#999', fontSize: '0.8rem' }}
     >
-        {isAdminAuth ? "✅ Admin View Active" : "🔒 Admin Access (For Complaints)"}
+        {isAdminAuth ? "Admin View Active" : " Admin Access (For Complaints)"}
     </p>
 
     {showAdminLogin && !isAdminAuth && (
@@ -1154,7 +1162,7 @@ const handleLogin = () => {
         <p className="sec-sub">Register to appear on our faculty showcase. Your profile will be visible to students and visitors automatically.</p>
        
         <div className="preview-card">
-          <div className="preview-label">✨ Your profile will look like this</div>
+          <div className="preview-label">Your profile will look like this</div>
           <div className="preview-card-top">
             <div className="preview-avatar">👤</div>
             <div>
@@ -1255,16 +1263,18 @@ const handleLogin = () => {
         onChange={handleInputChange}
         required
       >
-        <option value="">Select</option>
-        <option value="CSE">CSE</option>
-        <option value="BBA">BBA</option>
-        <option value="Law">Law</option>
-        <option value="EEE">EEE</option>
-        <option value="Pharmacy">Pharmacy</option>
-        <option value="Architecture">Architecture</option>
-        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="">Select Department</option>
+      <option value="CSE">CSE</option>
+      <option value="BBA">BBA</option>
+      <option value="Law">LL.B</option>
+      <option value="EEE">EEE</option>
+      <option value="Economics">Economics</option>
+      
+      <option value="ETE">ETE</option>
+      <option value="Data Science">Data Science</option>
+      <option value="SWE">SWE</option>
         <option value="English">English</option>
-        <option value="Biotechnology">Biotechnology</option>
+       
       </select>
     </div>
 
@@ -1339,7 +1349,7 @@ const handleLogin = () => {
 
 
   {/* Photo Upload Field */}
-  <div className="form-group">
+  {/*<div className="form-group">
     <label className="form-label">Upload Photo</label>
     <input
       type="file"
@@ -1348,7 +1358,20 @@ const handleLogin = () => {
       style={{ padding: '0.65rem 1rem' }}
       onChange={(e) => setPhoto(e.target.files[0])}
     />
-  </div>
+  </div>*/}
+  {/* Photo URL Input Field */}
+<div className="form-group">
+  <label className="form-label">Profile Photo URL</label>
+  <input
+    type="url"
+    name="photoUrl" // তোমার মডেল এবং handleChange এর সাথে মিল রেখে
+    className="form-input"
+    placeholder="Paste image link (e.g. ImgBB or Cloudinary link)"
+    style={{ padding: '0.65rem 1rem' }}
+    value={regData.photoUrl} // তোমার স্টেট ভেরিয়েবল
+    onChange={handleInputChange} // তোমার সাধারণ handleChange ফাংশন
+  />
+</div>
 
 
  
