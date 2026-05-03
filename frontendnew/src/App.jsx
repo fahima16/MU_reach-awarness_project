@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
 import GlobalReachMap from "./components/GlobalReachMap";
+import SafetyMedicalHub from "./components/SafetyMedicalHub";
 
 
 const AdminFeedbackPanel = () => {
@@ -840,6 +841,8 @@ Dr Mohammad Jahirul Hoque</p>
     </div>
 </div>
 
+ 
+
 {/* Modal Fix: Eita ensure korbe jeno kalo aboron na ashe */}
 {showModal && (
     <div className="mu-modal" style={{ display: 'flex', position: 'fixed', zIndex: 9999, top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.9)', alignItems: 'center', justifyContent: 'center' }} onClick={closeMUVideo}>
@@ -975,8 +978,11 @@ Dr Mohammad Jahirul Hoque</p>
     marginTop: '50px',
     border: '1px solid #eee'
 }}>
+
+     <SafetyMedicalHub />
    
     <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
+    
       
      <img src="cartoon.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
        </div>
@@ -1037,7 +1043,10 @@ Dr Mohammad Jahirul Hoque</p>
         
        </div>
     </div>
+
+    
     {/*</div>*/}
+       
         
        <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
     {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}

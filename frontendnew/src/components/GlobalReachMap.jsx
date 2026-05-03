@@ -5,7 +5,7 @@ import './GlobalReachMap.css';
 const GlobalReachMap = () => {
   const mapImage = "https://cdn.pixabay.com/photo/2013/07/12/12/54/world-map-146505_1280.png";
 
-  const mapVariants = {
+ const mapVariants = {
     initial: { 
       scale: 1, 
       x: "0%", 
@@ -13,14 +13,17 @@ const GlobalReachMap = () => {
       opacity: 0.5 
     },
     zoom: { 
-      scale: 0.8,        // ম্যাপ বড় দেখানোর জন্য এটি ১ এর বেশি হতে হবে
-      x: "-2%",       // সিলেটকে মাঝখানে আনার জন্য
+      scale: 0.7,        
+      x: "-2%",      
       y: "-5%", 
-      opacity: 1,      // অপাসিটি সর্বোচ্চ ১ হয়
-      transition: { duration: 5, ease: [0.45, 0.05, 0.55, 0.95], delay: 0.2 }
+      opacity: 1,      
+      transition: { 
+        duration: 1.8, // Reduced from 3 to 0.8 seconds
+        ease: "easeOut", // Snappier finish
+        delay: 0.2 // Removed delay for instant reaction
+      }
     }
-  };
-
+};
   return (
     <div className="global-reach-viewport white-theme"> 
       <div className="particles-container"></div>
@@ -53,7 +56,7 @@ const GlobalReachMap = () => {
             className="sylhet-label"
             initial={{ opacity: 0, y: 5 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 4.8 }}
+            transition={{ delay: 1 }}
           >
             SYLHET
           </motion.span>
@@ -65,7 +68,7 @@ const GlobalReachMap = () => {
           className="mu-elegant-title"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 5 }}
+          transition={{ delay: 2.1 }}
         >
           Metropolitan University
         </motion.h2>
@@ -73,7 +76,7 @@ const GlobalReachMap = () => {
           className="mu-location-subtitle"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ delay: 5.2 }}
+          transition={{ delay: 1 }}
         >
           SYLHET, BANGLADESH
         </motion.p>
