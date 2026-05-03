@@ -160,7 +160,7 @@ const handleLogin = () => {
     try {
 
 
-      const response = await axios.get('hhttps://mu-reach-awarness-project.onrender.com/api/teachers');
+      const response = await axios.get('https://mu-reach-awarness-project.onrender.com/api/teachers');
 
 
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
