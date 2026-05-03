@@ -135,6 +135,7 @@ const handleLogin = () => {
   }, []);
   // রেজিস্ট্রেশন ফর্মের জন্য স্টেট
   const [teachers, setTeachers]=useState([]);
+  const [loading, setLoading] = useState(true);
   const [regData, setRegData] = useState({
     fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '', bio: '', recommended: 'true',
     whyNoMessage: '', satisfactionLevel: '',
@@ -228,7 +229,8 @@ const handleLogin = () => {
 
 
   // ৩. ফটো (Image 9 এ photoUrl নামে আছে)
-  if(photo) formData.append('photo', photo);
+  //if(photo) formData.append('photo', photo);
+  formData.append('photoUrl', regData.photoUrl);
 
 
   try {
@@ -432,7 +434,8 @@ const handleLogin = () => {
             {teacher.photoUrl ? (
               <img
                 /* ইমেজের সোর্সেও ব্যাকটিক্স (`) দিতে হবে */
-                src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                //src={`https://mu-reach-awarness-project.onrender.com/${teacher.photoUrl?.replace(/\\/g, '/')}`}
+                src={teacher.photoUrl}
                 alt={teacher.fullName}
                 className="t-avatar"
                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
@@ -1339,7 +1342,7 @@ const handleLogin = () => {
 
 
   {/* Photo Upload Field */}
-  <div className="form-group">
+  {/*<div className="form-group">
     <label className="form-label">Upload Photo</label>
     <input
       type="file"
@@ -1348,7 +1351,20 @@ const handleLogin = () => {
       style={{ padding: '0.65rem 1rem' }}
       onChange={(e) => setPhoto(e.target.files[0])}
     />
-  </div>
+  </div>*/}
+  {/* Photo URL Input Field */}
+<div className="form-group">
+  <label className="form-label">Profile Photo URL</label>
+  <input
+    type="url"
+    name="photoUrl" // তোমার মডেল এবং handleChange এর সাথে মিল রেখে
+    className="form-input"
+    placeholder="Paste image link (e.g. ImgBB or Cloudinary link)"
+    style={{ padding: '0.65rem 1rem' }}
+    value={regData.photoUrl} // তোমার স্টেট ভেরিয়েবল
+    onChange={handleInputChange} // তোমার সাধারণ handleChange ফাংশন
+  />
+</div>
 
 
  
