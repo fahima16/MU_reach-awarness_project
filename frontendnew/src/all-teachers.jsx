@@ -160,7 +160,7 @@ const handleLogin = () => {
     try {
 
 
-      const response = await axios.get('http://localhost:5000/api/teachers');
+      const response = await axios.get('hhttps://mu-reach-awarness-project.onrender.com/api/teachers');
 
 
 // কনসোলে চেক করো ডাটা আসলে কী ফরম্যাটে আসছে
@@ -234,7 +234,7 @@ const handleLogin = () => {
 
 
   try {
-      const response = await axios.post('http://localhost:5000/api/teachers/register', formData, {
+      const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
