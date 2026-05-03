@@ -764,16 +764,21 @@ const handleLogin = () => {
     <label className="form-label">Department</label>
     <select
       className="form-select"
-      name="department" // ১. স্টেটের ভ্যারিয়েবল নামের সাথে মিল
-      value={regData.department} // ২. স্টেট থেকে ভ্যালু পড়া
-      onChange={handleInputChange} // ৩. সিলেক্ট করলে স্টেট আপডেট করা
+      name="department" 
+      value={regData.department} 
+      onChange={handleInputChange} 
       required
     >
       <option value="">Select Department</option>
       <option value="CSE">CSE</option>
       <option value="BBA">BBA</option>
-      <option value="Law">Law</option>
+      <option value="Law">LL.B</option>
       <option value="EEE">EEE</option>
+      <option value="Economics">Economics</option>
+      
+      <option value="ETE">ETE</option>
+      <option value="Data Science">Data Science</option>
+      <option value="SWE">SWE</option>
 
 
       <option value="English">English</option>
@@ -1258,16 +1263,18 @@ const handleLogin = () => {
         onChange={handleInputChange}
         required
       >
-        <option value="">Select</option>
-        <option value="CSE">CSE</option>
-        <option value="BBA">BBA</option>
-        <option value="Law">Law</option>
-        <option value="EEE">EEE</option>
-        <option value="Pharmacy">Pharmacy</option>
-        <option value="Architecture">Architecture</option>
-        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="">Select Department</option>
+      <option value="CSE">CSE</option>
+      <option value="BBA">BBA</option>
+      <option value="Law">LL.B</option>
+      <option value="EEE">EEE</option>
+      <option value="Economics">Economics</option>
+      
+      <option value="ETE">ETE</option>
+      <option value="Data Science">Data Science</option>
+      <option value="SWE">SWE</option>
         <option value="English">English</option>
-        <option value="Biotechnology">Biotechnology</option>
+       
       </select>
     </div>
 

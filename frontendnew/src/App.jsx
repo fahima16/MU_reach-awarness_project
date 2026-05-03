@@ -4,6 +4,8 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-router-dom';
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
+import GlobalReachMap from "./components/GlobalReachMap";
+import SafetyMedicalHub from "./components/SafetyMedicalHub";
 
 
 const AdminFeedbackPanel = () => {
@@ -656,10 +658,10 @@ useEffect(() => {
     </div>
 
     <div className="highlights-row">
-        <div className="h-item">✅ UGC Approved</div>
-        <div className="h-item">✅ Ranked Top University in Sylhet</div>
-        <div className="h-item">✅ 10,000+ Alumni Globally</div>
-        <div className="h-item">✅ Modern Research Facilities</div>
+        <div className="h-item">✔️ UGC Approved</div>
+        <div className="h-item">✔️ Ranked Top University in Sylhet</div>
+        <div className="h-item">✔️ 10,000+ Alumni Globally</div>
+        <div className="h-item">✔️ Modern Research Facilities</div>
     </div>
       </section>
 
@@ -678,7 +680,7 @@ useEffect(() => {
               <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>15+ Years</strong></div>
+                <div> Exp: <strong>15+ Years</strong></div>
               
               </div>
             </div>
@@ -689,7 +691,7 @@ useEffect(() => {
                  Board of Trustees</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -700,7 +702,7 @@ Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -821,9 +823,7 @@ Dr Mohammad Jahirul Hoque</p>
     padding: '80px 20px'  }}>
     <hr className="section-divider" />
 
-    <div className="map-top-image">
-        <img src="/newphoto.jpg" alt="Campus View" />
-    </div>
+    <GlobalReachMap />
 
     <div id="transportation" style ={{paddingTop: '10px' }}></div>
     <div className="map-guide-box">
@@ -844,6 +844,8 @@ Dr Mohammad Jahirul Hoque</p>
         <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 495, 1100, 'Hanif / SR Travels')}>Rangpur</button>
     </div>
 </div>
+
+ 
 
 {/* Modal Fix: Eita ensure korbe jeno kalo aboron na ashe */}
 {showModal && (
@@ -980,8 +982,11 @@ Dr Mohammad Jahirul Hoque</p>
     marginTop: '50px',
     border: '1px solid #eee'
 }}>
+
+     <SafetyMedicalHub />
    
     <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
+    
       
      <img src="cartoon.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
        </div>
@@ -1042,7 +1047,10 @@ Dr Mohammad Jahirul Hoque</p>
         
        </div>
     </div>
+
+    
     {/*</div>*/}
+       
         
        <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
     {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
