@@ -4,8 +4,12 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation} from 'react-router-dom';
 import AllAlumni from './all-alumni';
 import AllTeachers from './all-teachers';
+import GlobalReachMap from "./components/GlobalReachMap";
+import SafetyMedicalHub from "./components/SafetyMedicalHub";
+
 
 const AdminFeedbackPanel = () => {
+  
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
@@ -335,7 +339,7 @@ const fetchReachStats = async () => {
             lineChartRef.current.data.datasets[0].data = progressiveLineData;
             
             // নিচের লাইনটি নিশ্চিত করে যে ফিউচার মাসের গ্যাপগুলো যেন কানেক্ট না হয়
-            lineChartRef.current.options.scales.y.suggestedMax = 10;
+            lineChartRef.current.options.scales.y.suggestedMax = 3000;
             lineChartRef.current.options.spanGaps = false;
             
             lineChartRef.current.update();
@@ -524,7 +528,7 @@ useEffect(() => {
     <div className="container">
       {/* Welcome Section */}   
       <section>
-        <h3 className="sec-title">Welcome to Metropolitan University</h3>
+        <h3 className="sec--title">Welcome to Metropolitan University</h3>
         <div className="article-content">
           <img src="photo8.jpeg" alt="Welcome to MU" className="wrapped-photo" />
           <p>
@@ -538,7 +542,7 @@ useEffect(() => {
 
       {/* Campus Spotlight Section */}
       <aside>
-        <h3 className="sec-title">Campus Spotlight 📰</h3>
+        <h3 className="sec--title">Campus Spotlight 📰</h3>
         <div className="article-content">
           <img src="photo9.jpeg" alt="Campus Spotlight" className="wrapped-photo" />
           <p>
@@ -551,7 +555,7 @@ useEffect(() => {
       </aside>
 
       <section>
-        <h3 className="sec-title">Architects of Academic Excellence</h3>
+        <h3 className="sec--title">Architects of Academic Excellence</h3>
         <div className="article-content">
           <img src="photo13.jpeg" alt="Welcome to MU" className="wrapped-photo" />
           <p>
@@ -564,7 +568,7 @@ useEffect(() => {
       </section>
 
        <aside>
-        <h3 className="sec-title">MU Cafetaria 📰</h3>
+        <h3 className="sec--title">MU Cafetaria 📰</h3>
         <div className="article-content">
           <img src="Photo12.jpeg" alt="Campus Spotlight" className="wrapped-photo" />
           <p>
@@ -641,23 +645,23 @@ useEffect(() => {
         </div>
         
         <div className="milestone-card purple">
-            <span className="m-icon">📍</span>
+            <span className="m-icon">🌐</span>
             <h3>Global</h3>
             <p>Alumni Network</p>
         </div>
         
         <div className="milestone-card gold">
-            <span className="m-icon">🏅</span>
+            <span className="m-icon">🎖️</span>
             <h3>1st</h3>
             <p>Permanent Charter in Sylhet</p>
         </div>
     </div>
 
     <div className="highlights-row">
-        <div className="h-item">✅ UGC Approved</div>
-        <div className="h-item">✅ Ranked Top University in Sylhet</div>
-        <div className="h-item">✅ 10,000+ Alumni Globally</div>
-        <div className="h-item">✅ Modern Research Facilities</div>
+        <div className="h-item">✔️ UGC Approved</div>
+        <div className="h-item">✔️ Ranked Top University in Sylhet</div>
+        <div className="h-item">✔️ 10,000+ Alumni Globally</div>
+        <div className="h-item">✔️ Modern Research Facilities</div>
     </div>
       </section>
 
@@ -676,7 +680,7 @@ useEffect(() => {
               <h3 className="leader-name">Founder & Chairman</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>15+ Years</strong></div>
+                <div> Exp: <strong>15+ Years</strong></div>
               
               </div>
             </div>
@@ -687,7 +691,7 @@ useEffect(() => {
                  Board of Trustees</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -698,7 +702,7 @@ Dr Mohammad Jahirul Hoque</p>
               <h3 className="leader-name"> Vice Chancellor</h3>
               <div className="leader-info">
                 <div> Region: <strong>Sylhet</strong></div>
-                <div>⏱ Exp: <strong>10+ Years</strong></div>
+                <div>Exp: <strong>10+ Years</strong></div>
           
               </div>
             </div>
@@ -709,7 +713,9 @@ Dr Mohammad Jahirul Hoque</p>
             </a>
           </div>*/}
           <div className="btn-container">
-            <Link to="/all-teachers" className="know-more-btn">
+            <Link to="/all-teachers" 
+                onClick={()=>window.scrollTo(0,0)}
+                className="know-more-btn">
                 Know More — View All Faculty <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
@@ -801,7 +807,9 @@ Dr Mohammad Jahirul Hoque</p>
         {/*<a href="/all-alumni" className="view-all-link">
             View All Alumni <i className="fas fa-arrow-right"></i>
         </a>*/}
-        <Link to="/all-alumni" className="view-all-link">
+        <Link to="/all-alumni" 
+                onClick={()=>window.scrollTo(0,0)}
+                className="view-all-link">
                 View All Alumni <i className="fas fa-arrow-right"></i>
             </Link>
     </div>
@@ -815,9 +823,7 @@ Dr Mohammad Jahirul Hoque</p>
     padding: '80px 20px'  }}>
     <hr className="section-divider" />
 
-    <div className="map-top-image">
-        <img src="/newphoto.jpg" alt="Campus View" />
-    </div>
+    <GlobalReachMap />
 
     <div id="transportation" style ={{paddingTop: '10px' }}></div>
     <div className="map-guide-box">
@@ -838,6 +844,8 @@ Dr Mohammad Jahirul Hoque</p>
         <button className="city-btn" onClick={() => handleShowJourney('Rangpur', 495, 1100, 'Hanif / SR Travels')}>Rangpur</button>
     </div>
 </div>
+
+ 
 
 {/* Modal Fix: Eita ensure korbe jeno kalo aboron na ashe */}
 {showModal && (
@@ -974,8 +982,11 @@ Dr Mohammad Jahirul Hoque</p>
     marginTop: '50px',
     border: '1px solid #eee'
 }}>
+
+     <SafetyMedicalHub />
    
     <div className="banner-left" style={{ flex: '1', minWidth: '300px' }}>
+    
       
      <img src="cartoon.jpg" alt="MU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
        </div>
@@ -1036,7 +1047,10 @@ Dr Mohammad Jahirul Hoque</p>
         
        </div>
     </div>
+
+    
     {/*</div>*/}
+       
         
        <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
     {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
@@ -1090,9 +1104,9 @@ Dr Mohammad Jahirul Hoque</p>
         </a>
       </div>
       {/*<div className="mini-card-white"><span>🚌</span><h5>Transport</h5><p>Schedules</p></div>*/}
-      <div className="mini-card-white"><span>🚌</span><h5>Transport</h5>
+      <div className="mini-card-white"><span>🚌</span><h5>Regional</h5>
           <a href = "#transportation" className="plain-link">
-          Schedules
+          Support
         </a>
       </div>
       {/*<div className="mini-card-white"><span>📞</span><h5>Call Us</h5><p>+880 1313-05</p></div>*/}
@@ -1115,7 +1129,11 @@ Dr Mohammad Jahirul Hoque</p>
           </a>
       </div>
 
-      <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>
+      {/*<div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5><p>Fees & Funding</p></div>*/}
+      <div className="mini-card-white"><span>💰</span><h5>Campus Costing</h5>
+        <a href = "https://i.postimg.cc/sgXs5XR8/uni.jpg" target="_blank" rel="noreferrer" className="plain-link"> Schedule
+        </a>
+      </div>
       {/*<div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5><p>Our Presence</p></div>*/}
       <div className="mini-card-white"><span>🇧🇩</span><h5>MU Across BD</h5>
         <a href = "#reach-dashboard" className="plain-link">
@@ -1123,8 +1141,8 @@ Dr Mohammad Jahirul Hoque</p>
         </a>
       </div>
       {/*<div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5><p>Collaborations</p></div>*/}
-      <div className="mini-card-white"><span>🤝</span><h5>Partnerships</h5>
-          <a href = "https://www.metrouni.edu.bd/" target="_blank" rel="noreferrer" className="plain-link"> Collaboration
+      <div className="mini-card-white"><span>🤝</span><h5>Transport</h5>
+          <a href = "https://bus-voyage.vercel.app/" target="_blank" rel="noreferrer" className="plain-link"> Schedule
         </a>
       </div>
 

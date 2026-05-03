@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Teacher = require('../models/all-teachers');
-const multer = require('multer');
+//const multer = require('multer');
 
 // ছবি সেভ করার জন্য সাধারণ মেমোরি স্টোরেজ (যাতে এরর না আসে)
 //const upload = multer({ dest: 'uploads/' });
@@ -11,7 +11,7 @@ const multer = require('multer');
 const path = require('path');
 
 // ছবির এক্সটেনশনসহ সেভ করার জন্য স্টোরেজ ইঞ্জিন
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); // ফোল্ডার নাম
   },
@@ -22,11 +22,11 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });*/
 
 // ১. ইমেজ ১ ও ৪ কানেক্টেড রুট: রেজিস্ট্রেশন এবং ফিডব্যাক
 // এই একটি রুট দিয়েই টিচার রেজিস্ট্রেশন হবে এবং পরে ফিডব্যাক দিলে ওই আইডিতেই আপডেট হবে
-router.post('/register', upload.single('photo'), async (req, res) => {
+{/*router.post('/register', upload.single('photo'), async (req, res) => {
     try {
         console.log("Input Data:", req.body); // টার্মিনালে ডাটা আসছে কি না চেক করো
         const { employeeId } = req.body;
@@ -35,8 +35,8 @@ router.post('/register', upload.single('photo'), async (req, res) => {
             return res.status(400).json({ success: false, error: "Employee ID is missing!" });
         }
         const updateData={...req.body,
-            /*isUrgent: req.body.whyNoMessage ? true : false,*/
-            ratings:{
+            /*isUrgent: req.body.whyNoMessage ? true : false,*/}
+            {/*ratings:{
             academicEngagement: Number(req.body.academicEngagement) || 0,
             classroomBehavior: Number(req.body.classroomBehavior) || 0,
             resourceUtilization: Number(req.body.resourceUtilization) || 0,
@@ -46,6 +46,41 @@ router.post('/register', upload.single('photo'), async (req, res) => {
         if(req.file){
             updateData.photoUrl=`uploads/${req.file.filename}`;
         }
+
+        const teacher = await Teacher.findOneAndUpdate(
+            { employeeId: employeeId },
+            { $set: updateData }, 
+            { new: true, upsert: true }
+        );
+
+        res.status(200).json({ success: true, data: teacher });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});*/}
+
+router.post('/register', async (req, res) => {
+    try {
+        console.log("Input Data:", req.body); 
+        const { employeeId, photoUrl } = req.body; // সরাসরি বডি থেকে photoUrl নিবে
+
+        if (!employeeId) {
+            return res.status(400).json({ success: false, error: "Employee ID is missing!" });
+        }
+
+        const updateData = {
+            ...req.body,
+            // যদি ইউজার লিঙ্ক দেয় তবে সেটি সেভ হবে, নাহলে আগেরটি থাকবে
+            /*photoUrl: photoUrl || undefined,*/ 
+            photoUrl: photoUrl && photoUrl.trim() !== "" ? photoUrl : undefined,
+            ratings: {
+                academicEngagement: Number(req.body.academicEngagement) || 0,
+                classroomBehavior: Number(req.body.classroomBehavior) || 0,
+                resourceUtilization: Number(req.body.resourceUtilization) || 0,
+                punctuality: Number(req.body.punctuality) || 0,
+                studentParticipation: Number(req.body.studentParticipation) || 0
+            }
+        };
 
         const teacher = await Teacher.findOneAndUpdate(
             { employeeId: employeeId },
