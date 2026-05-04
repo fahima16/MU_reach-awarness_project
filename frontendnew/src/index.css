@@ -1696,8 +1696,8 @@ html {
   /* --- এই অংশটি ঠিক করা হয়েছে --- */
   .hero-caption {
     position: absolute !important;
-    bottom: 20px !important;
-    right: 15px !important; /* ডানপাশে সরিয়ে নেয়া হলো */
+    bottom: 10px !important;
+    right: 10px !important; /* ডানপাশে সরিয়ে নেয়া হলো */
     left: auto !important;  /* বামের সব পজিশন বাতিল */
     background: rgba(200, 169, 81, 0.95) !important;
     padding: 0 0 !important;
