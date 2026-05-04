@@ -730,16 +730,10 @@ const submitReg = async (e) => {
 
           <div className="map-grid reveal">
             <div className="map-visual">
-              <div className="map-placeholder-icon">🗺️</div>
-              <div className="map-placeholder-text">Interactive Bangladesh Map</div>
-              <div className="map-placeholder-sub">
-                Leaflet.js map renders here — showing teacher districts
-              </div>
-              <div className="map-dots">
-                {[...Array(12)].map((_, i) => (
-                  <div key={i} className="map-dot"></div>
-                ))}
-              </div>
+              <img src="/photo18.jpeg" alt="Bangladesh Map" className="map-img" 
+              style={{ display: 'block', maxWidth: '100%' }}
+              />
+              
             </div>
 
 

@@ -1640,91 +1640,87 @@ html {
   nav {
     display: flex !important;
     flex-direction: row !important;
-    flex-wrap: nowrap !important; /* কোনোভাবেই নিচের লাইনে নামতে দিবে না */
+    flex-wrap: nowrap !important;
     justify-content: space-between !important;
     align-items: center !important;
     padding: 10px 5px !important;
     gap: 2px !important;
   }
+
   .nav-logo, .logo-text {
     font-size: 12px !important;
     white-space: nowrap;
   }
-  /*aita picture boro korche*/
+
   .nav-links, .nav-center {
     display: flex !important;
-    gap: 4px !important; /* আইটেমগুলোর মাঝখানের গ্যাপ একদম কমিয়ে দিলাম */
+    gap: 4px !important;
   }
-   .nav-link {
-    font-size: 9px !important; /* ফন্ট ছোট করা ছাড়া উপায় নেই */
+
+  .nav-link {
+    font-size: 9px !important;
     padding: 2px !important;
     text-transform: uppercase;
   }
+
   .share-btn {
     padding: 4px 6px !important;
     font-size: 9px !important;
     min-width: fit-content !important;
     margin: 0 !important;
   }
+
   #home-section {
-    margin-top: -10px !important; /* নেভিবার থেকে দূরত্ব */
+    margin-top: -10px !important;
     padding-top: 0;
   }
-  .hero {
-   height:260px!important; 
-   /*min-height: 0 !important; */
-   /*min-height: 260px !important; /* এটি নিশ্চিত করবে সেকশনটি জিরো হবে না */     
 
+  .hero {
+    height: 260px !important;
     position: relative !important;
-    display: block !important; /* ফ্লেক্সবক্স সরিয়ে ব্লক দিলাম যাতে ইমেজ আর বক্স আলাদা থাকে */
-}
-  
-  
+    display: block !important;
+  }
+
   .hero-image {
     width: 100% !important;
     height: 100% !important;
     display: block !important;
     margin: 0 !important;
-
-    object-fit: cover !important; 
-    position: relative !important; /* নতুন যোগ করো */
+    object-fit: cover !important;
+    /* বিল্ডিং যেন ডানপাশে দেখা যায় */
+    object-position: right !important; 
+    position: relative !important;
     z-index: 1 !important;
-    /*object-position: center !important; 
-    min-height: 260px !important; 
-    visibility: visible !important;*/
-}
+  }
 
+  /* --- এই অংশটি ঠিক করা হয়েছে --- */
   .hero-caption {
-    position: absolute !important; /* ইমেজের ওপর ভাসানোর জন্য */
-    bottom: 20px !important; /* নিচে থেকে ২০ পিক্সেল উপরে */
-    right: 10px !important; /* ডান দিক থেকে ১৫ পিক্সেল ভেতরে (ল্যাপটপের মতো) */
-    background: rgba(200, 169, 81, 0.95) !important; /* তোমার গোল্ডেন কালার */
-    padding: 0px 10px !important; /* ছোট বক্সের জন্য কম প্যাডিং */
-    width: 35% !important; /* বক্সটা ছোট করে দিলাম যাতে পুরো স্ক্রিন না নেয় */
-    max-width: 200px !important; /* খুব বেশি বড় যাতে না হয় */
-    text-align: left !important; /* লেখা বাম দিক থেকে শুরু হবে */
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 15px !important; /* ডানপাশে সরিয়ে নেয়া হলো */
+    left: auto !important;  /* বামের সব পজিশন বাতিল */
+    background: rgba(200, 169, 81, 0.95) !important;
+    padding: 0 0 !important;
+    width: 35% !important;
+    max-width: 150px !important;
+    text-align: left !important;
     transform: none !important;
-    left: auto !important;
     border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 30;
-    .hero-caption {
-    z-index: 20 !important; /* ইমেজ যাতে লেখার ওপর না চলে আসে */
-}
-}
-.hero-caption h2 {
-    font-size: 1rem !important; /* টাইটেল ছোট */
+    z-index: 99 !important; /* যাতে এটি ইমেজের ওপর থাকে */
+  }
+
+  .hero-caption h2 {
+    font-size: 1rem !important;
     margin: 0 !important;
     color: #001f3f !important;
     font-weight: bold;
-}
-.hero-caption p {
-    font-size: 0.5rem !important; /* প্যারাগ্রাফ একদম ছোট */
+  }
+
+  .hero-caption p {
+    font-size: 0.5rem !important;
     margin: 5px 0 0 5px !important;
     color: #001f3f !important;
     line-height: 1.5;
-}
-  
-
-
+  }
 }

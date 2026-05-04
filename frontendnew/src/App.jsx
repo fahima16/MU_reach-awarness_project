@@ -1053,11 +1053,28 @@ Dr Mohammad Jahirul Hoque</p>
        
         
        <div className="life-mu-container" style={{ marginTop: '30px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
-    {/* marginBottom: '40px' যোগ করা হয়েছে গ্যাপ তৈরি করার জন্য */}
-    <h2 style={{ textAlign: 'center', color: '#001f3f', fontSize: '2.5rem', marginBottom: '40px' }}>
+    {/* ফন্ট ফ্যামিলি, ওয়েট এবং লেটার স্পেসিং পরিবর্তন করা হয়েছে */}
+    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+    <h2 style={{ 
+        color: '#001f3f', 
+        fontSize: '2.8rem', 
+        marginBottom: '10px', // লাইনটি টেক্সটের কাছাকাছি রাখার জন্য মার্জিন কমিয়ে দিলাম
+        fontFamily: "'Playfair Display', serif", 
+        fontWeight: 'bold',
+        letterSpacing: '2px'
+    }}>
         Life at MU
     </h2>
     
+    {/* ১ম ছবির সেই স্টাইলিশ লাইন */}
+    <div style={{
+        width: '80px',            // লাইনের দৈর্ঘ্য
+        height: '3px',            // লাইনের পুরুত্ব
+        background: 'linear-gradient(to right, transparent, #c8a951, transparent)', // দুই পাশে হালকা হয়ে মাঝখানে সোনালী
+        margin: '0 auto',         // সেন্টার করার জন্য
+        borderRadius: '2px'
+    }}></div>
+</div>
     <div className="life-video-grid">
         <div className="mu-video-card" onClick={() => openMUVideo('/modern campus.mp4')}>
             <img src="/modern campus.jpeg" alt="Modern Campus" />
@@ -1073,7 +1090,7 @@ Dr Mohammad Jahirul Hoque</p>
             <div className="mu-video-overlay"><h3>Evening Views</h3></div>
         </div>
         <div className="mu-video-card" onClick={() => openMUVideo('/academic building.mp4')}>
-            <img src="/academing photo.jpeg" alt="Academic Buildings" />
+            <img src="/photo19.jpeg" alt="Academic Buildings" />
             <div className="mu-video-overlay"><h3>Academic Buildings</h3></div>
         </div>
     </div>
