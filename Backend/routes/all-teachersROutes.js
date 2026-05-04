@@ -4,7 +4,7 @@ const Teacher = require('../models/all-teachers');
 //const multer = require('multer');
 
 // ছবি সেভ করার জন্য সাধারণ মেমোরি স্টোরেজ (যাতে এরর না আসে)
-//const upload = multer({ dest: 'uploads/' });
+//const upload = multer();
 
 
 
@@ -59,7 +59,8 @@ const upload = multer({ storage: storage });*/
     }
 });*/}
 
-router.post('/register', async (req, res) => {
+{/*router.post('/register', upload.none(), async (req, res) => {*/}
+    {/*router.post('/register', async (req, res) => {
     try {
         console.log("Input Data:", req.body); 
         const { employeeId, photoUrl } = req.body; // সরাসরি বডি থেকে photoUrl নিবে
@@ -71,7 +72,7 @@ router.post('/register', async (req, res) => {
         const updateData = {
             ...req.body,
             // যদি ইউজার লিঙ্ক দেয় তবে সেটি সেভ হবে, নাহলে আগেরটি থাকবে
-            /*photoUrl: photoUrl || undefined,*/ 
+            /*photoUrl: photoUrl || undefined,
             photoUrl: photoUrl && photoUrl.trim() !== "" ? photoUrl : undefined,
             ratings: {
                 academicEngagement: Number(req.body.academicEngagement) || 0,
@@ -85,6 +86,56 @@ router.post('/register', async (req, res) => {
         const teacher = await Teacher.findOneAndUpdate(
             { employeeId: employeeId },
             { $set: updateData }, 
+            { new: true, upsert: true }
+        );
+
+        res.status(200).json({ success: true, data: teacher });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});*/}
+
+router.post('/register', async (req, res) => {
+    try {
+        const { employeeId, photoUrl } = req.body;
+
+        if (!employeeId) {
+            return res.status(400).json({ success: false, error: "Employee ID is missing!" });
+        }
+
+        // ১. একটি ডাইনামিক অবজেক্ট তৈরি করা যাতে শুধু ভ্যালু থাকা ফিল্ডগুলো থাকবে
+        let updateFields = {};
+
+        // ২. সাধারণ ফিল্ডগুলো লুপ চালিয়ে চেক করা
+        const fields = ['fullName', 'department', 'district', 'experience', 'ex_details', 'bio', 'recommended', 'satisfactionLevel', 'whyNoMessage'];
+        fields.forEach(field => {
+            const value = req.body[field];
+            // ভ্যালু যদি undefined বা খালি স্ট্রিং না হয়, তবেই সেটা আপডেটের তালিকায় যাবে
+            if (value !== undefined && value !== null && String(value).trim() !== "") {
+                updateFields[field] = value;
+            }
+        });
+
+        // ৩. ফটো হ্যান্ডেল করা
+        if (photoUrl && photoUrl.trim() !== "") {
+            updateFields.photoUrl = photoUrl;
+        }
+
+        // ৪. রেটিং ফিল্ডগুলো আপডেট করার শর্ত (Dot Notation ব্যবহার করে)
+        // আমরা চেক করছি academicEngagement কি ০ এর চেয়ে বেশি? 
+        // কারণ রেজিস্ট্রেশন ফর্ম থেকে সাধারণত ০ আসে, যা আমাদের ইগনোর করতে হবে।
+        if (Number(req.body.academicEngagement) > 0) {
+            updateFields['ratings.academicEngagement'] = Number(req.body.academicEngagement);
+            updateFields['ratings.classroomBehavior'] = Number(req.body.classroomBehavior);
+            updateFields['ratings.resourceUtilization'] = Number(req.body.resourceUtilization);
+            updateFields['ratings.punctuality'] = Number(req.body.punctuality);
+            updateFields['ratings.studentParticipation'] = Number(req.body.studentParticipation);
+        }
+
+        // ৫. ডাটাবেজে আপডেট করা
+        const teacher = await Teacher.findOneAndUpdate(
+            { employeeId: employeeId },
+            { $set: updateFields }, // শুধুমাত্র ভ্যালু পাওয়া ফিল্ডগুলোই আপডেট হবে
             { new: true, upsert: true }
         );
 

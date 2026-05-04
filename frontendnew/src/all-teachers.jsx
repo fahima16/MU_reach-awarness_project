@@ -201,7 +201,7 @@ const handleLogin = () => {
 
 
 
-  const submitReg = async (e) => {
+  {/*const submitReg = async (e) => {
   e.preventDefault();
   const formData = new FormData();
 
@@ -252,7 +252,107 @@ const handleLogin = () => {
     } catch (err) {
       alert("Error: " + (err.response?.data?.error || "Server error"));
     }
+  };*/}
+  {/*const submitReg = async (e) => {
+  e.preventDefault();
+
+  // ১. FormData এর বদলে সরাসরি একটি সাধারণ JSON Object তৈরি করো
+  const dataToSend = {
+    fullName: regData.fullName,
+    department: regData.department,
+    district: regData.district,
+    experience: Number(regData.experience || 0),
+    ex_details: regData.ex_details,
+    employeeId: regData.employeeId, // ব্যাকএন্ড এই ID-টিই খুঁজছে
+    bio: regData.bio,
+    recommended: regData.recommended === 'true' || regData.recommended === true,
+    satisfactionLevel: regData.satisfactionLevel,
+    whyNoMessage: regData.whyNoMessage,
+    photoUrl: regData.photoUrl,
+    // রেটিং ফিল্ডগুলো
+    academicEngagement: Number(regData.academicEngagement || 0),
+    classroomBehavior: Number(regData.classroomBehavior || 0),
+    resourceUtilization: Number(regData.resourceUtilization || 0),
+    punctuality: Number(regData.punctuality || 0),
+    studentParticipation: Number(regData.studentParticipation || 0)
   };
+
+  try {
+    // ২. সরাসরি dataToSend অবজেক্টটি পাঠাও। headers দেওয়ার প্রয়োজন নেই, Axios নিজে থেকেই করে নিবে।
+    const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', dataToSend);
+
+    if (response.data.success) {
+      alert("Data successfully synced with Database!");
+      // ফর্ম রিসেট করা
+      setRegData({
+        fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '',
+        bio: '', recommended: 'true', satisfactionLevel: '', academicEngagement: 0, classroomBehavior: 0,
+        resourceUtilization: 0, punctuality: 0, studentParticipation: 0, whyNoMessage: '', photoUrl: ''
+      });
+      fetchTeachers(); // ড্যাশবোর্ড আপডেট
+    }
+  } catch (err) {
+    // এরর মেসেজটি কনসোলে প্রিন্ট করো যাতে সমস্যা বোঝা যায়
+    console.error("Submission Error:", err.response?.data);
+    alert("Error: " + (err.response?.data?.error || "Server error"));
+  }
+};*/}
+const submitReg = async (e) => {
+  e.preventDefault();
+
+  // ১. একটি খালি অবজেক্ট তৈরি করো
+  const dataToSend = {};
+
+  // ২. শুধুমাত্র সেই ডাটাগুলোই ঢোকাও যেগুলোতে ভ্যালু আছে
+  // এতে রেজিস্ট্রেশনের সময় রেটিং যাবে না, আর ফিডব্যাকের সময় নাম/বায়ো যাবে না
+  Object.keys(regData).forEach((key) => {
+    const value = regData[key];
+    
+    // employeeId সবসময় পাঠাতে হবে
+    if (key === 'employeeId') {
+      dataToSend[key] = value;
+    } 
+    // রেটিং এর ক্ষেত্রে চেক করো সেগুলো ০ এর বেশি কি না
+    else if (['academicEngagement', 'classroomBehavior', 'resourceUtilization', 'punctuality', 'studentParticipation'].includes(key)) {
+      if (Number(value) > 0) {
+        dataToSend[key] = Number(value);
+      }
+    }
+    // অন্য সব ফিল্ডের ক্ষেত্রে চেক করো সেগুলো খালি কি না
+    else if (value !== "" && value !== null && value !== undefined) {
+      // Boolean কনভার্সন (recommended এর জন্য)
+      if (key === 'recommended') {
+        dataToSend[key] = (value === 'true' || value === true);
+      } else {
+        dataToSend[key] = value;
+      }
+    }
+  });
+
+  // ৩. চেক করো employeeId আছে কি না
+  if (!dataToSend.employeeId) {
+      alert("Employee ID is required!");
+      return;
+  }
+
+  try {
+    const response = await axios.post('https://mu-reach-awarness-project.onrender.com/api/teachers/register', dataToSend);
+
+    if (response.data.success) {
+      alert("Successfully Updated!");
+      // ফর্ম রিসেট
+      setRegData({
+        fullName: '', department: '', district: '', experience: '', ex_details: '', employeeId: '',
+        bio: '', recommended: 'true', satisfactionLevel: '', academicEngagement: 0, classroomBehavior: 0,
+        resourceUtilization: 0, punctuality: 0, studentParticipation: 0, whyNoMessage: '', photoUrl: ''
+      });
+      fetchTeachers();
+    }
+  } catch (err) {
+    console.error("Submission Error:", err.response?.data);
+    alert("Error: " + (err.response?.data?.error || "Check Console"));
+  }
+};
   useEffect(() => {
     // ── SCROLL REVEAL ──
     const revealObs = new IntersectionObserver(entries => {
@@ -902,7 +1002,19 @@ const handleLogin = () => {
               checked={Number(regData[item.name]) === num}
               onChange={(e) => setRegData({...regData, [item.name]: Number(e.target.value)})}
             />
-            <label htmlFor={`${item.name}-${num}`}></label>
+            {/*<label htmlFor={`${item.name}-${num}`}></label>*/}
+            <label
+              htmlFor={`${item.name}-${num}`}
+              style={{
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                /* ৩. কালার লজিক: সিলেক্টেড স্টারের মান বর্তমান নাম্বারের সমান বা বড় হলে কালার হবে সোনালী */
+                color: Number(regData[item.name]) >= num ? '#ae9848' : '#ccc',
+                transition: 'color 0.2s'
+              }}
+            >
+              ★
+            </label>
           </React.Fragment>
         ))}
       </div>
