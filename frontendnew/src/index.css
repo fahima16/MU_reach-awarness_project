@@ -1694,11 +1694,11 @@ html {
   }
 
   /* --- এই অংশটি ঠিক করা হয়েছে --- */
-  .hero-caption {
+  /*.hero-caption {
     position: absolute !important;
     bottom: 10px !important;
-    right: 10px !important; /* ডানপাশে সরিয়ে নেয়া হলো */
-    left: auto !important;  /* বামের সব পজিশন বাতিল */
+    right: 10px !important; /* ডানপাশে সরিয়ে নেয়া হলো 
+    left: auto !important;  /* বামের সব পজিশন বাতিল 
     background: rgba(200, 169, 81, 0.95) !important;
     padding: 0 0 !important;
     width: 35% !important;
@@ -1707,18 +1707,37 @@ html {
     transform: none !important;
     border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 99 !important; /* যাতে এটি ইমেজের ওপর থাকে */
-  }
+    z-index: 99 !important; /* যাতে এটি ইমেজের ওপর থাকে 
+  }*/
+  /* মোবাইল রেসপন্সিভ মিডিয়া কোয়েরির ভেতরে (যেমন: max-width: 768px) */
+.hero-caption {
+    position: absolute !important;
+    bottom: 20px !important; /* নিচে থেকে একটু উপরে */
+    right: 10px !important; /* একদম ডানদিকে চেপে থাকবে */
+    background: rgba(200, 169, 81, 0.95) !important;
+    padding: 5px !important; /* প্যাডিং একটু বাড়াও */
+    width: 30% !important; /* ছোট বক্স */
+    max-width: 120px !important;
+    text-align: left !important;
+    
+    /* নিশ্চিত করার জন্য জেনো এটা মাঝখানে না আসে */
+    transform: none !important;
+    left: auto !important; 
+    
+    z-index: 10 !important; 
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
   .hero-caption h2 {
-    font-size: 1rem !important;
+    font-size: 0.7rem !important;
     margin: 0 !important;
     color: #001f3f !important;
     font-weight: bold;
   }
 
   .hero-caption p {
-    font-size: 0.5rem !important;
+    font-size: 0.4rem !important;
     margin: 5px 0 0 5px !important;
     color: #001f3f !important;
     line-height: 1.5;
